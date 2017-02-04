@@ -135,18 +135,20 @@ void RangeSearch::rangeSearch(node * n, Agent * agent, double range, int which_s
 			int distance = sqrt(pow(n->x - x, 2) + pow(n->y - y, 2));
 			if (distance != 0 && distance <= range) {
 				if (which_search == neighbor_search) (*agent).add_neighbor(n->ag);
-				else if (which_search == enemies_in_sight_search && (*n->ag).getSide() != (*agent).getSide()) (*agent).add_enemies(n->ag);
+				else{
+					(*agent).add_enemies(n->ag);
+				}
 			}
 			// if agent is within the left boundary of n
-			if (n->x >= x + range && n->x >= x-range) {
+			if (n->x >= x + range) {
 				rangeSearch(n->left, agent, range,  which_search);
 			}
 			// if agent is within the right boundary of n
-			else if (n->x < x + range && n->x < x - range) {
+			else if (n->x < x - range) {
 				rangeSearch(n->right, agent, range, which_search);
 			}
 			//if agent intersect with boundary n, recursively traverse both left and right.
-			else if (n->x <= x + range && n->x > x - range) {
+			else if (n->x < x + range && n->x >= x - range) {
 			
 				rangeSearch(n->left, agent, range, which_search);
 				rangeSearch(n->right, agent, range, which_search);
@@ -161,20 +163,20 @@ void RangeSearch::rangeSearch(node * n, Agent * agent, double range, int which_s
 			if (distance != 0 && distance <= range) {
 
 				if (which_search == neighbor_search) (*agent).add_neighbor(n->ag);
-				else if (which_search == enemies_in_sight_search && (*n->ag).getSide() != (*agent).getSide()) {
+				else  {
 					(*agent).add_enemies(n->ag);
 				}
 			}
 			// if agent is within the left boundary of n
-			if (n->y >= y + range && n->y >= y - range) {
+			if (n->y >= y + range) {
 				rangeSearch(n->left, agent, range, which_search);
 			}
 			// if agent is within the right boundary of n
-			else if (n->y < y + range && n->y < y - range) {
+			else if (n->y < y - range) {
 				rangeSearch(n->right, agent, range, which_search);
 			}
 			//if agent intersect with boundary n, recursively traverse both left and right.
-			else if (n->y <= y + range && n->y > y - range) {
+			else if (n->y < y + range && n->y >= y - range) {
 				rangeSearch(n->left, agent, range, which_search);
 				rangeSearch(n->right, agent, range, which_search);
 			}

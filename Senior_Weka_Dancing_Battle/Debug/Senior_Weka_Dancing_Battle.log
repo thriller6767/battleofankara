@@ -1,3 +1,26 @@
-﻿  Test.cpp
-  Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.exe
-  Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.pdb (Full PDB)
+﻿  Initial_val_mapper.cpp
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\initial_val_mapper.cpp(35): warning C4018: '<': signed/unsigned mismatch
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\initial_val_mapper.cpp(103): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\initial_val_mapper.cpp(145): error C2039: 'set_heightBonus': is not a member of 'Agent'
+  d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.h(43): note: see declaration of 'Agent'
+  Agent.cpp
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(179): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(180): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(182): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(183): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(194): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(197): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(198): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(199): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(202): error C2660: 'Agent::is_standing_on_high_ground': function does not take 0 arguments
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(202): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(205): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(206): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(207): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(265): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(266): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(267): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(371): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(371): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(381): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+  Generating Code...

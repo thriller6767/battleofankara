@@ -63,43 +63,33 @@ void Battle::updateAgent_otherProperties(Agent * a)
 
 }
 
-/*
-Insertion sort the enemies list with the distance between this agent and the enemies.
+/*Based on current situation, choose among IDLE, MOVE, ATTACK, RETREAT
+  If defensive = 1; Ottoman will take the defensive position until ALL agent can see some enemies
 */
-void Battle::insertionSort(Agent * thisAgent, vector<Agent*> enemies)
-{
-	int i, j;
-	Agent * temp;
-	double distance;
-
-	for (i = 1; i < enemies.size(); ++i){
-		temp = enemies[i];
-		distance = distance_between_two_points((*thisAgent).getPos(), (*temp).getPos());
-		for (j = i; j > 0 && distance_between_two_points((*thisAgent).getPos(), (*enemies[j - 1]).getPos()) > distance; --j) {
-			enemies[j] = enemies[j - 1];
-		}
-		enemies[j] = temp;
-	}
-}
-
-
-/*
-The best choice is having both special bonus and height bonus. In another word, even if the height bonus
-is 12 (the highest height bonus) but it does not have special bonus, this enemy is still not the best choice.
-
--------------NOT USE NOW---------------
-*/
-int Battle::evaluation_function(Agent * a, Agent * enemy, int specialB, int heightB)
-{
-	return specialB * 12 + heightB;
-}
-
-/*Based on current situation, choose among IDLE, MOVE, ATTACK, RETREAT*/
-void Battle::choose_and_Execute_Action(Agent * a){
+void Battle::choose_and_Execute_Action(Agent * a, int defensive){
 	int current_state = (*a).getAgentState();
 
 	switch (current_state) {
 	case READY: 
+		
+		//If no enemy in sight range, MOVE if offensive, IDLE if defensive.
+		if ((*a).getEnemies().empty()) {
+
+			if (idle_or_move(a, defensive) == Battle::Actions::IDLE) {} //no thing to change.
+			else {
+				//move to built-in direction.
+				move_to_built_in_dir(a);}
+		}
+		else {
+			Agent *enemy = chooseTheWeakestEnemy(a);
+			Agent *enemy_to_shoot;
+
+			//if there is enemy in shooing range.
+			if (!(*a).getEnemies_in_missile().empty()) {
+
+			}
+
+		}
 		break;
 	case ENGAGED:
 		break;
@@ -123,30 +113,11 @@ void Battle::move_to_chosen_enemy(Agent * a, Agent * chosenEnemy)
 {
 	//If this agent cannot see any enemy within sight range
 	if (chosenEnemy == nullptr) {
-		int random = rand() % 2;
-
-		switch (random)
-		{
-		case 0:
-			// this agent will not move -> IDLE
-			break;
-		case 1:
-			// this agent will move with default enemy direction
-
-			break;
-		}
+		
 	}
 	else {
 		Agent::Direction dir_after_move = find_direction_toward_enemy((*a).getPos(), (*chosenEnemy).getPos());
-		int max_to_move = (int)distance_between_two_points((*a).getPos(), (*chosenEnemy).getPos());
-		
-		int distance = rand() % (NEIGHBOR_RANGE + 1) + 50 ; //So it will be easier to check whether overlap
-
-		// If the distance between this agent and its enemy is smaller than the distance decide to move
-		if (distance > max_to_move) { //I assume that max_to_move will not be smaller than 50
-			distance = rand() % (max_to_move + 1) + 50;
-		}
-		
+		int distance = find_distance_to_move(a, chosenEnemy);
 		//Have not consider the problem of overlapping
 		vector<int> newPos = find_new_pos_after_move((*a).getPos(), distance, dir_after_move);
 		
@@ -163,6 +134,18 @@ void Battle::attack_chosen_enemy(Agent * a, Agent * enemy)
 {
 	// If this agent is already attacking someOne
 	(*a).setCurrentEnemyIndex((*enemy).getIndex());
+}
+
+void Battle::move_to_built_in_dir(Agent * a)
+{
+	Agent::Direction dir;
+	int distance = find_distance_to_move(a, nullptr);
+
+	if ((*a).getSide() == Bayezid) dir = Agent::Direction::SOUTH;	
+	else dir = Agent::Direction::NORTH;
+
+	(*a).changeDirection(dir);
+	(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, dir));
 }
 
 /*
@@ -515,6 +498,34 @@ bool Battle::is_surrounded(Agent * a)
 		if ((*neighbor).getSide() == (*a).getSide()) return false;
 	}
 	return true;
+}
+
+Battle::Actions Battle::idle_or_move(Agent * a, int defensive)
+{
+	if (defensive == 1) {
+		if ((*a).getSide() == Bayezid) { return Battle::Actions::IDLE; }
+		else { return Battle::Actions::MOVE; }
+	}
+	else {
+		if ((*a).getSide() == Bayezid) { return Battle::Actions::MOVE; }
+		else { return Battle::Actions::IDLE; }
+	}
+}
+
+int Battle::find_distance_to_move(Agent * a, Agent * chosenEnemy)
+{
+	int max_to_move, distance;
+	if (chosenEnemy == nullptr) max_to_move = -1;
+	else max_to_move = (int)distance_between_two_points((*a).getPos(), (*chosenEnemy).getPos());
+
+	distance = rand() % (NEIGHBOR_RANGE + 1) + 50; //So it will be easier to check whether overlap 
+	
+	// If the distance between this agent and its enemy is smaller than the distance decide to move
+	if (max_to_move != -1 && distance > max_to_move) { //I assume that max_to_move will not be smaller than 50
+		distance = rand() % (max_to_move + 1) + 50;
+	}
+	return distance;
+
 }
 
 void Battle::deleteAllAgent()

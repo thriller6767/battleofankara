@@ -142,7 +142,7 @@ void Initial_val_mapper::setRanges(ConReader contour)
 		//(*ag).print();
 		(*ag).setShootingRange(contour);
 		(*ag).setSightRange(contour);
-		(*ag).set_heightBonus(contour);
+		if ((*ag).is_standing_on_high_ground(contour)) (*ag).increaseAttackDamage();
 	}
 
 }

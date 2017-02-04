@@ -31,7 +31,7 @@ public:
 	/*WITHDRAW means that this agent will not intentionally attack the enemy,
 		will not choose to move toward enemy's direction, and will move to a built-in direction*/
 	/*RUNING_FOR_LIFE means running for life*/
-	enum class Actions{IDLE, ATTACK, WITHDRAW, MOVE, RUNING_FOR_LIFE, MAKE_LAST_STAND, DISENGAGE};
+	enum class Actions{IDLE, ATTACK, WITHDRAW, MOVE, RUNING_FOR_LIFE, MAKE_LAST_STAND, DISENGAGE, SHOOT};
 
 	Initial_val_mapper ivm; // for test
 	
@@ -56,19 +56,17 @@ private:
 	double duration;
 	RangeSearch rsTree;
 	ConReader cr;
-	int OttomanStatus[5]; // READY, ENGAGED, BETRAY, BROKEN, RETREAT;
-	int TamerlaneStatus[5];
+	
+	int Ottoman_alive, Tamerlane_alive, Ottoman_left, Tamerlane_left;
 
 
-	void insertionSort(Agent * thisAgent, std::vector<Agent *> enemies);
 	
-	int evaluation_function(Agent *a, Agent * enemy, int specialB, int heightB);//not used now
-	
-	void choose_and_Execute_Action(Agent * a);
+	void choose_and_Execute_Action(Agent * a, int offensive);
 
 	void move_to_chosen_enemy(Agent *a, Agent * chosenEnemy);
 	void running_for_life_if_state_is_broken(Agent * a);
 	void attack_chosen_enemy(Agent *a, Agent * chosenEnemy);
+	void move_to_built_in_dir(Agent *);
 
 	Agent * chooseTheWeakestEnemy(Agent * a);
 	Agent * find_the_closest_enemy(Agent *a);
@@ -87,6 +85,9 @@ private:
 	Agent * neighbor_is_enemy(Agent *a);
 
 	bool is_surrounded(Agent *a);
+
+	Battle::Actions idle_or_move(Agent *a, int defensive);
+	int find_distance_to_move(Agent *a, Agent * enemy);
 };
 
 

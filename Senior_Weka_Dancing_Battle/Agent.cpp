@@ -146,6 +146,10 @@ std::vector<Agent*> Agent::getEnemies()
 {
 	return enemies;
 }
+std::vector<Agent*> Agent::getEnemies_in_missile()
+{
+	return enemies_in_missile;
+}
 int Agent::getIndex()
 {
 	return agent_Index;
@@ -158,6 +162,11 @@ double Agent::getHeight(ConReader cr)
 int Agent::getCurrentEnemyIndex()
 {
 	return current_enemy_index_this_agent_is_attacking;
+}
+
+bool Agent::getBetrayBit()
+{
+	return betray;
 }
 
 /*
@@ -181,26 +190,35 @@ void Agent::setFrontLineSize()
 }
 
 /*
-if casualty is less than 0.5, morale will reduce by the same ratio of casualty
-Otherwise, morale will reduce by the 
+morale will only influenced by four factors: casualty_rate, fatigue, neighbor and height.
 */
-void Agent::setMorale()
+void Agent::setMorale(ConReader cr)
 {
-	double casualty = 1 - (initial_size - size) / initial_size;
-	int sizeInfluence;
+	double remaining_ratio = 1 - (initial_size - size) / initial_size;
+	morale *= remaining_ratio;
 
-	if (casualty < 0.5) {
-		sizeInfluence = (int)(morale * casualty);
-	}
-	else {
-		sizeInfluence = (int)(morale * casualty * 2);
-	}
-	morale +=  sizeInfluence;
+	//influenced by neighbor
+	if (is_neighbor_broken()) morale *= 0.8;
+	if (is_neighbor_broken()) morale *= 0.8;
+	if (is_surrounded()) morale *= 0.9;
+
+	//influenced by height
+	if (is_standing_on_high_ground(cr)) morale *= 1.1;
+
+	//influenced by fatigue
+	if (fatigue >= 25) morale *= 0.9;
+	else if (fatigue >= 50) morale *= 0.8;
+	else if (fatigue >= 100) morale *= 0.6;
+
 }
 
-void Agent::setFatigue(int turn_duration)
+/*
+Fatigure will increase iff the state is ENGAGED or it is moving.****
+In order not to further influence morale, fatigue will not increase if state is RETREAT/BROKEN/FIGHT_TO_DEATH.
+*/
+void Agent::setFatigue(int val_to_increase)
 {
-	fatigue += turn_duration;
+	fatigue += val_to_increase;
 }
 
 
@@ -231,12 +249,31 @@ void Agent::changeDirection(Agent::Direction newDir)
 	dir = newDir;
 }
 
+/*
+If it is broken, all the ability to attack/defend will disappear.
+*/
 void Agent::disableAttackAbility()
 {
 	missile_range = 0;
 	missile_damage = 0;
 	attack_damage = 0;
 	armor_defence = 0;
+}
+
+/*
+If it is fighting to death, all abilities will increase.
+*/
+void Agent::strengthenAbilities()
+{
+	missile_range *= 1.5;
+	missile_damage *= 1.5;
+	attack_damage *= 1.5;
+	armor_defence *= 1.5;
+}
+
+void Agent::increaseAttackDamage()
+{
+	attack_damage *= 1.2;
 }
 
 int Agent::attack_damage_delivered(int height_bonus, int special_bonus, int enemy_defend)
@@ -268,25 +305,47 @@ void Agent::clear_enemies()
 {
 	if (enemies.size() != 0) enemies.clear();
 }
-
-void Agent::set_neighbor_influence()
+/*
+Returns true if a neighbor of this side is broken.
+*/
+bool Agent::is_neighbor_broken()
 {
-	for (Agent * ag : neighbors) {  }
+	for (Agent * a : neighbors) {
+		if ((*a).getAgentState() == BROKEN && (*a).getSide() == side) { return true; }
+	}
+	return false;
+}
+/*
+Returns true if a neighbor of your side betray.
+*/
+bool Agent::does_neighbor_betray()
+{
+	for (Agent * a : neighbors) {
+		if ((*a).getBetrayBit() && (*a).getSide() == side) { return true; }
+	}
+	return false;
 }
 
+bool Agent::is_surrounded()
+{
+	if (neighbors.size() <= 3) return false;
+	for (Agent * a : neighbors) {
+		if ((*a).getSide() == side) { return false; }
+	}
+	return true;
+}
 
-
-void Agent::set_heightBonus(ConReader cr)
+bool Agent::is_standing_on_high_ground(ConReader cr)
 {
 	double height = cr.getHeight(pos);
-	double height_in_front_of_500 = getPos_in_front(1, cr);
-	//only to ensure the agent is on a hill, even a small one will make sense
+	double height_500_in_front = getPos_in_front(1, cr);
 
-	if (height > height_in_front_of_500) {
-		morale *= STANDING_ON_HILL_BONUS;
-		attack_damage *= STANDING_ON_HILL_BONUS;
-	}
+	// standing on a higher place
+	if (height > height_500_in_front) return true;
+	else return false;
+		
 }
+
 
 
 double Agent::find_sightRange(ConReader cr)

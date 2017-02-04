@@ -14,7 +14,6 @@
 #define SHOOTING_SPEED 47.80
 #define GRAVITATIONAL_ACCELERATION 9.8
 #define SHOOTING_DEGREE 45
-#define STANDING_ON_HILL_BONUS 1.3
 
 #define Bayezid 999
 #define Tamerlane -999
@@ -68,14 +67,16 @@ public:
 	double getDepth();
 	std::vector<Agent *> getNeighbor();
 	std::vector<Agent *> getEnemies();
+	std::vector<Agent *> getEnemies_in_missile();
 	int getIndex();
 	double getHeight(ConReader); 
-	int getCurrentEnemyIndex();//GETTERS
+	int getCurrentEnemyIndex();
+	bool getBetrayBit();//GETTERS
 	/*-----------------------------------------*/
 
 	void setCurrentEnemyIndex(int enemy_index);
 	void setFrontLineSize();
-	void setMorale();
+	void setMorale(ConReader cr);
 	void setFatigue(int turn_duration);
 	void setShootingRange(ConReader cr);
 	void setSightRange(ConReader cr);
@@ -83,6 +84,8 @@ public:
 	void changePos(std::vector<int>);
 	void changeDirection(Agent::Direction);
 	void disableAttackAbility();
+	void strengthenAbilities();
+	void increaseAttackDamage();
 	
 	int attack_damage_delivered(int height_bonus, int special_bonus, int enemy_defend);
 	int missile_damage_delivered(int special_bonus, int enemy_defend);
@@ -93,8 +96,10 @@ public:
 	void add_enemies(Agent * enemy);
 	void clear_enemies();
 
-	void set_neighbor_influence();
-	void set_heightBonus(ConReader cr);
+	bool is_neighbor_broken();
+	bool does_neighbor_betray();
+	bool is_surrounded();
+	bool is_standing_on_high_ground(ConReader cr);
 
 	double find_sightRange( ConReader cr);
 	double find_shootingRange(ConReader cr);
@@ -129,6 +134,7 @@ private:
 	double missile_range_ratio;
 	std::vector<Agent *> neighbors;
 	std::vector<Agent *> enemies;
+	std::vector<Agent *> enemies_in_missile;
 	int current_enemy_index_this_agent_is_attacking;
 	bool betray;
 
