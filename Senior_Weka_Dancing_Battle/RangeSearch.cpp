@@ -135,11 +135,14 @@ void RangeSearch::rangeSearch(node * n, Agent * agent, double range, int which_s
 			int distance = sqrt(pow(n->x - x, 2) + pow(n->y - y, 2));
 			if (distance != 0 && distance <= range) {
 				if (which_search == neighbor_search) (*agent).add_neighbor(n->ag);
-				else if (which_search == enemies_in_sight_search && (*agent).getSide() != (*n->ag).getSide()){
+
+				else if (which_search == enemies_in_sight_search && (*agent).getSide() != (*n->ag).getSide()
+						 && is_agent_facing_enemy(agent, n->ag)){
 					(*agent).add_enemies(n->ag);
 				}
-				else if (which_search == enemies_in_shooting_search && (*agent).getSide() != (*n->ag).getSide()) {
-					(*agent).add
+				else if (which_search == enemies_in_shooting_search && (*agent).getSide() != (*n->ag).getSide()
+					     && is_agent_facing_enemy(agent, n->ag)) {
+					(*agent).add_enemies_to_shoot(n->ag);
 				}
 			}
 			// if agent is within the left boundary of n
@@ -166,8 +169,14 @@ void RangeSearch::rangeSearch(node * n, Agent * agent, double range, int which_s
 			if (distance != 0 && distance <= range) {
 
 				if (which_search == neighbor_search) (*agent).add_neighbor(n->ag);
-				else if (which_search == enemies_in_sight_search && (*agent).getSide() != (*n->ag).getSide()) {
+
+				else if (which_search == enemies_in_sight_search && (*agent).getSide() != (*n->ag).getSide()
+					&& is_agent_facing_enemy(agent, n->ag)) {
 					(*agent).add_enemies(n->ag);
+				}
+				else if (which_search == enemies_in_shooting_search && (*agent).getSide() != (*n->ag).getSide()
+					&& is_agent_facing_enemy(agent, n->ag)) {
+					(*agent).add_enemies_to_shoot(n->ag);
 				}
 			}
 			// if agent is within the left boundary of n
@@ -187,5 +196,41 @@ void RangeSearch::rangeSearch(node * n, Agent * agent, double range, int which_s
 		}
 
 	}
+}
+
+bool RangeSearch::is_agent_facing_enemy(Agent * agent, Agent * enemy)
+{
+	vector<int> agent_Pos = (*agent).getPos();
+	vector<int> enemy_Pos = (*enemy).getPos();
+	Agent::Direction dir = (*agent).getDirection();
+
+	switch (dir) {
+	case Agent::Direction::NORTH:
+
+		// means that A can face B. An agent cannot see an enemy at its back
+		return (enemy_Pos[1] <= agent_Pos[1]);
+
+	case Agent::Direction::SOUTH:
+		return (enemy_Pos[1] >= agent_Pos[1]);
+
+	case Agent::Direction::EAST:
+		return (enemy_Pos[0] >= agent_Pos[0]);
+
+	case Agent::Direction::WEST:
+		return (enemy_Pos[0] <= agent_Pos[0]);
+
+	case Agent::Direction::NW:
+		return (enemy_Pos[1] <= -enemy_Pos[0] + agent_Pos[0] + agent_Pos[1]);
+
+	case Agent::Direction::NE:
+		return (enemy_Pos[1] <= enemy_Pos[0]);
+
+	case Agent::Direction::SW:
+		return (enemy_Pos[1] >= enemy_Pos[0]);
+
+	case Agent::Direction::SE:
+		return (enemy_Pos[1] >= -enemy_Pos[0] + agent_Pos[0] + agent_Pos[1]);
+	}
+
 }
 

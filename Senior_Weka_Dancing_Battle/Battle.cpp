@@ -27,12 +27,6 @@ void Battle::put_rangetree_boundaries()
 	}	
 }
 
-std::vector<Battle::Actions> Battle::getPossibleMoves(Agent * a)
-{
-	return std::vector<Battle::Actions>();
-}
-
-
 void Battle::populate(int poisoned_well, int marching_from_Constantinople)
 {
 	cr.loadAltitude();
@@ -76,21 +70,44 @@ void Battle::choose_and_Execute_Action(Agent * a, int defensive){
 				move_to_built_in_dir(a);}
 		}
 		else {
-			double shooting_range = (*a).getMissileRange();
-			Agent *enemy = chooseTheWeakestEnemy(a);
-			vector<int> enemy_pos = (*enemy).getPos();
+			Agent * e_in_neighbor = find_enemy_in_neighbor(a);
 
-			// if the chosen enemy is in shooting range
-			if (distance_between_two_points(enemy_pos, (*a).getPos()) <= shooting_range) {
-				//shoot this enemy
+			//if there is an enemy in neighbor range, attack
+			if (e_in_neighbor != nullptr) {
+
+				//move to it
+
+				//attack
+
+				//change state to ENGAGED
+				(*a).changeAgentState(ENGAGED);
+
+			}
+			else {
+				double shooting_range = (*a).getMissileRange();
+				Agent *enemy = chooseTheWeakestEnemy(a);
+				vector<int> enemy_pos = (*enemy).getPos();
+
+				// if the chosen enemy is in shooting range
+				if (distance_between_two_points(enemy_pos, (*a).getPos()) <= shooting_range) {
+					
+					//shoot this enemy
+
+					
+				}
+				else {
+					// else we need to range search enemies in shooting range
+					rsTree.findAgent_within_range(a, shooting_range, enemies_in_shooting_search);
+					
+					int random = rand() % ((*a).getEnemies_in_missile().size()); // randomly pick one
+					Agent *enemy_to_shoot = (*a).getEnemies_in_missile()[random];
+
+					//shoot the enemy
+
+				}
 
 				//and move to it.
 				move_to_chosen_enemy(a, enemy);
-			}
-			else {
-				// else we need to range search enemies in shooting range
-
-
 			}
 
 
@@ -122,7 +139,7 @@ void Battle::move_to_chosen_enemy(Agent * a, Agent * chosenEnemy)
 		
 	}
 	else {
-		Agent::Direction dir_after_move = find_direction_toward_enemy((*a).getPos(), (*chosenEnemy).getPos());
+		Agent::Direction dir_after_move = find_new_dir_after_move((*a).getPos(), (*chosenEnemy).getPos());
 		int distance = find_distance_to_move(a, chosenEnemy);
 		//Have not consider the problem of overlapping
 		vector<int> newPos = find_new_pos_after_move((*a).getPos(), distance, dir_after_move);
@@ -149,6 +166,22 @@ void Battle::move_to_built_in_dir(Agent * a)
 
 	if ((*a).getSide() == Bayezid) dir = Agent::Direction::SOUTH;	
 	else dir = Agent::Direction::NORTH;
+
+	(*a).changeDirection(dir);
+	(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, dir));
+}
+
+/* Pre-requirement: this agent decided to retreat.
+If it is a Otoman agent, retreat to north.
+If it is a bayezid agent, retreat to south
+*/
+void Battle::retreat_to_built_in_dir(Agent * a)
+{
+	Agent::Direction dir;
+	int distance = find_distance_to_move(a, nullptr);
+
+	if ((*a).getSide() == Bayezid) dir = Agent::Direction::NORTH;
+	else dir = Agent::Direction::SOUTH;
 
 	(*a).changeDirection(dir);
 	(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, dir));
@@ -264,6 +297,16 @@ Agent * Battle::find_the_enemy_with_SPECIAL_BONUS(Agent * a)
 	
 }
 
+/*If there is enemy in neighbor, return the first one found
+Else return nullptr*/
+Agent * Battle::find_enemy_in_neighbor(Agent * a)
+{
+	for (Agent *n : (*a).getNeighbor()) {
+		if ((*a).getSide() != (*n).getSide()) return n;
+	}
+	return nullptr;
+}
+
 /*Return 1 if Agent a has special Bonus against enemy, Otherwise return 0
 */
 int Battle::has_special_bonus_against(Agent * a, Agent * enemy)
@@ -308,101 +351,14 @@ double Battle::distance_between_two_points(std::vector<int> A, std::vector<int> 
 }
 
 /*
-For a given agent A, return a list of enemies within sight range in the direction A is facing.
-*/
-void Battle::add_Enemies_within_sight_range(double dis, Agent * a, Agent *possible_enemies)
-{
-	vector<int> pos_of_this_agent = (*a).getPos();
-	double sight_range = (*a).getSightRange();
-	Agent::Direction dir = (*a).getDirection();
-	int this_side = (*a).getSide();
-
-	if ( this_side != (*possible_enemies).getSide() 
-		&& is_enemy_within_range(dis, pos_of_this_agent, (*possible_enemies).getPos(), sight_range,dir) == 0) {
-
-			(*a).add_enemies(possible_enemies);
-	}
-
-}
-
-/*
-For a given agent A, return a list of enemies within shooting range in the direction A is facing.
-*/
-std::vector<Agent*> Battle::getEnemies_within_shooting_range(Agent * a)
-{
-	vector<int> pos_of_this_agent = (*a).getPos();
-	vector<Agent *> enemies_within_sight_range = (*a).getEnemies();
-	double shooting_range = (*a).getMissileRange();
-	Agent::Direction dir = (*a).getDirection();
-	int this_side = (*a).getSide();
-	vector<Agent*> enemies;
-
-	for (Agent* agent : enemies_within_sight_range) {
-		if (is_enemy_within_range(SHIT_NULL, pos_of_this_agent, (*agent).getPos(), shooting_range,
-			dir) == 0) {
-
-			enemies.push_back(agent);
-		}
-	}
-
-	return enemies;
-}
-
-/*
-If the enemy is within the sight range and in the direction this agent is facing, return 0;
-Otherwise return -1;
-*/
-int Battle::is_enemy_within_range(double dis, std::vector<int> A, std::vector<int> enemy, double range_A, Agent::Direction dir_A)
-{
-	if (dis == SHIT_NULL) dis = distance_between_two_points(A, enemy);
-	if (dis > range_A) return -1; //out of range
-
-	switch (dir_A) {
-	case Agent::Direction::NORTH:
-
-		// means that A can face B. An agent cannot see an enemy at its back
-		if (enemy[1] < A[1])  return 0;
-		else return -1;
-		
-	case Agent::Direction::SOUTH: 
-		if (enemy[1] > A[1])  return 0;
-		else return -1;
-
-	case Agent::Direction::EAST: 
-		if (enemy[0] > A[0])  return 0;
-		else return -1;
-
-	case Agent::Direction::WEST:  
-		if (enemy[0] < A[0])  return 0;
-		else return -1;
-
-	case Agent::Direction::NW: 
-		if (enemy[1] < -enemy[0] + A[0] + A[1]) return 0;
-		else return -1;
-
-	case Agent::Direction::NE:  
-		if (enemy[1] < enemy[0]) return 0;
-		else return -1;
-
-	case Agent::Direction::SW: 
-		if (enemy[1] > enemy[0]) return 0;
-		else return -1;
-
-	case Agent::Direction::SE:  
-		if (enemy[1] > -enemy[0] + A[0] + A[1]) return 0;
-		else return -1;
-	}
-}
-
-/*
 IF This agent's state is BROKEN,
 	all abilities to attack, defend and shoot are disabled; 
 	this agent will move in the opposite direction from the closest enemy.
 */
-void Battle::running_for_life_if_state_is_broken(Agent * a)
+void Battle::running_for_life(Agent * a)
 {
 	Agent * closestEnemy = find_the_closest_enemy(a);
-	Agent::Direction direction_toward_enemy = find_direction_toward_enemy((*a).getPos(), (*closestEnemy).getPos());
+	Agent::Direction direction_toward_enemy = find_new_dir_after_move((*a).getPos(), (*closestEnemy).getPos());
 	
 	int distance = 100; //Dont know how to handle
 	Agent::Direction direction_from;
@@ -425,7 +381,7 @@ void Battle::running_for_life_if_state_is_broken(Agent * a)
 /*
 Return the direction at which this agent should face after moving toward the enemy
 */
-Agent::Direction Battle::find_direction_toward_enemy(std::vector<int> pos, std::vector<int> enemy_pos)
+Agent::Direction Battle::find_new_dir_after_move(std::vector<int> pos, std::vector<int> enemy_pos)
 {
 	if (enemy_pos[0] <= pos[0] + DIRECTION_STANDARD || enemy_pos[0] >= pos[0] - DIRECTION_STANDARD) {
 
@@ -448,6 +404,11 @@ Agent::Direction Battle::find_direction_toward_enemy(std::vector<int> pos, std::
 	else return Agent::Direction::NE;
 }
 
+/*
+pos: current position
+distance: distance to move
+dir: direction to move
+*/
 std::vector<int> Battle::find_new_pos_after_move(std::vector<int> pos, int distance, Agent::Direction dir)
 {
 	vector<int> newPos;
@@ -476,7 +437,7 @@ std::vector<int> Battle::find_new_pos_after_move(std::vector<int> pos, int dista
 
 
 
-void Battle::move_with_default_enemy_direciton(Agent * a)
+void Battle::move_to_default_enemy_direciton(Agent * a)
 {
 	int distance = rand() % (NEIGHBOR_RANGE + 1) + 50;
 	//Ottomans are supposed to move south
