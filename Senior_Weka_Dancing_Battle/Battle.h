@@ -44,11 +44,13 @@ public:
 	void updateAgent_otherProperties(Agent *a);
 	void updateBattleField();
 	void deleteAllAgent();
-	void initial_chart_print();
 	void delete_searchTree();
 
-	void map_Graph_and_Agent();
+	void put_rangetree_boundaries();
 
+
+	/*--------print-----------------*/
+	void initial_chart_print();
 
 private:
 	
@@ -59,15 +61,16 @@ private:
 	
 	int Ottoman_alive, Tamerlane_alive, Ottoman_left, Tamerlane_left;
 
-
-	
+	/*-----------decide which action, and do it------------------*/
 	void choose_and_Execute_Action(Agent * a, int offensive);
 
 	void move_to_chosen_enemy(Agent *a, Agent * chosenEnemy);
 	void running_for_life_if_state_is_broken(Agent * a);
 	void attack_chosen_enemy(Agent *a, Agent * chosenEnemy);
 	void move_to_built_in_dir(Agent *);
+	void retreat_to_built_in_dir(Agent *a);
 
+	/*--------three ways to choose enemy------------------*/
 	Agent * chooseTheWeakestEnemy(Agent * a);
 	Agent * find_the_closest_enemy(Agent *a);
 	Agent * find_the_enemy_with_highest_HEIGHT_BONUS(Agent * a);
@@ -75,19 +78,20 @@ private:
 	int has_special_bonus_against(Agent * a, Agent * enemy);
 	int find_height_bonus_against(Agent * a, Agent * enemy);
 
+
 	double distance_between_two_points(std::vector<int> A, std::vector<int> B);
+	
 	int is_enemy_within_range(double dis, std::vector<int>A, std::vector<int> B, double sight_range_A, Agent::Direction dir_A);
 
-	Agent::Direction find_direction_toward_enemy(std::vector<int> pos, std::vector<int> enemy_pos);
-	std::vector<int> find_new_pos_after_move(std::vector<int> pos, int distance, Agent::Direction dir);
-
-	void move_with_default_enemy_direciton(Agent *a);
-	Agent * neighbor_is_enemy(Agent *a);
-
-	bool is_surrounded(Agent *a);
-
+	/* ------------- base on offensive/defensive attribute, decide to remain idle or move--------*/
 	Battle::Actions idle_or_move(Agent *a, int defensive);
-	int find_distance_to_move(Agent *a, Agent * enemy);
+	
+	/*-------choose a distance to move. follow the direction, and change the pos-----------*/
+	int find_distance_to_move(Agent *a, Agent * enemy);	
+	std::vector<int> find_new_pos_after_move(std::vector<int> pos, int distance, Agent::Direction dir);
+	Agent::Direction find_direction_toward_enemy(std::vector<int> pos, std::vector<int> enemy_pos);
+	
+	void move_with_default_enemy_direciton(Agent *a);
 };
 
 

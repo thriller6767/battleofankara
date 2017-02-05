@@ -305,6 +305,16 @@ void Agent::clear_enemies()
 {
 	if (enemies.size() != 0) enemies.clear();
 }
+
+void Agent::add_enemies_to_shoot(Agent * e)
+{
+	enemies_in_missile.push_back(e);
+}
+
+void Agent::clear_enemies_to_shoot()
+{
+	if (enemies_in_missile.size() != 0) enemies_in_missile.clear();
+}
 /*
 Returns true if a neighbor of this side is broken.
 */

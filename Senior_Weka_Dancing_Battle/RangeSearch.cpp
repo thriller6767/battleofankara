@@ -135,8 +135,11 @@ void RangeSearch::rangeSearch(node * n, Agent * agent, double range, int which_s
 			int distance = sqrt(pow(n->x - x, 2) + pow(n->y - y, 2));
 			if (distance != 0 && distance <= range) {
 				if (which_search == neighbor_search) (*agent).add_neighbor(n->ag);
-				else{
+				else if (which_search == enemies_in_sight_search && (*agent).getSide() != (*n->ag).getSide()){
 					(*agent).add_enemies(n->ag);
+				}
+				else if (which_search == enemies_in_shooting_search && (*agent).getSide() != (*n->ag).getSide()) {
+					(*agent).add
 				}
 			}
 			// if agent is within the left boundary of n
@@ -163,7 +166,7 @@ void RangeSearch::rangeSearch(node * n, Agent * agent, double range, int which_s
 			if (distance != 0 && distance <= range) {
 
 				if (which_search == neighbor_search) (*agent).add_neighbor(n->ag);
-				else  {
+				else if (which_search == enemies_in_sight_search && (*agent).getSide() != (*n->ag).getSide()) {
 					(*agent).add_enemies(n->ag);
 				}
 			}

@@ -11,7 +11,7 @@
 
 using namespace std;
 
-void Battle::map_Graph_and_Agent()
+void Battle::put_rangetree_boundaries()
 {
 	int total_size = ivm.AgentList.size();
 	int center = total_size / 2;
@@ -24,12 +24,7 @@ void Battle::map_Graph_and_Agent()
 	{
 		Agent *a = ivm.AgentList.at(i);
 		rsTree.put(a, (*a).getPos().at(0), (*a).getPos().at(1));
-	}
-
-	//for (Agent * a : ivm.AgentList) rsTree.findAgent_within_range(a, NEIGHBOR_RANGE);
-
-	//rsTree.findAgent_within_range(ivm.AgentList[55], NEIGHBOR_RANGE);
-	
+	}	
 }
 
 std::vector<Battle::Actions> Battle::getPossibleMoves(Agent * a)
@@ -81,13 +76,24 @@ void Battle::choose_and_Execute_Action(Agent * a, int defensive){
 				move_to_built_in_dir(a);}
 		}
 		else {
+			double shooting_range = (*a).getMissileRange();
 			Agent *enemy = chooseTheWeakestEnemy(a);
-			Agent *enemy_to_shoot;
+			vector<int> enemy_pos = (*enemy).getPos();
 
-			//if there is enemy in shooing range.
-			if (!(*a).getEnemies_in_missile().empty()) {
+			// if the chosen enemy is in shooting range
+			if (distance_between_two_points(enemy_pos, (*a).getPos()) <= shooting_range) {
+				//shoot this enemy
+
+				//and move to it.
+				move_to_chosen_enemy(a, enemy);
+			}
+			else {
+				// else we need to range search enemies in shooting range
+
 
 			}
+
+
 
 		}
 		break;
@@ -483,22 +489,6 @@ void Battle::move_with_default_enemy_direciton(Agent * a)
 	}
 }
 
-Agent* Battle::neighbor_is_enemy(Agent * a)
-{
-	for (Agent * neighbor : (*a).getNeighbor()) {
-		// Enemy!
-		if ((*neighbor).getSide() != (*a).getSide()) return neighbor;
-	}
-	return nullptr;
-}
-
-bool Battle::is_surrounded(Agent * a)
-{
-	for (Agent * neighbor : (*a).getNeighbor()) {
-		if ((*neighbor).getSide() == (*a).getSide()) return false;
-	}
-	return true;
-}
 
 Battle::Actions Battle::idle_or_move(Agent * a, int defensive)
 {

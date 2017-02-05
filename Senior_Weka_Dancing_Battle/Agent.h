@@ -88,13 +88,15 @@ public:
 	void increaseAttackDamage();
 	
 	int attack_damage_delivered(int height_bonus, int special_bonus, int enemy_defend);
-	int missile_damage_delivered(int special_bonus, int enemy_defend);
-	
+	int missile_damage_delivered(int special_bonus, int enemy_defend);	
 
 	void add_neighbor(Agent * neighbor);
-	void clear_neighbor();
 	void add_enemies(Agent * enemy);
-	void clear_enemies();
+	void add_enemies_to_shoot(Agent * e);
+
+	void clear_neighbor();	
+	void clear_enemies();	
+	void clear_enemies_to_shoot();
 
 	bool is_neighbor_broken();
 	bool does_neighbor_betray();
