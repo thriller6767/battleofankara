@@ -52,14 +52,19 @@ void Battle::updateAgent_otherProperties(Agent * a)
 
 }
 
-/*Based on current situation, choose among IDLE, MOVE, ATTACK, RETREAT
+/*
+It is only available for agents STILL ALIVE AND IN BATTLEFIELD
+
+Based on current situation, choose among IDLE, MOVE, ATTACK, RETREAT
   If offensive = 0, Ottoman stay idle, and Tamerlane move.
   If offensive = 1, Ottoman move, Tamerlane stay.
   If offensive = 2, both move
 */
 void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
-	int current_state = (*a).getAgentState();
+	
+	if (!(*a).is_alive || !(*a).in_battlefield) return;
 
+	int current_state = (*a).getAgentState();
 	switch (current_state) {
 	case READY: 
 
@@ -75,8 +80,8 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 				&& ((*a).is_morale_below_10() || (*a).is_size_below_50_percent())) {
 				
 				(*a).changeSide();
-				++Tamerlane_in_battle;
-				--Ottoman_in_battle;
+				++Tamerlane_alive_in_battle;
+				--Ottoman_alive_in_battle;
 			}
 		}
 		// if less than 30% of agent in this side remain fighting, WITHDRAW
@@ -176,11 +181,16 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 		else if ((*a).is_surrounded() && (*a).is_able_to_fight_to_death()
 			&& (*a).is_size_below_20_percent() && (!(*a).is_morale_below_zero())) {
 
+			if ((*a).getSide() == Bayezid) ++Ottoman_fight_to_death;
+			else ++Tamerlane_fight_to_death;
+
 			(*a).changeAgentState(FIGHT_TO_DEATH);
 			(*a).strengthenAbilities();
 			(*a).strengthenMorale();
 
-			// how to deliver damage then? is it being attacked?*****************
+			// because it is engaged with someone, so keep attacking!!
+			attack_enemy(a, ivm.AgentList[(*a).getCurrentEnemyIndex()]);
+
 		}
 		// RUN for life
 		else if ((*a).is_morale_below_10() && (*a).is_size_below_20_percent()) {
@@ -213,19 +223,30 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 		running_for_life(a);
 		break;
 	case FIGHT_TO_DEATH: 
-		//************attack who? or remain offensive?
+		//remain still unless it is being attacked.
+		if ((*a).is_being_attacked) {
 
+			attack_enemy(a, ivm.AgentList[(*a).getCurrentEnemyIndex()]);
+			(*a).changeFatigue(FATIGUE_INCREASE_IF_ATTACK);
+
+		}
+		else {
+			//remain still
+		}
 		break;
 	case RETREAT: 
 		// fight to death
 		if ((*a).is_surrounded() && (*a).is_able_to_fight_to_death()
 			&& (*a).is_size_below_20_percent() && (!(*a).is_morale_below_zero())) {
 
+			if ((*a).getSide() == Bayezid) ++Ottoman_fight_to_death;
+			else ++Tamerlane_fight_to_death;
+
 			(*a).changeAgentState(FIGHT_TO_DEATH);
 			(*a).strengthenAbilities();
 			(*a).strengthenMorale();
 
-			// how to deliver damage then? is it being attacked?*****************
+			//remain still. 
 
 		}	
 		// RUN for life
@@ -271,7 +292,7 @@ void Battle::move_to_chosen_enemy(Agent * a, Agent * chosenEnemy)
 		Agent::Direction dir_after_move = find_new_dir_after_move((*a).getPos(), (*chosenEnemy).getPos());
 		int distance = find_distance_to_move(a, chosenEnemy);
 		//Have not consider the problem of overlapping
-		vector<int> newPos = find_new_pos_after_move((*a).getPos(), distance, dir_after_move);
+		vector<int> newPos = find_new_pos_after_move((*a).getPos(), distance, dir_after_move, false);
 		
 		(*a).changeDirection(dir_after_move);
 		(*a).changePos(newPos);
@@ -316,7 +337,7 @@ void Battle::move_to_built_in_dir(Agent * a)
 	else dir = Agent::Direction::NORTH;
 
 	(*a).changeDirection(dir);
-	(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, dir));
+	(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, dir, false));
 }
 
 /* Pre-requirement: this agent decided to retreat.
@@ -332,7 +353,16 @@ void Battle::withdraw_to_built_in_dir(Agent * a)
 	else dir = Agent::Direction::SOUTH;
 
 	(*a).changeDirection(dir);
-	(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, dir));
+	vector<int> newPos = find_new_pos_after_move((*a).getPos(), distance, dir, true);
+
+	//out of battlefield
+	if (newPos[0] == -1) {
+		(*a).in_battlefield = false;
+
+		if ((*a).getSide() == Bayezid) { --Ottoman_alive_in_battle; ++Ottoman_left_battle; }
+		else { --Tamerlane_alive_in_battle;  ++Tamerlane_left_battle; }
+	}
+	(*a).changePos(newPos);
 }
 
 void Battle::shoot_the_enemy(Agent * a, Agent * enemy)
@@ -536,7 +566,16 @@ void Battle::running_for_life(Agent * a)
 
 	(*a).changeDirection(direction_from);
 	(*a).disableAttackAbility();
-	(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, direction_from));
+
+	vector<int> newPos = find_new_pos_after_move((*a).getPos(), distance, direction_from, true);
+	//out of battlefield
+	if (newPos[0] == -1) {
+		(*a).in_battlefield = false;
+		
+		if ((*a).getSide() == Bayezid) { --Ottoman_alive_in_battle; ++Ottoman_left_battle; }
+		else {--Tamerlane_alive_in_battle;  ++Tamerlane_left_battle;}
+	}
+	(*a).changePos(newPos);
 }
 
 /*
@@ -570,7 +609,7 @@ pos: current position
 distance: distance to move
 dir: direction to move
 */
-std::vector<int> Battle::find_new_pos_after_move(std::vector<int> pos, int distance, Agent::Direction dir)
+std::vector<int> Battle::find_new_pos_after_move(std::vector<int> pos, int distance, Agent::Direction dir, bool out_field_waiver)
 {
 	vector<int> newPos;
 	newPos.push_back(pos[0]);
@@ -593,8 +632,25 @@ std::vector<int> Battle::find_new_pos_after_move(std::vector<int> pos, int dista
 		else { newPos[0] += x_dis; newPos[1] -= y_dis; }
 	}
 
-	//Should check if new pos goes beyong battlefield
-	return newPos;	
+	//If WITHDRAW OR RUN_FOR_LIFE
+	if (out_field_waiver) {
+		if (newPos[0] > BATTLEFIELD_X_MAX || newPos[0] < 0 || newPos[1] > BATTLEFIELD_Y_MAX || newPos[1] < 0) {
+			return { -1, -1 };
+		}
+		else {
+			return newPos;
+		}
+	}
+	else {
+		if (newPos[0] > BATTLEFIELD_X_MAX || newPos[0] < 0 || newPos[1] > BATTLEFIELD_Y_MAX || newPos[1] < 0) {
+			return pos;
+		}
+		else {
+			return newPos;
+		}
+	}
+
+	
 }
 
 
@@ -604,11 +660,11 @@ void Battle::move_to_default_enemy_direciton(Agent * a)
 	int distance = rand() % (NEIGHBOR_RANGE + 1) + 50;
 	//Ottomans are supposed to move south
 	if ((*a).getSide() == Bayezid) {
-		(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, Agent::Direction::SOUTH));
+		(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, Agent::Direction::SOUTH, false));
 	}
 	//Tamerlane are supposed to move north
 	else {
-		(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, Agent::Direction::NORTH));
+		(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, Agent::Direction::NORTH, false));
 	}
 }
 
@@ -639,6 +695,9 @@ Battle::Actions Battle::idle_or_move(Agent * a, int offensive)
 	}
 }
 
+/*
+Must make sure it does not move beyond battlefield
+*/
 int Battle::find_distance_to_move(Agent * a, Agent * chosenEnemy)
 {
 	int max_to_move, distance;

@@ -9,6 +9,8 @@
 #include "Initial_val_mapper.h"
 #include "RangeSearch.h"
 
+#define BATTLEFIELD_Y_MAX 12000
+#define BATTLEFIELD_X_MAX 9500
 #define NEIGHBOR_RANGE 270
 #define SHIT_NULL -100
 #define HEIGHT_SCORE_INTERVAL 25
@@ -60,14 +62,21 @@ private:
 	RangeSearch rsTree;
 	ConReader cr;
 	
-	/*Agent still alive and in the battle field*/
-	int Ottoman_in_battle, Tamerlane_in_battle;
+	/*Agent still alive and in the battle field
+	(alive_in_battle + left_battle + dead = n)
+	*/
+	int Ottoman_alive_in_battle, Tamerlane_alive_in_battle;
 
 	/*Agent has already left the battle field*/
 	int Ottoman_left_battle, Tamerlane_left_battle;
 
-	/*Agent are broken or treat (BUT IN THE BATTLE FIELD!!!!)*/
+	/*Agent are broken or treat 
+	(broken_or_retreat + still_fighting_in_battle = n - dead
+	*/
 	int Ottoman_broken_or_retreat, Tamerlane_broken_or_retreat;
+
+	/*just for statistcs*/
+	int Ottoman_fight_to_death, Tamerlane_fight_to_death;
 
 	/*-----------decide which action, and do it------------------*/
 	
@@ -97,7 +106,7 @@ private:
 	
 	/*-------choose a distance to move. follow the direction, and change the pos-----------*/
 	int find_distance_to_move(Agent *a, Agent * enemy);	
-	std::vector<int> find_new_pos_after_move(std::vector<int> pos, int distance, Agent::Direction dir);
+	std::vector<int> find_new_pos_after_move(std::vector<int> pos, int distance, Agent::Direction dir, bool out_field_waiver);
 	Agent::Direction find_new_dir_after_move(std::vector<int> pos, std::vector<int> enemy_pos);
 	
 	void move_to_default_enemy_direciton(Agent *a);

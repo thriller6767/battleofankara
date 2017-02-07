@@ -159,8 +159,14 @@ void test_choose_and_execute_action()
 	int offensive = 0;
 	Agent* a = battle.ivm.AgentList[0];
 	Agent* b = battle.ivm.AgentList[140];
+	
+	/*if a is retreating*/
+	(*a).changeAgentState(RETREAT);
 
+	printf("A's current Pos is (%d, %d)\n", (*a).getPos()[0], (*a).getPos()[1]);
 	/*at the very first of battle, see what choice can be done for #0*/
 	battle.choose_and_Execute_Action(a, 0, 0);
+	printf("after make choice, Pos is (%d, %d)\n", (*a).getPos()[0], (*a).getPos()[1]);
+
 }
 
