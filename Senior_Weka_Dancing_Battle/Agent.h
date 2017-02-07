@@ -79,9 +79,9 @@ public:
 
 	void setCurrentEnemyIndex(int enemy_index);
 	void setFrontLineSize();
-	void setMorale(ConReader cr);
-	void setShootingRange(ConReader cr);
-	void setSightRange(ConReader cr);
+	void updateMorale(ConReader cr);
+	void updateShootingRange(ConReader cr);
+	void updateSightRange(ConReader cr);
 
 	void changeFatigue(int);
 	void changeSize(int);

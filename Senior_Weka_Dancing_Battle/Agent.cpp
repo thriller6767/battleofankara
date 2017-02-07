@@ -192,7 +192,7 @@ void Agent::setFrontLineSize()
 /*
 morale will only influenced by four factors: casualty_rate, fatigue, neighbor and height.
 */
-void Agent::setMorale(ConReader cr)
+void Agent::updateMorale(ConReader cr)
 {
 	double remaining_ratio =  size / initial_size;
 	morale = remaining_ratio * initial_morale;
@@ -227,12 +227,12 @@ void Agent::changeSize(int damage)
 }
 
 
-void Agent::setShootingRange(ConReader cr)
+void Agent::updateShootingRange(ConReader cr)
 {
 	if (missile_range != 0) missile_range = find_shootingRange(cr);
 }
 
-void Agent::setSightRange(ConReader cr)
+void Agent::updateSightRange(ConReader cr)
 {
 	sight_range = find_sightRange(cr);
 	//printf("sightrange is %f", sight_range);

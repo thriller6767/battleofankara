@@ -141,8 +141,8 @@ void Initial_val_mapper::setRanges(ConReader contour)
 {
 	for (Agent * ag : AgentList) {
 		//(*ag).print();
-		(*ag).setShootingRange(contour);
-		(*ag).setSightRange(contour);
+		(*ag).updateShootingRange(contour);
+		(*ag).updateSightRange(contour);
 		if ((*ag).is_standing_on_high_ground(contour)) (*ag).increaseAttackDamage(1.2);
 	}
 

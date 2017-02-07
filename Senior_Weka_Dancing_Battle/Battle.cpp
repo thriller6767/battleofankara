@@ -27,6 +27,58 @@ void Battle::put_rangetree_boundaries()
 	}	
 }
 
+void Battle::map_neighbor_and_enemies()
+{
+	//range search for neighbors
+	for (Agent *a : ivm.AgentList) {
+		rsTree.findAgent_within_range(a, NEIGHBOR_RANGE, neighbor_search);
+
+		//(*a).print_neighbors();
+	}
+	//range search for enemies
+	for (Agent *a : ivm.AgentList) {
+		int sightrange = (*a).getSightRange();
+		rsTree.findAgent_within_range(a, sightrange, enemies_in_sight_search);
+
+		//(*a).print_enemies();
+	}
+}
+
+void Battle::one_battle(int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds)
+{
+	initiate_battle(is_water_poisoned, marching_from_constantinople, increase_amount);
+	
+	int r = 1;
+
+	while (r <= 1 || (!no_alive_agent_still_fighting(Bayezid)) || (!no_alive_agent_still_fighting(Tamerlane))) {
+
+		put_rangetree_boundaries();
+		//map_neighbor_and_enemies();
+
+	/*	for (Agent * a : ivm.AgentList) {
+			updateMorale_shootingR_sightR(a);
+			choose_and_Execute_Action(a, offensive, betray);
+		}
+
+		for (Agent * a : ivm.AgentList) {
+			(*a).clear_enemies();
+			(*a).clear_enemies_to_shoot();
+			(*a).clear_neighbor();
+		}*/
+
+		delete_searchTree();
+		printf("r is %d\n", r);
+		++r;
+	}
+}
+
+void Battle::initiate_battle(int is_water_poisoned, int marching_from_constantinople, int increase_amount)
+{
+	populate(is_water_poisoned, marching_from_constantinople);
+	Ottoman_alive_in_battle = ivm.Ottoman_last_index + 1;
+	Tamerlane_alive_in_battle = ivm.AgentList.size() - 1 - ivm.Ottoman_last_index;
+}
+
 void Battle::populate(int poisoned_well, int marching_from_Constantinople)
 {
 	cr.loadAltitude();
@@ -36,9 +88,8 @@ void Battle::populate(int poisoned_well, int marching_from_Constantinople)
 /*
 When choose to move/attack/run for life, this agent has already updated direction and position
 Here properties need to update:
-	Size
+	
 	Morale
-	State
 	Shooting_range
 	Sight_range
 	clear neighbor and enemy list
@@ -47,9 +98,11 @@ Here properties need to update:
 	enemies
 
 */
-void Battle::updateAgent_otherProperties(Agent * a)
+void Battle::updateMorale_shootingR_sightR(Agent * a)
 {
-
+	(*a).updateMorale(cr);
+	(*a).updateShootingRange(cr);
+	(*a).updateSightRange(cr);
 }
 
 /*
@@ -169,6 +222,7 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 			(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
 			(*a).changeAgentState(RETREAT);
 			(*a).is_being_attacked = false;
+			(*a).setCurrentEnemyIndex(-1);
 
 			if ((*a).getSide() == Bayezid) ++Ottoman_broken_or_retreat;
 			if ((*a).getSide() == Tamerlane) ++Tamerlane_broken_or_retreat;
@@ -198,6 +252,7 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 			running_for_life(a); // running for life and disable all abiity
 			(*a).changeAgentState(BROKEN);
 			(*a).is_being_attacked = false;
+			(*a).setCurrentEnemyIndex(-1);
 
 			if ((*a).getSide() == Bayezid) ++Ottoman_broken_or_retreat;
 			if ((*a).getSide() == Tamerlane) ++Tamerlane_broken_or_retreat;
@@ -211,6 +266,7 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 
 				(*a).changeAgentState(READY);
 				(*a).is_being_attacked = false;
+				(*a).setCurrentEnemyIndex(-1);
 			}
 			else {
 				//keep attacking the current enemy
@@ -262,6 +318,7 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 		// if being attacked
 		else if ((*a).is_being_attacked) {
 
+			(*a).changeAgentState(ENGAGED);
 			attack_enemy(a, ivm.AgentList[(*a).getCurrentEnemyIndex()]);
 			(*a).changeFatigue(FATIGUE_INCREASE_IF_ATTACK);
 
@@ -675,6 +732,16 @@ bool Battle::more_than_70percent_in_flight(int side)
 		|| (side == Tamerlane && (Tamerlane_broken_or_retreat / (ivm.AgentList.size() - 1 - ivm.Ottoman_last_index)) >= 0.7));
 }
 
+bool Battle::no_alive_agent_still_fighting(int side)
+{
+	if (side == Bayezid) {
+		return (Ottoman_alive_in_battle + Ottoman_left_battle - Ottoman_broken_or_retreat) == 0;
+	}
+	else {
+		return (Tamerlane_alive_in_battle + Tamerlane_left_battle - Tamerlane_broken_or_retreat) == 0;
+	}
+}
+
 /*
 If offensive = 0, Ottoman stay idle, and Tamerlane move.
 If offensive = 1, Ottoman move, Tamerlane stay.
@@ -697,6 +764,7 @@ Battle::Actions Battle::idle_or_move(Agent * a, int offensive)
 
 /*
 Must make sure it does not move beyond battlefield
+the distance [100, neighbor range]
 */
 int Battle::find_distance_to_move(Agent * a, Agent * chosenEnemy)
 {
@@ -704,11 +772,12 @@ int Battle::find_distance_to_move(Agent * a, Agent * chosenEnemy)
 	if (chosenEnemy == nullptr) max_to_move = -1;
 	else max_to_move = (int)distance_between_two_points((*a).getPos(), (*chosenEnemy).getPos());
 
-	distance = rand() % (NEIGHBOR_RANGE + 1) + 50; //So it will be easier to check whether overlap 
+	distance = rand() % (NEIGHBOR_RANGE + 1) + 100; //So it will be easier to check whether overlap 
 	
 	// If the distance between this agent and its enemy is smaller than the distance decide to move
-	if (max_to_move != -1 && distance > max_to_move) { //I assume that max_to_move will not be smaller than 50
+	if (max_to_move != -1 && distance > max_to_move) { //should not happen
 		distance = rand() % (max_to_move + 1) + 50;
+	
 	}
 	return distance;
 

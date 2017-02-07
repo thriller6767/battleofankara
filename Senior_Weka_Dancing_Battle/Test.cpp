@@ -21,17 +21,29 @@ double dis_btw(int, int, int, int);
 
 void test_choose_and_execute_action();
 
+void test_put_range_tree_in_battle();
+void test_range_search_in_battle();
+
+void test_one_battle();
+
 int main() {
 	
-	battle.populate(0, 0);
+	//battle.initiate_battle(0, 0, 1);
+
+	//test_put_range_tree_in_battle();
+	//test_range_search_in_battle();
 
 	//test_kdtree();
 	//kdtree_n2_compare();
 
-	test_choose_and_execute_action();
+	//test_choose_and_execute_action();
 
-	battle.delete_searchTree();
-	battle.deleteAllAgent();
+	//battle.delete_searchTree();
+
+	//battle.deleteAllAgent();
+
+	test_one_battle();
+
 	return 0;
 	
 }
@@ -163,10 +175,54 @@ void test_choose_and_execute_action()
 	/*if a is retreating*/
 	(*a).changeAgentState(RETREAT);
 
+	printf("--------------test retreat------------------------------\n");
 	printf("A's current Pos is (%d, %d)\n", (*a).getPos()[0], (*a).getPos()[1]);
 	/*at the very first of battle, see what choice can be done for #0*/
 	battle.choose_and_Execute_Action(a, 0, 0);
 	printf("after make choice, Pos is (%d, %d)\n", (*a).getPos()[0], (*a).getPos()[1]);
 
+	/*then if a is attacked by b when retreating*/
+	printf("-------------a is attacked by bwhen retreating---------------\n");
+	(*b).changeAgentState(ENGAGED);
+	(*b).setCurrentEnemyIndex((*a).getIndex());
+	(*b).is_being_attacked = true;
+	(*a).is_being_attacked = true;
+	(*a).setCurrentEnemyIndex((*b).getIndex());
+
+	printf("what will b do?\n");
+	printf("A current Size is %d, pos is (%d, %d), fatigue is %d\n", (*a).getSize(), (*a).getPos()[0], (*a).getPos()[1], (*a).getFatigue());
+	printf("B current Size is %d, pos is (%d, %d), fatigue is %d\n", (*b).getSize(), (*b).getPos()[0], (*b).getPos()[1], (*b).getFatigue());
+	
+	battle.choose_and_Execute_Action(b, 0, 0);
+	printf("\nafter b making choice:\nA Size is %d, pos is (%d, %d), fatigue is %d\n", (*a).getSize(), (*a).getPos()[0], (*a).getPos()[1], (*a).getFatigue());
+	printf("B Size is %d, pos is (%d, %d), fatigue is %d\n", (*b).getSize(), (*b).getPos()[0], (*b).getPos()[1], (*b).getFatigue());
+	
+	battle.choose_and_Execute_Action(a, 0, 0);
+	printf("\nafter a making choice:\na current Size is %d, pos is (%d, %d), fatigue is %d\n", (*a).getSize(), (*a).getPos()[0], (*a).getPos()[1], (*a).getFatigue());
+	printf("B current Size is %d, pos is (%d, %d), fatigue is %d\n", (*b).getSize(), (*b).getPos()[0], (*b).getPos()[1], (*b).getFatigue());
+
+	if ((*a).getAgentState() == ENGAGED) printf("A is now ENGAGED with %d\n", (*a).getCurrentEnemyIndex());
+}
+
+void test_put_range_tree_in_battle()
+{
+	battle.put_rangetree_boundaries();
+}
+
+void test_range_search_in_battle()
+{
+	battle.map_neighbor_and_enemies();
+}
+
+void test_one_battle()
+{
+	int march_from_constantinople = 0;
+	int is_ottoman_offensive = 0;
+	int is_water_poisoned = 0;
+	int any_betrayal = 0;
+	int size_increase_ratio = 1;
+	int rounds = 300;
+
+	battle.one_battle(is_ottoman_offensive, any_betrayal, march_from_constantinople, is_water_poisoned, size_increase_ratio, rounds);
 }
 

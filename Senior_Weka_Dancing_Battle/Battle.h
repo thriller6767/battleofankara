@@ -38,16 +38,15 @@ public:
 
 	Initial_val_mapper ivm; // for test
 	
+	void one_battle(int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds);
 
-	void populate(int poisoned_well, int marching_from_Constantinople);
-	void updateAgent_otherProperties(Agent *a);
-	void updateBattleField();
+	void initiate_battle(int poisoned_well, int marching_from_Constantinople, int increase_amount);
 	void deleteAllAgent();
 	
 	/*-----range tree----------------*/
 	void delete_searchTree();
 	void put_rangetree_boundaries();
-
+	void map_neighbor_and_enemies();
 
 	/*--------print-----------------*/
 	void initial_chart_print();
@@ -68,18 +67,17 @@ private:
 	int Ottoman_alive_in_battle, Tamerlane_alive_in_battle;
 
 	/*Agent has already left the battle field*/
-	int Ottoman_left_battle, Tamerlane_left_battle;
+	int Ottoman_left_battle, Tamerlane_left_battle = 0;
 
 	/*Agent are broken or treat 
 	(broken_or_retreat + still_fighting_in_battle = n - dead
 	*/
-	int Ottoman_broken_or_retreat, Tamerlane_broken_or_retreat;
+	int Ottoman_broken_or_retreat, Tamerlane_broken_or_retreat = 0;
 
 	/*just for statistcs*/
-	int Ottoman_fight_to_death, Tamerlane_fight_to_death;
+	int Ottoman_fight_to_death, Tamerlane_fight_to_death = 0;
 
 	/*-----------decide which action, and do it------------------*/
-	
 
 	void move_to_chosen_enemy(Agent *a, Agent * chosenEnemy);
 	void running_for_life(Agent * a);
@@ -113,6 +111,11 @@ private:
 
 	/*There more more than 30% of this side agent in broken or retreat*/
 	bool more_than_70percent_in_flight(int side);
+	bool no_alive_agent_still_fighting(int side);
+
+	
+	void populate(int poisoned_well, int marching_from_Constantinople);
+	void updateMorale_shootingR_sightR(Agent *a);
 };
 
 
