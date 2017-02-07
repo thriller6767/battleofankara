@@ -13,19 +13,24 @@ Battle battle;
 RangeSearch kdtree;
 
 void test_kdtree();
+void map_kdtree();
+void map_neighbor_and_enemy();
 void kdtree_n2_compare();
 void test_random();
 double dis_btw(int, int, int, int);
+
+void test_choose_and_execute_action();
 
 int main() {
 	
 	battle.populate(0, 0);
 
-	test_kdtree();
-	kdtree_n2_compare();
+	//test_kdtree();
+	//kdtree_n2_compare();
 
+	test_choose_and_execute_action();
 
-
+	battle.delete_searchTree();
 	battle.deleteAllAgent();
 	return 0;
 	
@@ -34,6 +39,8 @@ int main() {
 void test_kdtree() {
 
 	//put nodes
+	map_kdtree();
+
 	for (Agent *a : battle.ivm.AgentList) {
 		kdtree.put(a, (*a).getPos().at(0), (*a).getPos().at(1));
 	}
@@ -55,18 +62,43 @@ void test_kdtree() {
 		int sightrange = (*a).getSightRange();
 		kdtree.findAgent_within_range(a, sightrange, enemies_in_sight_search);
 
-		(*a).print_enemies();
+		//(*a).print_enemies();
 	}
 
 	//single search
 	//kdtree.findAgent_within_range(battle.ivm.AgentList[144], (*battle.ivm.AgentList[144]).getSightRange(), enemies_in_sight_search);
 
-	printf("neighbors:");
-	for (Agent * n : (*battle.ivm.AgentList[144]).getNeighbor()) printf("%d, ", (*n).getIndex());
-	printf("\nenemies: ");
-	for (Agent * n : (*battle.ivm.AgentList[144]).getEnemies()) printf("%d, ", (*n).getIndex());
-	kdtree.~RangeSearch();
+	//printf("neighbors:");
+	//for (Agent * n : (*battle.ivm.AgentList[144]).getNeighbor()) printf("%d, ", (*n).getIndex());
+	//printf("\nenemies: ");
+	//for (Agent * n : (*battle.ivm.AgentList[144]).getEnemies()) printf("%d, ", (*n).getIndex());
+	//kdtree.~RangeSearch();
 
+}
+
+void map_kdtree()
+{
+	for (Agent *a : battle.ivm.AgentList) {
+		kdtree.put(a, (*a).getPos().at(0), (*a).getPos().at(1));
+	}
+}
+
+void map_neighbor_and_enemy()
+{
+	//range search for neighbors
+	for (Agent *a : battle.ivm.AgentList) {
+		kdtree.findAgent_within_range(a, NEIGHBOR_RANGE, neighbor_search);
+
+		//(*a).print_neighbors();
+	}
+
+	//range search for enemies
+	for (Agent *a : battle.ivm.AgentList) {
+		int sightrange = (*a).getSightRange();
+		kdtree.findAgent_within_range(a, sightrange, enemies_in_sight_search);
+
+		//(*a).print_enemies();
+	}
 }
 
 void kdtree_n2_compare()
@@ -120,4 +152,15 @@ double dis_btw(int x, int x2, int y , int y2)
 	return sqrt(pow(x - x2, 2) + pow(y - y2, 2));
 }
 
+void test_choose_and_execute_action() 
+{
+	map_kdtree();
+	map_neighbor_and_enemy();
+	int offensive = 0;
+	Agent* a = battle.ivm.AgentList[0];
+	Agent* b = battle.ivm.AgentList[140];
+
+	/*at the very first of battle, see what choice can be done for #0*/
+	battle.choose_and_Execute_Action(a, 0, 0);
+}
 

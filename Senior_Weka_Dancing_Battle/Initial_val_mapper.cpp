@@ -21,10 +21,10 @@ void Initial_val_mapper::fancyPrint()
 {
 	Agent * a;
 		printf("Total number of agent is %d\n", AgentList.size());
-		printf("\n---------------\nOttoman side has %d agents, they are: \n", Ottoman_last_index);
+		printf("\n---------------\nOttoman side has %d agents, they are: \n", Ottoman_last_index + 1);
 		printf("________________________________________________________________________________________________\n");
 		printf("NAME		CATEGORY	SIZE	MORALE	FATIGUE	   DIRECTION	AD	MD	RANGE	    ACCURACY	DEFEND	INDEX	POS		Sight_Range	Width	Depth\n");
-		for (int i = 0; i < Ottoman_last_index; ++i) {
+		for (int i = 0; i <= Ottoman_last_index; ++i) {
 			a = AgentList.at(i);
 			(*a).print();
 		}
@@ -122,6 +122,7 @@ int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_fr
 											.initDepth(depth)
 											.initCurrentEenemy(-1)
 											.initBetrayBoolean(false)
+										    .initInitialMorale (morale - poisoned_well)
 											.build();
 
 				AgentList.push_back(ag);
@@ -142,7 +143,7 @@ void Initial_val_mapper::setRanges(ConReader contour)
 		//(*ag).print();
 		(*ag).setShootingRange(contour);
 		(*ag).setSightRange(contour);
-		if ((*ag).is_standing_on_high_ground(contour)) (*ag).increaseAttackDamage();
+		if ((*ag).is_standing_on_high_ground(contour)) (*ag).increaseAttackDamage(1.2);
 	}
 
 }

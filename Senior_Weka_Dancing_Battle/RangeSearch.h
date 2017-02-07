@@ -55,4 +55,6 @@ private:
 	/*----------- Range Search-----------------*/
 	
 	void rangeSearch(node *n, Agent * agent, double range, int which_search);
+	bool is_agent_facing_enemy(Agent *agent, Agent *enemy);
+	
 };

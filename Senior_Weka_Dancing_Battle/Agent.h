@@ -48,6 +48,9 @@ public:
 		OTTO_RESERVES, TAMER_HORSE_ARCHER, TAMER_GAURDS, TAMERLANE,TAMER_RESERVES, ELEPHANT};
 
 	class Builder;
+	bool in_battlefield = true;
+	bool is_alive = true;
+	bool is_being_attacked = false;
 
 	Agent::Name getName();
 	int getSide();
@@ -77,18 +80,23 @@ public:
 	void setCurrentEnemyIndex(int enemy_index);
 	void setFrontLineSize();
 	void setMorale(ConReader cr);
-	void setFatigue(int turn_duration);
 	void setShootingRange(ConReader cr);
 	void setSightRange(ConReader cr);
-	void changeStatus(int status);
+
+	void changeFatigue(int);
+	void changeSize(int);
+	void changeAgentState(int status);
+	void changeSide();
 	void changePos(std::vector<int>);
 	void changeDirection(Agent::Direction);
 	void disableAttackAbility();
 	void strengthenAbilities();
-	void increaseAttackDamage();
+	void strengthenMorale();
+	void weakenMorale();
+	void increaseAttackDamage(double rate);
 	
-	int attack_damage_delivered(int height_bonus, int special_bonus, int enemy_defend);
-	int missile_damage_delivered(int special_bonus, int enemy_defend);	
+	int attack_damage_delivered(int special_bonus, int enemy_defend);
+	int missile_damage_delivered(int enemy_defend);	
 
 	void add_neighbor(Agent * neighbor);
 	void add_enemies(Agent * enemy);
@@ -102,15 +110,21 @@ public:
 	bool does_neighbor_betray();
 	bool is_surrounded();
 	bool is_standing_on_high_ground(ConReader cr);
+	bool is_betrayable_unit();
+	bool is_able_to_fight_to_death();
+	bool is_size_below_20_percent();
+	bool is_morale_below_zero();
+	bool is_morale_below_10();
+	bool is_size_below_50_percent();
+	bool is_able_to_shoot();
 
 	double find_sightRange( ConReader cr);
 	double find_shootingRange(ConReader cr);
 
+	/*------------print--------------------------------*/
 	void print();
 	void print_neighbors();
 	void print_enemies();
-
-	bool is_being_attacked();
 
 private:
 	Name name;
@@ -120,6 +134,7 @@ private:
 	std::vector<int> pos;
 	int size;
 	int initial_size;
+	int initial_morale;
 	int morale;
 	int fatigue;
 	int front_line_size;
@@ -180,6 +195,7 @@ private:
 	double missile_range_ratio;
 	int current_enemy_index_this_agent_is_attacking;
 	bool betray; 
+	int initial_morale;
 
 public:
 	Builder& initName(Agent::Name name);
@@ -204,6 +220,7 @@ public:
 	Builder& initDepth(double depth);
 	Builder& initCurrentEenemy(int index);
 	Builder& initBetrayBoolean(bool b);
+	Builder& initInitialMorale(int morale);
 
 	Agent* build();
 

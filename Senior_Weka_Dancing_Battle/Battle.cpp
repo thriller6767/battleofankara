@@ -53,74 +53,203 @@ void Battle::updateAgent_otherProperties(Agent * a)
 }
 
 /*Based on current situation, choose among IDLE, MOVE, ATTACK, RETREAT
-  If defensive = 1; Ottoman will take the defensive position until ALL agent can see some enemies
+  If offensive = 0, Ottoman stay idle, and Tamerlane move.
+  If offensive = 1, Ottoman move, Tamerlane stay.
+  If offensive = 2, both move
 */
-void Battle::choose_and_Execute_Action(Agent * a, int defensive){
+void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 	int current_state = (*a).getAgentState();
 
 	switch (current_state) {
 	case READY: 
-		
-		//If no enemy in sight range, MOVE if offensive, IDLE if defensive.
-		if ((*a).getEnemies().empty()) {
 
-			if (idle_or_move(a, defensive) == Battle::Actions::IDLE) {} //no thing to change.
+		/* if input attribute indicates that there is betray in the battle, it will have 50% percent
+		chance to betray. 
+		It also requires that this agent belongs to betrayable_unit (Tartar or Anatolina) and satisfies
+		either (morale < 10% or size < 50%)
+		*/
+		if (betray == 1) { 
+			int betray_rand = rand() % 2;// throw an int [0 , 1]
+
+			if (betray_rand == 1 && (*a).is_betrayable_unit()
+				&& ((*a).is_morale_below_10() || (*a).is_size_below_50_percent())) {
+				
+				(*a).changeSide();
+				++Tamerlane_in_battle;
+				--Ottoman_in_battle;
+			}
+		}
+		// if less than 30% of agent in this side remain fighting, WITHDRAW
+		if (more_than_70percent_in_flight((*a).getSide())
+			&& (!(*a).is_morale_below_zero())
+			&& (!(*a).is_size_below_20_percent())) {
+
+			withdraw_to_built_in_dir(a);
+			(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
+			(*a).changeAgentState(RETREAT);
+
+			if ((*a).getSide() == Bayezid) ++Ottoman_broken_or_retreat;
+			if ((*a).getSide() == Tamerlane) ++Tamerlane_broken_or_retreat;
+
+		}
+
+		//If no enemy in sight range, MOVE if offensive, IDLE if offensive.
+		else if ((*a).getEnemies().empty()) {
+
+			if (idle_or_move(a, offensive) == Battle::Actions::IDLE) {} //no thing to change.
 			else {
 				//move to built-in direction.
-				move_to_built_in_dir(a);}
+				move_to_built_in_dir(a);
+			}
 		}
+		//if there are enemies in sight range, and is not retreating
 		else {
 			Agent * e_in_neighbor = find_enemy_in_neighbor(a);
 
-			//if there is an enemy in neighbor range, attack
+			//if there is an enemy in neighbor range, ATTACK
 			if (e_in_neighbor != nullptr) {
 
-				//move to it
+				//move and attack
+				charge_newly_chosen_enemy(a, e_in_neighbor);
 
-				//attack
-
-				//change state to ENGAGED
+				//change state to ENGAGED, increase fatigue
 				(*a).changeAgentState(ENGAGED);
-
+				(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
+				(*a).changeFatigue(FATIGUE_INCREASE_IF_ATTACK);
 			}
 			else {
+				//shoot and move
 				double shooting_range = (*a).getMissileRange();
 				Agent *enemy = chooseTheWeakestEnemy(a);
 				vector<int> enemy_pos = (*enemy).getPos();
 
-				// if the chosen enemy is in shooting range
-				if (distance_between_two_points(enemy_pos, (*a).getPos()) <= shooting_range) {
-					
-					//shoot this enemy
+				// if not able to shoot
+				if (!(*a).is_able_to_shoot()) {}
 
-					
+				// if the chosen enemy is in shooting range
+				else if (distance_between_two_points(enemy_pos, (*a).getPos()) <= shooting_range) {
+
+					//shoot this enemy
+					shoot_the_enemy(a, enemy);
+
 				}
 				else {
 					// else we need to range search enemies in shooting range
 					rsTree.findAgent_within_range(a, shooting_range, enemies_in_shooting_search);
-					
-					int random = rand() % ((*a).getEnemies_in_missile().size()); // randomly pick one
-					Agent *enemy_to_shoot = (*a).getEnemies_in_missile()[random];
 
-					//shoot the enemy
+					// If we can find a enemy to shoot
+					if (!(*a).getEnemies_in_missile().empty()) {
+						printf("# of enmies in missile range is %d\n", (*a).getEnemies_in_missile().size());
+						//int random = rand() % ((*a).getEnemies_in_missile().size()); // randomly pick one
+						Agent *enemy_to_shoot = (*a).getEnemies_in_missile()[0];
 
+						//shoot the enemy
+						shoot_the_enemy(a, enemy_to_shoot);
+					}
 				}
 
 				//and move to it.
 				move_to_chosen_enemy(a, enemy);
+				(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
 			}
-
-
-
 		}
 		break;
 	case ENGAGED:
+		//If (less than 30% of this side remains fighting AND HP >= 20% AND morale > 0) => WITHDRAW
+		if (more_than_70percent_in_flight((*a).getSide())
+			&& (!(*a).is_morale_below_zero())
+			&& (!(*a).is_size_below_20_percent())) {
+
+			withdraw_to_built_in_dir(a);
+			(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
+			(*a).changeAgentState(RETREAT);
+			(*a).is_being_attacked = false;
+
+			if ((*a).getSide() == Bayezid) ++Ottoman_broken_or_retreat;
+			if ((*a).getSide() == Tamerlane) ++Tamerlane_broken_or_retreat;
+
+			//Disadvantage on MORALE when go from ENGAGE to RETREAT
+			(*a).weakenMorale();
+		}
+
+		//If(surrounded  AND certain agents, AND HP <20 % AND morale > 0), FIGHT_TO_DEATH.
+		else if ((*a).is_surrounded() && (*a).is_able_to_fight_to_death()
+			&& (*a).is_size_below_20_percent() && (!(*a).is_morale_below_zero())) {
+
+			(*a).changeAgentState(FIGHT_TO_DEATH);
+			(*a).strengthenAbilities();
+			(*a).strengthenMorale();
+
+			// how to deliver damage then? is it being attacked?*****************
+		}
+		// RUN for life
+		else if ((*a).is_morale_below_10() && (*a).is_size_below_20_percent()) {
+
+			running_for_life(a); // running for life and disable all abiity
+			(*a).changeAgentState(BROKEN);
+			(*a).is_being_attacked = false;
+
+			if ((*a).getSide() == Bayezid) ++Ottoman_broken_or_retreat;
+			if ((*a).getSide() == Tamerlane) ++Tamerlane_broken_or_retreat;
+		}
+		else {
+			Agent * current_enemy = ivm.AgentList[(*a).getCurrentEnemyIndex()];
+			
+			//if enemy routs or die, DISENGAGE
+			if (!(*current_enemy).is_alive || (*current_enemy).getAgentState() == BROKEN
+				|| (*current_enemy).getAgentState() == RETREAT) {
+
+				(*a).changeAgentState(READY);
+				(*a).is_being_attacked = false;
+			}
+			else {
+				//keep attacking the current enemy
+				attack_enemy(a, ivm.AgentList[(*a).getCurrentEnemyIndex()]);
+				(*a).changeFatigue(FATIGUE_INCREASE_IF_ATTACK);
+			}
+		}
 		break;
-	case BROKEN: 
+	case BROKEN:
+		running_for_life(a);
 		break;
 	case FIGHT_TO_DEATH: 
+		//************attack who? or remain offensive?
+
 		break;
 	case RETREAT: 
+		// fight to death
+		if ((*a).is_surrounded() && (*a).is_able_to_fight_to_death()
+			&& (*a).is_size_below_20_percent() && (!(*a).is_morale_below_zero())) {
+
+			(*a).changeAgentState(FIGHT_TO_DEATH);
+			(*a).strengthenAbilities();
+			(*a).strengthenMorale();
+
+			// how to deliver damage then? is it being attacked?*****************
+
+		}	
+		// RUN for life
+		else if ((*a).is_morale_below_10() && (*a).is_size_below_20_percent()) {
+
+			running_for_life(a); // running for life and disable all abiity
+			(*a).changeAgentState(BROKEN);
+			(*a).is_being_attacked = false;
+
+			if ((*a).getSide() == Bayezid) ++Ottoman_broken_or_retreat;
+			if ((*a).getSide() == Tamerlane) ++Tamerlane_broken_or_retreat;
+		}
+		// if being attacked
+		else if ((*a).is_being_attacked) {
+
+			attack_enemy(a, ivm.AgentList[(*a).getCurrentEnemyIndex()]);
+			(*a).changeFatigue(FATIGUE_INCREASE_IF_ATTACK);
+
+		}
+		// keep withdraw
+		else {
+			withdraw_to_built_in_dir(a);
+			(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
+		}
 		break;
 	}
 }
@@ -136,7 +265,7 @@ void Battle::move_to_chosen_enemy(Agent * a, Agent * chosenEnemy)
 {
 	//If this agent cannot see any enemy within sight range
 	if (chosenEnemy == nullptr) {
-		
+		//should not accur
 	}
 	else {
 		Agent::Direction dir_after_move = find_new_dir_after_move((*a).getPos(), (*chosenEnemy).getPos());
@@ -150,13 +279,32 @@ void Battle::move_to_chosen_enemy(Agent * a, Agent * chosenEnemy)
 }
 
 /*
-If this agent decides to attack (pre-condition: enemy is in neighbor range)
- 
+ Move to it, and then deliver damage
+ Right now, move to it means overlapping *****************
 */
-void Battle::attack_chosen_enemy(Agent * a, Agent * enemy)
+void Battle::charge_newly_chosen_enemy(Agent * a, Agent * chosenEnemy)
 {
-	// If this agent is already attacking someOne
+	Agent::Direction dir_after_move = find_new_dir_after_move((*a).getPos(), (*chosenEnemy).getPos());
+
+	(*a).changeDirection(dir_after_move); //move there
+	(*a).changePos((*chosenEnemy).getPos());
+
+	attack_enemy(a, chosenEnemy); //deliver damage
+}
+
+/*
+enemy_size -= damage
+*/
+void Battle::attack_enemy(Agent * a, Agent * enemy)
+{
+	//attack also means being attacked
 	(*a).setCurrentEnemyIndex((*enemy).getIndex());
+	(*enemy).setCurrentEnemyIndex((*a).getIndex());
+	(*a).is_being_attacked = true;
+	(*enemy).is_being_attacked = true;
+
+	int special_bonus = SPECIAL_BONUS_TO_ATTACK * has_special_bonus_against(a, enemy);
+	(*enemy).changeSize((*enemy).attack_damage_delivered(special_bonus, (*enemy).getArmorDefence()));
 }
 
 void Battle::move_to_built_in_dir(Agent * a)
@@ -175,7 +323,7 @@ void Battle::move_to_built_in_dir(Agent * a)
 If it is a Otoman agent, retreat to north.
 If it is a bayezid agent, retreat to south
 */
-void Battle::retreat_to_built_in_dir(Agent * a)
+void Battle::withdraw_to_built_in_dir(Agent * a)
 {
 	Agent::Direction dir;
 	int distance = find_distance_to_move(a, nullptr);
@@ -187,13 +335,17 @@ void Battle::retreat_to_built_in_dir(Agent * a)
 	(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, dir));
 }
 
+void Battle::shoot_the_enemy(Agent * a, Agent * enemy)
+{
+	(*enemy).changeSize((*a).missile_damage_delivered((*enemy).getArmorDefence()));
+}
+
 /*
-If this agent can not see an enemy, return nullptr
-Else return the enemy chosen by a random advantage type.
+return the enemy chosen by a random advantage type.
 */
 Agent * Battle::chooseTheWeakestEnemy(Agent * a)
 {
-	if ((*a).getEnemies().size() == 0) return nullptr;
+	if ((*a).getEnemies().size() == 0) return nullptr; //should not happen. it is handled by FSM already
 	else {
 		int random = rand() % 3;
 		Agent *chosenEnemy;
@@ -209,7 +361,7 @@ Agent * Battle::chooseTheWeakestEnemy(Agent * a)
 
 			//if this agent does not have special bonus on any of the enemies
 			if (chosenEnemy == nullptr) {
-				//roll the dice again
+				//roll the dice again [0, 1]
 				random = rand() % 2;
 
 				if (random == 0) chosenEnemy = find_the_closest_enemy(a);
@@ -225,6 +377,8 @@ Return the closest enemy
 */
 Agent * Battle::find_the_closest_enemy(Agent * a)
 {
+	if ((*a).getEnemies().empty()) return nullptr; //should not happen, handled by FSM
+
 	double mindis = distance_between_two_points((*a).getPos(), (*(*a).getEnemies()[0]).getPos());
 	double dis;
 	Agent * closestEnemy = (*a).getEnemies()[0];
@@ -357,12 +511,18 @@ IF This agent's state is BROKEN,
 */
 void Battle::running_for_life(Agent * a)
 {
-	Agent * closestEnemy = find_the_closest_enemy(a);
-	Agent::Direction direction_toward_enemy = find_new_dir_after_move((*a).getPos(), (*closestEnemy).getPos());
-	
-	int distance = 100; //Dont know how to handle
 	Agent::Direction direction_from;
-	switch (direction_toward_enemy) {
+	Agent * closestEnemy = find_the_closest_enemy(a);
+	int distance = NEIGHBOR_RANGE;
+
+	if (closestEnemy == nullptr) {
+		if ((*a).getSide() == Bayezid) direction_from = Agent::Direction::NORTH;
+		else direction_from = Agent::Direction::SOUTH;
+	}
+	else {
+		Agent::Direction direction_toward_enemy = find_new_dir_after_move((*a).getPos(), (*closestEnemy).getPos());
+	
+		switch (direction_toward_enemy) {
 		case Agent::Direction::NORTH: direction_from = Agent::Direction::SOUTH; break;
 		case Agent::Direction::SOUTH: direction_from = Agent::Direction::NORTH; break;
 		case Agent::Direction::WEST: direction_from = Agent::Direction::EAST; break;
@@ -371,6 +531,7 @@ void Battle::running_for_life(Agent * a)
 		case Agent::Direction::SW: direction_from = Agent::Direction::NE; break;
 		case Agent::Direction::NW: direction_from = Agent::Direction::SE; break;
 		default: direction_from = Agent::Direction::NW; break;
+		}
 	}
 
 	(*a).changeDirection(direction_from);
@@ -432,6 +593,7 @@ std::vector<int> Battle::find_new_pos_after_move(std::vector<int> pos, int dista
 		else { newPos[0] += x_dis; newPos[1] -= y_dis; }
 	}
 
+	//Should check if new pos goes beyong battlefield
 	return newPos;	
 }
 
@@ -450,16 +612,30 @@ void Battle::move_to_default_enemy_direciton(Agent * a)
 	}
 }
 
-
-Battle::Actions Battle::idle_or_move(Agent * a, int defensive)
+bool Battle::more_than_70percent_in_flight(int side)
 {
-	if (defensive == 1) {
+	return 
+		((side == Bayezid && (Ottoman_broken_or_retreat / (ivm.Ottoman_last_index + 1)) >= 0.7)
+		|| (side == Tamerlane && (Tamerlane_broken_or_retreat / (ivm.AgentList.size() - 1 - ivm.Ottoman_last_index)) >= 0.7));
+}
+
+/*
+If offensive = 0, Ottoman stay idle, and Tamerlane move.
+If offensive = 1, Ottoman move, Tamerlane stay.
+If offensive = 2, both move
+*/
+Battle::Actions Battle::idle_or_move(Agent * a, int offensive)
+{
+	if (offensive == 0) {
 		if ((*a).getSide() == Bayezid) { return Battle::Actions::IDLE; }
 		else { return Battle::Actions::MOVE; }
 	}
-	else {
+	else if (offensive == 1) {
 		if ((*a).getSide() == Bayezid) { return Battle::Actions::MOVE; }
 		else { return Battle::Actions::IDLE; }
+	}
+	else {
+		return Battle::Actions::MOVE;
 	}
 }
 

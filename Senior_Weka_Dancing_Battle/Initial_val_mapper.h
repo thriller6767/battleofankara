@@ -39,7 +39,6 @@ public:
 	void deleteAllAgent();
 	void printOneUnit();
 
-	void Dijskra(std::vector<std::vector<int>>);
 
 	int Ottoman_last_index = 0;
 	std::vector<Agent*> AgentList;

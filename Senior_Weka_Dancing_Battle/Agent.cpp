@@ -118,7 +118,7 @@ double Agent::getMissileRange()
 
 double Agent::getArmorDefence()
 {
-	return armor_defence;
+	return (size/initial_size) * armor_defence;
 }
 
 int Agent::getFrontLineSize()
@@ -194,21 +194,21 @@ morale will only influenced by four factors: casualty_rate, fatigue, neighbor an
 */
 void Agent::setMorale(ConReader cr)
 {
-	double remaining_ratio = 1 - (initial_size - size) / initial_size;
-	morale *= remaining_ratio;
+	double remaining_ratio =  size / initial_size;
+	morale = remaining_ratio * initial_morale;
 
 	//influenced by neighbor
-	if (is_neighbor_broken()) morale *= 0.8;
-	if (is_neighbor_broken()) morale *= 0.8;
-	if (is_surrounded()) morale *= 0.9;
+	if (is_neighbor_broken()) morale -= 10;
+	if (does_neighbor_betray()) morale -= 10;
+	if (is_surrounded()) morale -= 5;
 
 	//influenced by height
-	if (is_standing_on_high_ground(cr)) morale *= 1.1;
+	if (is_standing_on_high_ground(cr)) morale += 5;
 
 	//influenced by fatigue
-	if (fatigue >= 25) morale *= 0.9;
-	else if (fatigue >= 50) morale *= 0.8;
-	else if (fatigue >= 100) morale *= 0.6;
+	if (fatigue >= 25) morale -= 5;
+	else if (fatigue >= 50) morale -= 10;
+	else if (fatigue >= 100) morale -= 15;
 
 }
 
@@ -216,9 +216,14 @@ void Agent::setMorale(ConReader cr)
 Fatigure will increase iff the state is ENGAGED or it is moving.****
 In order not to further influence morale, fatigue will not increase if state is RETREAT/BROKEN/FIGHT_TO_DEATH.
 */
-void Agent::setFatigue(int val_to_increase)
+void Agent::changeFatigue(int val_to_increase)
 {
 	fatigue += val_to_increase;
+}
+
+void Agent::changeSize(int damage)
+{
+	size -= damage;
 }
 
 
@@ -233,9 +238,15 @@ void Agent::setSightRange(ConReader cr)
 	//printf("sightrange is %f", sight_range);
 }
 
-void Agent::changeStatus(int status)
+void Agent::changeAgentState(int status)
 {
 	agent_state = status;
+}
+
+void Agent::changeSide()
+{
+	side = -side;
+	betray = true;
 }
 
 void Agent::changePos(std::vector<int> position)
@@ -271,19 +282,33 @@ void Agent::strengthenAbilities()
 	armor_defence *= 1.5;
 }
 
-void Agent::increaseAttackDamage()
+void Agent::strengthenMorale()
 {
-	attack_damage *= 1.2;
+	morale += 20;
 }
 
-int Agent::attack_damage_delivered(int height_bonus, int special_bonus, int enemy_defend)
+void Agent::weakenMorale()
 {
-	return attack_damage + height_bonus + special_bonus - enemy_defend;
+	morale -= 5;
 }
 
-int Agent::missile_damage_delivered(int special_bonus, int enemy_defend)
+void Agent::increaseAttackDamage(double rate)
 {
-	return (int)(missile_damage * (special_bonus + accuracy) - fatigue - enemy_defend);
+	attack_damage *= rate;
+}
+
+int Agent::attack_damage_delivered(int special_bonus, int enemy_defend)
+{
+	int attack = (attack_damage + special_bonus - enemy_defend - fatigue);
+	if (attack <= 0) return 1;
+	else return (size/initial_size) * attack;
+}
+
+int Agent::missile_damage_delivered(int enemy_defend)
+{
+	double missile = missile_damage * (accuracy) - fatigue - enemy_defend;
+	if (missile <= 0) return 1;
+	else return (size / initial_size) * missile;
 }
 
 void Agent::add_neighbor(Agent * neighbor)
@@ -356,6 +381,42 @@ bool Agent::is_standing_on_high_ground(ConReader cr)
 		
 }
 
+bool Agent::is_betrayable_unit()
+{
+	return (name == Agent::Name::TARTAR || name == Agent::Name::ANATOLIAN);
+}
+
+bool Agent::is_able_to_fight_to_death()
+{
+	return 
+		(name == Agent::Name::JANISSARY || name == Agent::Name::KAPUKULU || name == Agent::Name::SERB_CAL
+		|| name == Agent::Name::SERB_INF || name == Agent::Name::TAMERLANE || name == Agent::Name::TAMER_GAURDS);
+}
+
+bool Agent::is_size_below_20_percent()
+{
+	return (size / initial_size < 0.2);
+}
+
+bool Agent::is_morale_below_zero()
+{
+	return (morale <= 0);
+}
+
+bool Agent::is_morale_below_10()
+{
+	return (morale < 10);
+}
+
+bool Agent::is_size_below_50_percent()
+{
+	return (size / initial_size < 0.5);
+}
+
+bool Agent::is_able_to_shoot()
+{
+	return (name != Agent::Name::SERB_CAL || name != Agent::Name::SERB_INF);
+}
 
 
 double Agent::find_sightRange(ConReader cr)
@@ -598,6 +659,12 @@ Agent::Builder & Agent::Builder::initCurrentEenemy(int index)
 Agent:: Builder & Agent::Builder::initBetrayBoolean(bool b)
 {
 	this->betray = b;
+	return *this;
+}
+
+Agent::Builder & Agent::Builder::initInitialMorale(int morale)
+{
+	this->initial_morale = morale;
 	return *this;
 }
 

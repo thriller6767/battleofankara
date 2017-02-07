@@ -19,6 +19,10 @@ int battle() {
 	size_increase_ratio = 1;
 	rounds = 300;
 
+	/*
+	hunter_game_before_battle = 0;
+	did_not_get_paid = 0;*/
+
 	return -1;
 }
 
