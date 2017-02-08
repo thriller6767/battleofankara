@@ -29,7 +29,9 @@ void test_one_battle();
 
 int main() {
 	
-	//battle.initiate_battle(0, 0, 1);
+	battle.initiate_battle(0, 0, 1);
+	//printf("Ottoman last is %d\n", battle.ivm.Ottoman_last_index);
+	//printf("morale is %d\n", (*battle.ivm.AgentList[0]).getMorale());
 	//test_kdtree();
 	//kdtree_n2_compare();
 
@@ -41,6 +43,7 @@ int main() {
 
 	test_one_battle();
 
+	//printf(" 0.1 * 56 is %d\n", (int) (0.1 * 56));
 	//test_while();
 
 	return 0;
@@ -234,8 +237,8 @@ void test_one_battle()
 	int is_water_poisoned = 0;
 	int any_betrayal = 0;
 	int size_increase_ratio = 1;
-	int rounds = 300;
+	int rounds = 50;
 
-	battle.one_battle(is_ottoman_offensive, any_betrayal, march_from_constantinople, is_water_poisoned, size_increase_ratio, rounds);
+	battle.simple_result_of_one_battle(5, is_ottoman_offensive, any_betrayal, march_from_constantinople, is_water_poisoned, size_increase_ratio, rounds);
 }
 

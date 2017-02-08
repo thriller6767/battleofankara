@@ -23,6 +23,7 @@
 #define ENGAGED 555
 #define FIGHT_TO_DEATH 444
 #define READY 333
+#define DEAD 222
 
 #define LIGHT_INF_WIDTH_DEPTH_RATIO 10
 #define DEFAULT_WIDTH_DEPTH_RATIO 5/2
@@ -55,6 +56,7 @@ public:
 	Agent::Name getName();
 	int getSide();
 	int getSize();
+	int getInitialSize();
 	int getMorale();
 	int getFatigue();
 	std::vector<int> getPos();
@@ -116,7 +118,7 @@ public:
 	bool is_morale_below_zero();
 	bool is_morale_below_10();
 	bool is_size_below_50_percent();
-	bool is_able_to_shoot();
+	bool not_able_to_shoot();
 
 	double find_sightRange( ConReader cr);
 	double find_shootingRange(ConReader cr);
@@ -125,6 +127,7 @@ public:
 	void print();
 	void print_neighbors();
 	void print_enemies();
+	std::string printName();
 
 private:
 	Name name;
@@ -155,7 +158,6 @@ private:
 	int current_enemy_index_this_agent_is_attacking;
 	bool betray;
 
-	std::string printName();
 	std::string printDir();
 	std::string printCate();
 

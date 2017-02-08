@@ -2,6 +2,8 @@
 #ifndef _BATTLE_H
 #define _BATTLE_H
 
+#include <iostream>
+#include <fstream>
 #include <cstdio>
 #include <ctime>
 #include <vector>
@@ -16,9 +18,9 @@
 #define HEIGHT_SCORE_INTERVAL 25
 #define DIRECTION_STANDARD 50
 
-#define SPECIAL_BONUS_TO_ATTACK 5
-#define FATIGUE_INCREASE_IF_ATTACK 2
-#define FATIGUE_INCREASE_IF_MOVE 1
+#define SPECIAL_BONUS_TO_ATTACK 10
+#define FATIGUE_INCREASE_IF_ATTACK 3
+#define FATIGUE_INCREASE_IF_MOVE 2
 
 /*The precondition of ATTACK is WITHIN ChargeRange. If within ChargeRange, more possibility to ATTACK,
   If an eney's status is ENGAGED, ATTACK.
@@ -38,7 +40,9 @@ public:
 
 	Initial_val_mapper ivm; // for test
 	
-	void one_battle(int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds);
+	int simple_result_of_one_battle(int fileIndex, int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds);
+
+	void one_battle(std::ofstream& file, std::ofstream & agentstat, int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds);
 
 	void initiate_battle(int poisoned_well, int marching_from_Constantinople, int increase_amount);
 	void deleteAllAgent();
@@ -56,10 +60,12 @@ public:
 
 private:
 	
-	std::clock_t start;
+	std::time_t start;
 	double duration;
 	RangeSearch rsTree;
 	ConReader cr;
+
+	int Ottoman_size, Tamerlane_size;
 	
 	/*Agent still alive and in the battle field
 	(alive_in_battle + left_battle + dead = n)
@@ -67,15 +73,16 @@ private:
 	int Ottoman_alive_in_battle, Tamerlane_alive_in_battle;
 
 	/*Agent has already left the battle field*/
-	int Ottoman_left_battle, Tamerlane_left_battle = 0;
+	int Ottoman_left_battle = 0, Tamerlane_left_battle = 0;
 
 	/*Agent are broken or treat 
 	(broken_or_retreat + still_fighting_in_battle = n - dead
 	*/
-	int Ottoman_broken_or_retreat, Tamerlane_broken_or_retreat = 0;
+	int Ottoman_betray = 0, Ottoman_broken = 0, Ottoman_retreat = 0, Tamerlane_retreat = 0, Tamerlane_broken = 0;
 
 	/*just for statistcs*/
-	int Ottoman_fight_to_death, Tamerlane_fight_to_death = 0;
+	int Ottoman_fight_to_death = 0, Tamerlane_fight_to_death = 0;
+	int Ottoman_dead, Tamerlane_dead, Ottoman_engaged, Tamerlane_engaged;
 
 	/*-----------decide which action, and do it------------------*/
 
@@ -112,10 +119,12 @@ private:
 	/*There more more than 30% of this side agent in broken or retreat*/
 	bool more_than_70percent_in_flight(int side);
 	bool no_alive_agent_still_fighting(int side);
-
 	
 	void populate(int poisoned_well, int marching_from_Constantinople);
 	void updateMorale_shootingR_sightR(Agent *a);
+
+	void write_statistics(std::ofstream& file, int r, int rounds);
+	void write_agent_stats(std::ofstream& file, int r, Agent * a);
 };
 
 

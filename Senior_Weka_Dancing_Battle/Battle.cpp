@@ -44,20 +44,109 @@ void Battle::map_neighbor_and_enemies()
 	}
 }
 
-void Battle::one_battle(int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds)
+int Battle::simple_result_of_one_battle(int fileIndex,  int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds)
 {
-	initiate_battle(is_water_poisoned, marching_from_constantinople, increase_amount);
-	
-	int r = 1;
+	ofstream file1, file2;
+	string n = "one_battle" + to_string(fileIndex) + ".txt";
+	string m = "agent_stat_per_round_" + to_string(fileIndex) + ".txt";
+	file1.open(n.c_str());
+	file2.open(m.c_str());
 
-	while (r <= 50 || (!no_alive_agent_still_fighting(Bayezid)) || (!no_alive_agent_still_fighting(Tamerlane))) {
-		
+	if (file1) {
+		printf("Successfully open a file, filename: %s \n", n.c_str());
+
+		file1 << "one battle with attributes " << "is_ottoman_offensive = " << offensive << ", betrayal = " << betray
+			<< ", march_from_constantinople = " << marching_from_constantinople << ", is_water_poisoned = " << is_water_poisoned
+			<< ", size_increase = " << increase_amount << ", rounds = " << rounds << "\n";
+	}
+
+	one_battle(file1, file2, offensive, betray, marching_from_constantinople, is_water_poisoned, increase_amount, rounds);
+	
+	ivm.deleteAllAgent();
+	file1.close();
+	file2.close();
+	return 0;
+}
+
+void Battle::write_statistics(ofstream& file, int r, int rounds)
+{
+	if (file) {
+		if (r >= rounds) file << "\n============DRAW ==============\n";
+		else if (no_alive_agent_still_fighting(Bayezid)) file << "Bayezid lost\n";
+		else if (no_alive_agent_still_fighting(Tamerlane)) file << "Tamerlane lost\n";
+
+		file << "\nBroken: ";
+		for (Agent *a : ivm.AgentList) {
+			if ((*a).getAgentState() == BROKEN) file << (*a).getIndex() << " , ";
+		}
+
+		//STATISTICS
+		file << "\n\n====================Ottoman Agent: ==============================\n";
+		int n = 0;
+		int total = 0, alive = 0, killed = 0, left = 0;
+		while (n < Ottoman_size) {
+			Agent * a = ivm.AgentList[n];
+			total += (*a).getInitialSize();
+			alive += (*a).getSize();
+
+			if ((*a).getAgentState() == ENGAGED) file << "**Still Engaged: " << (*a).getCurrentEnemyIndex() << "\n";
+			if (!(*a).in_battlefield) left += (*a).getSize();
+
+			++n;
+		}
+		file << "total Ottoman soldiers are " << total << ", killed " << total - alive << ", left " << left << "remain in field" << total - left;
+		file << "\n kill rate is " << killed / total << "\n";
+
+		file << "\n\n====================Tamerlane Agent: ==============================\n";
+		int y = Ottoman_size - 1;
+		total= 0, alive =0, killed= 0, left = 0;
+		while (y < ivm.AgentList.size()) {
+			Agent * a = ivm.AgentList[y];
+			total += (*a).getInitialSize();
+			alive += (*a).getSize();
+
+			if ((*a).getAgentState() == ENGAGED) file << "**Still Engaged: " << (*a).getCurrentEnemyIndex() << "\n";
+			if (!(*a).in_battlefield) left += (*a).getSize();
+
+			++y;
+		}
+		file << "total Tamerlane soldiers are " << total << ", killed " << total - alive << ", left " << left << "remain in field" << total - left;
+		file << "\n kill rate is " << killed / total << "\n";
+
+	}
+}
+
+void Battle::write_agent_stats(std::ofstream & file, int r, Agent * a)
+{
+	if (file) {
+		file << "Agent " << (*a).getIndex() << ", Name " << (*a).printName() << ", POS (" << (*a).getPos()[0] << ", " 
+			<< (*a).getPos()[1] << "), Size " << (*a).getSize() << ", Morale " << to_string((*a).getMorale()) << ", State " << (*a).getAgentState() << "\n";
+	}
+}
+
+void Battle::one_battle(ofstream& file, ofstream & agentstat, int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds)
+{
+	start = time(0);
+	initiate_battle(is_water_poisoned, marching_from_constantinople, increase_amount);
+
+	int r = 1;
+	while (r <= rounds &&
+		(!no_alive_agent_still_fighting(Bayezid) && !no_alive_agent_still_fighting(Tamerlane))) {
+
 		put_rangetree_boundaries();
 		map_neighbor_and_enemies();
+
+		Ottoman_engaged = 0, Tamerlane_engaged = 0;
+		if (agentstat) agentstat << "\n=================\nr is " << r << " :\n";
 
 		for (Agent * a : ivm.AgentList) {
 			updateMorale_shootingR_sightR(a);
 			choose_and_Execute_Action(a, offensive, betray);
+
+			write_agent_stats(agentstat, r, a);
+
+			if ((*a).getSide() == Bayezid && (*a).getAgentState() == ENGAGED) ++Ottoman_engaged;
+			else if ((*a).getSide() == Tamerlane && (*a).getAgentState() == ENGAGED) ++Tamerlane_engaged;
 		}
 
 		for (Agent * a : ivm.AgentList) {
@@ -67,22 +156,45 @@ void Battle::one_battle(int offensive, int betray, int marching_from_constantino
 		}
 
 		delete_searchTree();
-		printf("r is %d\n", r);
+
+		Ottoman_dead = Ottoman_size - Ottoman_alive_in_battle - Ottoman_left_battle;
+		Tamerlane_dead = Tamerlane_size - Tamerlane_alive_in_battle - Tamerlane_left_battle;
+
+		printf("\n\nr is %d: Ottoman in battle: %d, left %d, broken %d, retreat %d, dead %d, betray %d\n	Tamerlane in battle: %d, left %d, broken %d, retreat %d, dead %d \n",
+			r, Ottoman_alive_in_battle, Ottoman_left_battle, Ottoman_broken, Ottoman_retreat, Ottoman_dead, Ottoman_betray,
+			Tamerlane_alive_in_battle, Tamerlane_left_battle, Tamerlane_broken, Tamerlane_retreat, Tamerlane_dead);
+
+		printf("Ottoman engaged: %d, Tamerlane engaged %d\n", Ottoman_engaged, Tamerlane_engaged);
+
+		if (file) {
+			file << "\nr is " << r << ": Ottoman in battle: " << Ottoman_alive_in_battle << ", left " << Ottoman_left_battle << ", broken "
+				<< Ottoman_broken << ", retreat " << Ottoman_retreat << ", fight to death " << Ottoman_fight_to_death << ", dead " << Ottoman_dead << ", betray " << Ottoman_betray << "\n";
+			file << "	Tamerlane in battle " << Tamerlane_alive_in_battle << ", left " << Tamerlane_left_battle << ", broken " << Tamerlane_broken << ", retreat " << Tamerlane_retreat
+				<< ", fight to death " << Tamerlane_dead << "\n";
+			file << "Ottoman engaged: " << Ottoman_engaged << ", Tamerlane engaged: " << Tamerlane_engaged << "\n";
+		}
+
 		++r;
 	}
 
-	if (r >= rounds) printf("==========DRAW===================");
+	if (r >= rounds) printf("\n==========DRAW===================");
 	else if (no_alive_agent_still_fighting(Bayezid)) printf("Bayezid lost.");
 	else if (no_alive_agent_still_fighting(Tamerlane)) printf("Tamerlane lost");
 
-	ivm.deleteAllAgent();
+	write_statistics(file, r, rounds);
+
+	int seconds_since_start = difftime(time(0), start);
+	printf("when finish, r is %d, time is %d seconds", r, seconds_since_start);
 }
 
 void Battle::initiate_battle(int is_water_poisoned, int marching_from_constantinople, int increase_amount)
 {
 	populate(is_water_poisoned, marching_from_constantinople);
-	Ottoman_alive_in_battle = ivm.Ottoman_last_index + 1;
-	Tamerlane_alive_in_battle = ivm.AgentList.size() - 1 - ivm.Ottoman_last_index;
+	Ottoman_alive_in_battle = ivm.Ottoman_last_index;
+	Tamerlane_alive_in_battle = ivm.AgentList.size() - ivm.Ottoman_last_index;
+
+	Ottoman_size = Ottoman_alive_in_battle;
+	Tamerlane_size = Tamerlane_alive_in_battle;
 }
 
 void Battle::populate(int poisoned_well, int marching_from_Constantinople)
@@ -106,6 +218,11 @@ Here properties need to update:
 */
 void Battle::updateMorale_shootingR_sightR(Agent * a)
 {
+	if ((*a).getSize() <= 0) {
+		(*a).is_alive = false;
+		(*a).changeAgentState(DEAD);
+		printf("------------Agent # %d is dead\n", (*a).getIndex());
+	}
 	(*a).updateMorale(cr);
 	(*a).updateShootingRange(cr);
 	(*a).updateSightRange(cr);
@@ -121,7 +238,14 @@ Based on current situation, choose among IDLE, MOVE, ATTACK, RETREAT
 */
 void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 	
-	if (!(*a).is_alive || !(*a).in_battlefield) return;
+	//dead
+	if ((*a).getAgentState() == DEAD) {
+		if ((*a).getSide() == Bayezid) --Ottoman_alive_in_battle;
+		else --Tamerlane_alive_in_battle;
+		return;
+	}
+	//out
+	if (!(*a).in_battlefield) return;
 
 	int current_state = (*a).getAgentState();
 	switch (current_state) {
@@ -141,19 +265,20 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 				(*a).changeSide();
 				++Tamerlane_alive_in_battle;
 				--Ottoman_alive_in_battle;
+				++Ottoman_betray;
 			}
 		}
 		// if less than 30% of agent in this side remain fighting, WITHDRAW
 		if (more_than_70percent_in_flight((*a).getSide())
-			&& (!(*a).is_morale_below_zero())
-			&& (!(*a).is_size_below_20_percent())) {
+			/*&& (!(*a).is_morale_below_zero())
+			&& (!(*a).is_size_below_20_percent())*/) {
 
 			withdraw_to_built_in_dir(a);
 			(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
 			(*a).changeAgentState(RETREAT);
 
-			if ((*a).getSide() == Bayezid) ++Ottoman_broken_or_retreat;
-			if ((*a).getSide() == Tamerlane) ++Tamerlane_broken_or_retreat;
+			if ((*a).getSide() == Bayezid) ++Ottoman_retreat;
+			else if ((*a).getSide() == Tamerlane) ++Tamerlane_retreat;
 
 		}
 
@@ -164,6 +289,7 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 			else {
 				//move to built-in direction.
 				move_to_built_in_dir(a);
+				(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
 			}
 		}
 		//if there are enemies in sight range, and is not retreating
@@ -188,7 +314,7 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 				vector<int> enemy_pos = (*enemy).getPos();
 
 				// if not able to shoot
-				if (!(*a).is_able_to_shoot()) {}
+				if ((*a).not_able_to_shoot()) {}
 
 				// if the chosen enemy is in shooting range
 				else if (distance_between_two_points(enemy_pos, (*a).getPos()) <= shooting_range) {
@@ -203,7 +329,7 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 
 					// If we can find a enemy to shoot
 					if (!(*a).getEnemies_in_missile().empty()) {
-						printf("# of enmies in missile range is %d\n", (*a).getEnemies_in_missile().size());
+						//printf("# of enmies in missile range is %d\n", (*a).getEnemies_in_missile().size());
 						//int random = rand() % ((*a).getEnemies_in_missile().size()); // randomly pick one
 						Agent *enemy_to_shoot = (*a).getEnemies_in_missile()[0];
 
@@ -219,6 +345,8 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 		}
 		break;
 	case ENGAGED:
+		//printf("*****ENGAGED!! Agent # %d", (*a).getIndex());
+
 		//If (less than 30% of this side remains fighting AND HP >= 20% AND morale > 0) => WITHDRAW
 		if (more_than_70percent_in_flight((*a).getSide())
 			&& (!(*a).is_morale_below_zero())
@@ -230,8 +358,8 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 			(*a).is_being_attacked = false;
 			(*a).setCurrentEnemyIndex(-1);
 
-			if ((*a).getSide() == Bayezid) ++Ottoman_broken_or_retreat;
-			if ((*a).getSide() == Tamerlane) ++Tamerlane_broken_or_retreat;
+			if ((*a).getSide() == Bayezid) ++Ottoman_retreat;
+			if ((*a).getSide() == Tamerlane) ++Tamerlane_retreat;
 
 			//Disadvantage on MORALE when go from ENGAGE to RETREAT
 			(*a).weakenMorale();
@@ -253,15 +381,17 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 
 		}
 		// RUN for life
-		else if ((*a).is_morale_below_10() && (*a).is_size_below_20_percent()) {
+		else if ((*a).is_morale_below_zero() && (*a).is_size_below_20_percent()) {
+
+			printf("Agent # %d is broken ", (*a).getIndex());
 
 			running_for_life(a); // running for life and disable all abiity
 			(*a).changeAgentState(BROKEN);
 			(*a).is_being_attacked = false;
 			(*a).setCurrentEnemyIndex(-1);
 
-			if ((*a).getSide() == Bayezid) ++Ottoman_broken_or_retreat;
-			if ((*a).getSide() == Tamerlane) ++Tamerlane_broken_or_retreat;
+			if ((*a).getSide() == Bayezid) ++Ottoman_broken;
+			if ((*a).getSide() == Tamerlane) ++Tamerlane_broken;
 		}
 		else {
 			Agent * current_enemy = ivm.AgentList[(*a).getCurrentEnemyIndex()];
@@ -301,9 +431,14 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 		if ((*a).is_surrounded() && (*a).is_able_to_fight_to_death()
 			&& (*a).is_size_below_20_percent() && (!(*a).is_morale_below_zero())) {
 
-			if ((*a).getSide() == Bayezid) ++Ottoman_fight_to_death;
-			else ++Tamerlane_fight_to_death;
-
+			if ((*a).getSide() == Bayezid) {
+				++Ottoman_fight_to_death;
+				--Ottoman_retreat;
+			}
+			else {
+				++Tamerlane_fight_to_death;
+				--Tamerlane_retreat;
+			}
 			(*a).changeAgentState(FIGHT_TO_DEATH);
 			(*a).strengthenAbilities();
 			(*a).strengthenMorale();
@@ -312,17 +447,26 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 
 		}	
 		// RUN for life
-		else if ((*a).is_morale_below_10() && (*a).is_size_below_20_percent()) {
+		else if ((*a).is_morale_below_zero() && (*a).is_size_below_20_percent()) {
+
+			if ((*a).getSide() == Bayezid) {
+				--Ottoman_retreat; ++Ottoman_broken;
+			}
+			else {
+				--Tamerlane_retreat; ++Tamerlane_broken;
+			}
+			printf("Agent # %d is broken ", (*a).getIndex());
 
 			running_for_life(a); // running for life and disable all abiity
 			(*a).changeAgentState(BROKEN);
 			(*a).is_being_attacked = false;
 
-			if ((*a).getSide() == Bayezid) ++Ottoman_broken_or_retreat;
-			if ((*a).getSide() == Tamerlane) ++Tamerlane_broken_or_retreat;
 		}
 		// if being attacked
 		else if ((*a).is_being_attacked) {
+
+			if ((*a).getSide() == Bayezid) --Ottoman_retreat;
+			else --Tamerlane_retreat;
 
 			(*a).changeAgentState(ENGAGED);
 			attack_enemy(a, ivm.AgentList[(*a).getCurrentEnemyIndex()]);
@@ -394,7 +538,7 @@ void Battle::attack_enemy(Agent * a, Agent * enemy)
 void Battle::move_to_built_in_dir(Agent * a)
 {
 	Agent::Direction dir;
-	int distance = find_distance_to_move(a, nullptr);
+	int distance = NEIGHBOR_RANGE;
 
 	if ((*a).getSide() == Bayezid) dir = Agent::Direction::SOUTH;	
 	else dir = Agent::Direction::NORTH;
@@ -430,6 +574,7 @@ void Battle::withdraw_to_built_in_dir(Agent * a)
 
 void Battle::shoot_the_enemy(Agent * a, Agent * enemy)
 {
+	printf("-----Agent %d is shooting Agent %d ", (*a).getIndex(), (*enemy).getIndex());
 	(*enemy).changeSize((*a).missile_damage_delivered((*enemy).getArmorDefence()));
 }
 
@@ -602,7 +747,7 @@ Simply calculate the distance between two points with given x-y coordinates.
 */
 double Battle::distance_between_two_points(std::vector<int> A, std::vector<int> B)
 {
-	if (A.empty() || B.empty()) printf("EMPTY VECTOR**************\n");
+	if (A.empty() || B.empty()) {}//printf("EMPTY VECTOR**************\n");
 	else return sqrt(pow(B[0] - A[0], 2) + pow(B[1] - A[1], 2));
 }
 
@@ -729,7 +874,7 @@ std::vector<int> Battle::find_new_pos_after_move(std::vector<int> pos, int dista
 
 void Battle::move_to_default_enemy_direciton(Agent * a)
 {
-	int distance = rand() % (NEIGHBOR_RANGE + 1) + 50;
+	int distance = rand() % (NEIGHBOR_RANGE + 1) + 100;
 	//Ottomans are supposed to move south
 	if ((*a).getSide() == Bayezid) {
 		(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, Agent::Direction::SOUTH, false));
@@ -743,17 +888,17 @@ void Battle::move_to_default_enemy_direciton(Agent * a)
 bool Battle::more_than_70percent_in_flight(int side)
 {
 	return 
-		((side == Bayezid && (Ottoman_broken_or_retreat / (ivm.Ottoman_last_index + 1)) >= 0.7)
-		|| (side == Tamerlane && (Tamerlane_broken_or_retreat / (ivm.AgentList.size() - 1 - ivm.Ottoman_last_index)) >= 0.7));
+		((side == Bayezid && 0.1 *(Ottoman_broken + Ottoman_retreat) / (0.1 * Ottoman_size) >= 0.7)
+		|| (side == Tamerlane && 0.1*(Tamerlane_broken + Tamerlane_retreat) / (0.1 * Tamerlane_size) >= 0.7));
 }
 
 bool Battle::no_alive_agent_still_fighting(int side)
 {
 	if (side == Bayezid) {
-		return (Ottoman_alive_in_battle + Ottoman_left_battle - Ottoman_broken_or_retreat) == 0;
+		return (Ottoman_size - Ottoman_dead - Ottoman_left_battle) == 0;
 	}
 	else {
-		return (Tamerlane_alive_in_battle + Tamerlane_left_battle - Tamerlane_broken_or_retreat) == 0;
+		return (Tamerlane_size - Tamerlane_dead - Tamerlane_left_battle) == 0;
 	}
 }
 
