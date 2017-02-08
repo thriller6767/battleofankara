@@ -23,16 +23,13 @@ void test_choose_and_execute_action();
 
 void test_put_range_tree_in_battle();
 void test_range_search_in_battle();
+void test_while();
 
 void test_one_battle();
 
 int main() {
 	
 	//battle.initiate_battle(0, 0, 1);
-
-	//test_put_range_tree_in_battle();
-	//test_range_search_in_battle();
-
 	//test_kdtree();
 	//kdtree_n2_compare();
 
@@ -43,6 +40,8 @@ int main() {
 	//battle.deleteAllAgent();
 
 	test_one_battle();
+
+	//test_while();
 
 	return 0;
 	
@@ -146,7 +145,6 @@ void kdtree_n2_compare()
 	(*battle.ivm.AgentList[target_index]).print_neighbors();
 }
 
-
 void test_random() {
 	int random;
 	random = rand() % 2;
@@ -212,6 +210,21 @@ void test_put_range_tree_in_battle()
 void test_range_search_in_battle()
 {
 	battle.map_neighbor_and_enemies();
+}
+
+void test_while()
+{
+	int c = 1;
+	battle.initiate_battle(0, 0, 1);
+	
+	while (c <= 2){
+		battle.put_rangetree_boundaries();
+		battle.map_neighbor_and_enemies();
+		battle.delete_searchTree();
+		++c;
+	}
+	battle.deleteAllAgent();
+
 }
 
 void test_one_battle()

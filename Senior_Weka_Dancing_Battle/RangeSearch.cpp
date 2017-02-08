@@ -113,8 +113,8 @@ void RangeSearch::freeBST(node * t)
 		if (t->left != NULL) freeBST(t->left);
 		if (t->right != NULL) freeBST(t->right);	
 		
-		if (t->ag != NULL) t->ag = NULL;
-		if (t->parent != NULL) t->parent = NULL;
+		//if (t->ag != NULL) t->ag = NULL;
+		//if (t->parent != NULL) t->parent = NULL;
 
 		t = NULL;
 		delete t;

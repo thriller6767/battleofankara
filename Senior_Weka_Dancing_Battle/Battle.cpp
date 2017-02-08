@@ -50,12 +50,12 @@ void Battle::one_battle(int offensive, int betray, int marching_from_constantino
 	
 	int r = 1;
 
-	while (r <= 1 || (!no_alive_agent_still_fighting(Bayezid)) || (!no_alive_agent_still_fighting(Tamerlane))) {
-
+	while (r <= 50 || (!no_alive_agent_still_fighting(Bayezid)) || (!no_alive_agent_still_fighting(Tamerlane))) {
+		
 		put_rangetree_boundaries();
-		//map_neighbor_and_enemies();
+		map_neighbor_and_enemies();
 
-	/*	for (Agent * a : ivm.AgentList) {
+		for (Agent * a : ivm.AgentList) {
 			updateMorale_shootingR_sightR(a);
 			choose_and_Execute_Action(a, offensive, betray);
 		}
@@ -64,12 +64,18 @@ void Battle::one_battle(int offensive, int betray, int marching_from_constantino
 			(*a).clear_enemies();
 			(*a).clear_enemies_to_shoot();
 			(*a).clear_neighbor();
-		}*/
+		}
 
 		delete_searchTree();
 		printf("r is %d\n", r);
 		++r;
 	}
+
+	if (r >= rounds) printf("==========DRAW===================");
+	else if (no_alive_agent_still_fighting(Bayezid)) printf("Bayezid lost.");
+	else if (no_alive_agent_still_fighting(Tamerlane)) printf("Tamerlane lost");
+
+	ivm.deleteAllAgent();
 }
 
 void Battle::initiate_battle(int is_water_poisoned, int marching_from_constantinople, int increase_amount)
@@ -531,8 +537,17 @@ Agent * Battle::find_the_enemy_with_SPECIAL_BONUS(Agent * a)
 		}
 		// choose the enemy with special bonus
 		else {
-			random = rand() % (enemies_with_special_bonus.size());
-			return enemies_with_special_bonus[random];
+			if (enemies_with_special_bonus.empty() && !enemies_running_away.empty()) {
+				random = rand() % (enemies_running_away.size());
+				return enemies_running_away[random];
+			}
+			else if (!enemies_with_special_bonus.empty()){
+				random = rand() % (enemies_with_special_bonus.size());
+				return enemies_with_special_bonus[random];
+			}
+			else {
+				return nullptr;
+			}
 		}
 	}
 	
