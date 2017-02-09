@@ -86,7 +86,7 @@ public:
 	void updateSightRange(ConReader cr);
 
 	void changeFatigue(int);
-	void changeSize(int);
+	void decrease(int);
 	void changeAgentState(int status);
 	void changeSide();
 	void changePos(std::vector<int>);
@@ -97,8 +97,8 @@ public:
 	void weakenMorale();
 	void increaseAttackDamage(double rate);
 	
-	int attack_damage_delivered(int special_bonus, int enemy_defend);
-	int missile_damage_delivered(int enemy_defend);	
+	int attack_damage_delivered(int special_bonus, double enemy_defend);
+	int missile_damage_delivered(double enemy_defend);	
 
 	void add_neighbor(Agent * neighbor);
 	void add_enemies(Agent * enemy);

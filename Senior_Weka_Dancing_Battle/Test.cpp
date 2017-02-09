@@ -27,9 +27,13 @@ void test_while();
 
 void test_one_battle();
 
+void test_attack_damage();
+
 int main() {
-	
-	battle.initiate_battle(0, 0, 1);
+
+	//battle.initiate_battle(0, 0, 1);
+	//test_attack_damage();
+	//battle.ivm.fancyPrint();
 	//printf("Ottoman last is %d\n", battle.ivm.Ottoman_last_index);
 	//printf("morale is %d\n", (*battle.ivm.AgentList[0]).getMorale());
 	//test_kdtree();
@@ -239,6 +243,20 @@ void test_one_battle()
 	int size_increase_ratio = 1;
 	int rounds = 50;
 
-	battle.simple_result_of_one_battle(5, is_ottoman_offensive, any_betrayal, march_from_constantinople, is_water_poisoned, size_increase_ratio, rounds);
+	int i = 2;
+	while (i <= 4) {
+		
+		battle.simple_result_of_one_battle(i, is_ottoman_offensive, any_betrayal, march_from_constantinople, is_water_poisoned, size_increase_ratio, rounds * i);
+		i++;
+	}
+}
+
+void test_attack_damage()
+{
+	Agent * a = battle.ivm.AgentList[0];
+	Agent * b = battle.ivm.AgentList[100];
+
+
+	printf(" A -> B DAMAGE is %d\n", (*a).attack_damage_delivered(0, (*b).getArmorDefence()));
 }
 

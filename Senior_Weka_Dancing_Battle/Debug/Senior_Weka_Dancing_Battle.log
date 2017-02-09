@@ -1,16 +1,5 @@
 ﻿  Test.cpp
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\test.cpp(76): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\test.cpp(111): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  Battle.cpp
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(40): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(103): warning C4018: '<': signed/unsigned mismatch
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(186): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(534): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(577): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(740): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(843): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  Generating Code...
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(751): warning C4715: 'Battle::distance_between_two_points': not all control paths return a value
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(845): warning C4700: uninitialized local variable 'x_dis' used
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\test.cpp(80): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\test.cpp(115): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.exe
   Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.pdb (Full PDB)

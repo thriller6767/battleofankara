@@ -18,12 +18,12 @@ void Battle::put_rangetree_boundaries()
 
 	for (int i = center; i >= 0; --i) {
 		Agent *a = ivm.AgentList.at(i);
-		rsTree.put(a, (*a).getPos().at(0), (*a).getPos().at(1));
+		if ((*a).is_alive) { rsTree.put(a, (*a).getPos().at(0), (*a).getPos().at(1)); }
 	}
 	for (int i = center + 1; i < total_size; ++i)
 	{
 		Agent *a = ivm.AgentList.at(i);
-		rsTree.put(a, (*a).getPos().at(0), (*a).getPos().at(1));
+		if ((*a).is_alive) { rsTree.put(a, (*a).getPos().at(0), (*a).getPos().at(1)); }
 	}	
 }
 
@@ -31,15 +31,17 @@ void Battle::map_neighbor_and_enemies()
 {
 	//range search for neighbors
 	for (Agent *a : ivm.AgentList) {
-		rsTree.findAgent_within_range(a, NEIGHBOR_RANGE, neighbor_search);
-
+		if ((*a).is_alive) {
+			rsTree.findAgent_within_range(a, NEIGHBOR_RANGE, neighbor_search);
+		}
 		//(*a).print_neighbors();
 	}
 	//range search for enemies
 	for (Agent *a : ivm.AgentList) {
 		int sightrange = (*a).getSightRange();
-		rsTree.findAgent_within_range(a, sightrange, enemies_in_sight_search);
-
+		if ((*a).is_alive) {
+			rsTree.findAgent_within_range(a, sightrange, enemies_in_sight_search);
+		}
 		//(*a).print_enemies();
 	}
 }
@@ -94,8 +96,8 @@ void Battle::write_statistics(ofstream& file, int r, int rounds)
 
 			++n;
 		}
-		file << "total Ottoman soldiers are " << total << ", killed " << total - alive << ", left " << left << "remain in field" << total - left;
-		file << "\n kill rate is " << killed / total << "\n";
+		file << "total Ottoman soldiers are " << total << ", killed " << total - alive << ", left " << left << ", remain in field" << total - left;
+		file << "\n kill rate is " << (double) killed / (double) total << "\n";
 
 		file << "\n\n====================Tamerlane Agent: ==============================\n";
 		int y = Ottoman_size - 1;
@@ -172,6 +174,7 @@ void Battle::one_battle(ofstream& file, ofstream & agentstat, int offensive, int
 			file << "	Tamerlane in battle " << Tamerlane_alive_in_battle << ", left " << Tamerlane_left_battle << ", broken " << Tamerlane_broken << ", retreat " << Tamerlane_retreat
 				<< ", fight to death " << Tamerlane_dead << "\n";
 			file << "Ottoman engaged: " << Ottoman_engaged << ", Tamerlane engaged: " << Tamerlane_engaged << "\n";
+	
 		}
 
 		++r;
@@ -532,7 +535,9 @@ void Battle::attack_enemy(Agent * a, Agent * enemy)
 	(*enemy).is_being_attacked = true;
 
 	int special_bonus = SPECIAL_BONUS_TO_ATTACK * has_special_bonus_against(a, enemy);
-	(*enemy).changeSize((*enemy).attack_damage_delivered(special_bonus, (*enemy).getArmorDefence()));
+	int damage = (*enemy).attack_damage_delivered(special_bonus, (*enemy).getArmorDefence());
+	//if (damage = 1) { printf("afkdajflkajjjjjjkkkkk-------------------\n"); }
+	(*enemy).decrease(damage);
 }
 
 void Battle::move_to_built_in_dir(Agent * a)
@@ -575,7 +580,7 @@ void Battle::withdraw_to_built_in_dir(Agent * a)
 void Battle::shoot_the_enemy(Agent * a, Agent * enemy)
 {
 	printf("-----Agent %d is shooting Agent %d ", (*a).getIndex(), (*enemy).getIndex());
-	(*enemy).changeSize((*a).missile_damage_delivered((*enemy).getArmorDefence()));
+	(*enemy).decrease((*a).missile_damage_delivered((*enemy).getArmorDefence()));
 }
 
 /*

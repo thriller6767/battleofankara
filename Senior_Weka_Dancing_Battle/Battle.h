@@ -18,8 +18,8 @@
 #define HEIGHT_SCORE_INTERVAL 25
 #define DIRECTION_STANDARD 50
 
-#define SPECIAL_BONUS_TO_ATTACK 10
-#define FATIGUE_INCREASE_IF_ATTACK 3
+#define SPECIAL_BONUS_TO_ATTACK 20
+#define FATIGUE_INCREASE_IF_ATTACK 5
 #define FATIGUE_INCREASE_IF_MOVE 2
 
 /*The precondition of ATTACK is WITHIN ChargeRange. If within ChargeRange, more possibility to ATTACK,
@@ -82,7 +82,7 @@ private:
 
 	/*just for statistcs*/
 	int Ottoman_fight_to_death = 0, Tamerlane_fight_to_death = 0;
-	int Ottoman_dead, Tamerlane_dead, Ottoman_engaged, Tamerlane_engaged;
+	int Ottoman_dead, Tamerlane_dead, Ottoman_engaged, Tamerlane_engaged, Ottoman_ready, Tamerlane_ready;
 
 	/*-----------decide which action, and do it------------------*/
 

@@ -123,7 +123,7 @@ double Agent::getMissileRange()
 
 double Agent::getArmorDefence()
 {
-	return (1.0*size/1.0*initial_size) * armor_defence;
+	return (((double)size/(double)initial_size) * armor_defence);
 }
 
 int Agent::getFrontLineSize()
@@ -199,8 +199,8 @@ morale will only influenced by four factors: casualty_rate, fatigue, neighbor an
 */
 void Agent::updateMorale(ConReader cr)
 {
-	double remaining_ratio =  1.0*size / 1.0*initial_size;
-	morale = remaining_ratio * 1.0 * initial_morale;
+	double remaining_ratio =  (double)size / (double)initial_size;
+	morale = remaining_ratio * (double)initial_morale;
 
 	//influenced by neighbor
 	if (is_neighbor_broken()) morale -= 10;
@@ -211,9 +211,9 @@ void Agent::updateMorale(ConReader cr)
 	if (is_standing_on_high_ground(cr)) morale += 5;
 
 	//influenced by fatigue
-	if (fatigue >= 50) morale -= 5;
-	else if (fatigue >= 150) morale -= 10;
-	else if (fatigue >= 200) morale -= 15;
+	if (fatigue >= 25) morale -= 10;
+	else if (fatigue >= 50) morale -= 15;
+	else if (fatigue >= 100) morale -= 20;
 
 }
 
@@ -226,7 +226,7 @@ void Agent::changeFatigue(int val_to_increase)
 	fatigue += val_to_increase;
 }
 
-void Agent::changeSize(int damage)
+void Agent::decrease(int damage)
 {
 	size -= damage;
 }
@@ -302,18 +302,19 @@ void Agent::increaseAttackDamage(double rate)
 	attack_damage = (int) attack_damage* rate;
 }
 
-int Agent::attack_damage_delivered(int special_bonus, int enemy_defend)
+int Agent::attack_damage_delivered(int special_bonus, double enemy_defend)
 {
-	int attack = (attack_damage + special_bonus - enemy_defend - fatigue);
-	if (attack <= 0) return 1;
-	else return (int) ((1.0*size/1.0*initial_size) * attack);
+	double attack = ((double)attack_damage + (double)special_bonus - enemy_defend - 0.5* fatigue);
+
+	if (attack <= 0.0) return 1;
+	else return (int) (((double)size/(double)initial_size) * attack);
 }
 
-int Agent::missile_damage_delivered(int enemy_defend)
+int Agent::missile_damage_delivered(double enemy_defend)
 {
-	double missile = missile_damage * (accuracy) - fatigue - enemy_defend;
+	double missile = (double)missile_damage * (double)(accuracy) -(double)fatigue - enemy_defend;
 	if (missile <= 0) return 1;
-	else return (int)((1.0*size / 1.0*initial_size) * missile);
+	else return (int)(((double)size / (double)initial_size) * missile);
 }
 
 void Agent::add_neighbor(Agent * neighbor)
@@ -400,7 +401,7 @@ bool Agent::is_able_to_fight_to_death()
 
 bool Agent::is_size_below_20_percent()
 {
-	double result = (1.0 * size) / (1.0 * initial_size);
+	double result = ((double)size) / ((double)initial_size);
 	return result < 0.2;
 }
 
@@ -416,7 +417,7 @@ bool Agent::is_morale_below_10()
 
 bool Agent::is_size_below_50_percent()
 {
-	double result = (1.0 * size) / (1.0 * initial_size);
+	double result = ((double)size) / ((double)initial_size);
 	return result< 0.5;
 }
 
