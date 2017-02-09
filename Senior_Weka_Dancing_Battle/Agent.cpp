@@ -200,7 +200,7 @@ morale will only influenced by four factors: casualty_rate, fatigue, neighbor an
 void Agent::updateMorale(ConReader cr)
 {
 	double remaining_ratio =  (double)size / (double)initial_size;
-	morale = remaining_ratio * (double)initial_morale;
+	morale = (int) remaining_ratio * (double)initial_morale;
 
 	//influenced by neighbor
 	if (is_neighbor_broken()) morale -= 10;
@@ -304,7 +304,7 @@ void Agent::increaseAttackDamage(double rate)
 
 int Agent::attack_damage_delivered(int special_bonus, double enemy_defend)
 {
-	double attack = ((double)attack_damage + (double)special_bonus - enemy_defend - 0.5* fatigue);
+	double attack = ((double)attack_damage + (double)special_bonus - enemy_defend -  fatigue);
 
 	if (attack <= 0.0) return 1;
 	else return (int) (((double)size/(double)initial_size) * attack);

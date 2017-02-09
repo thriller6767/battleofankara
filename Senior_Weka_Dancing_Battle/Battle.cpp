@@ -46,7 +46,7 @@ void Battle::map_neighbor_and_enemies()
 	}
 }
 
-int Battle::simple_result_of_one_battle(int fileIndex,  int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds)
+int Battle::simple_result_of_one_battle(std::ofstream& RESULTFILE, int fileIndex,  int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds)
 {
 	ofstream file1, file2;
 	string n = "one_battle" + to_string(fileIndex) + ".txt";
@@ -54,23 +54,24 @@ int Battle::simple_result_of_one_battle(int fileIndex,  int offensive, int betra
 	file1.open(n.c_str());
 	file2.open(m.c_str());
 
-	if (file1) {
+
+	if (file1 && file2) {
 		printf("Successfully open a file, filename: %s \n", n.c_str());
 
 		file1 << "one battle with attributes " << "is_ottoman_offensive = " << offensive << ", betrayal = " << betray
 			<< ", march_from_constantinople = " << marching_from_constantinople << ", is_water_poisoned = " << is_water_poisoned
 			<< ", size_increase = " << increase_amount << ", rounds = " << rounds << "\n";
+
+		one_battle(RESULTFILE, file1, file2, offensive, betray, marching_from_constantinople, is_water_poisoned, increase_amount, rounds);
 	}
 
-	one_battle(file1, file2, offensive, betray, marching_from_constantinople, is_water_poisoned, increase_amount, rounds);
-	
 	ivm.deleteAllAgent();
 	file1.close();
 	file2.close();
 	return 0;
 }
 
-void Battle::write_statistics(ofstream& file, int r, int rounds)
+void Battle::write_statistics(ofstream& RESULTFILE, ofstream& file, int r, int rounds)
 {
 	if (file) {
 		if (r >= rounds) file << "\n============DRAW ==============\n";
@@ -85,7 +86,7 @@ void Battle::write_statistics(ofstream& file, int r, int rounds)
 		//STATISTICS
 		file << "\n\n====================Ottoman Agent: ==============================\n";
 		int n = 0;
-		int total = 0, alive = 0, killed = 0, left = 0;
+		int total = 0, alive = 0,left = 0;
 		while (n < Ottoman_size) {
 			Agent * a = ivm.AgentList[n];
 			total += (*a).getInitialSize();
@@ -96,12 +97,14 @@ void Battle::write_statistics(ofstream& file, int r, int rounds)
 
 			++n;
 		}
+		double ottoman_casualty_rate = (double)(total - alive) / (double)total;
 		file << "total Ottoman soldiers are " << total << ", killed " << total - alive << ", left " << left << ", remain in field" << total - left;
-		file << "\n kill rate is " << (double) killed / (double) total << "\n";
+		file << "\n kill rate is " << ottoman_casualty_rate << "\n";
+		RESULTFILE << ottoman_casualty_rate << "		";
 
 		file << "\n\n====================Tamerlane Agent: ==============================\n";
 		int y = Ottoman_size - 1;
-		total= 0, alive =0, killed= 0, left = 0;
+		total= 0, alive =0, left = 0;
 		while (y < ivm.AgentList.size()) {
 			Agent * a = ivm.AgentList[y];
 			total += (*a).getInitialSize();
@@ -112,8 +115,10 @@ void Battle::write_statistics(ofstream& file, int r, int rounds)
 
 			++y;
 		}
+		double Tamerlane_casualty_Rate = (double) (total - alive) / (double)total;
 		file << "total Tamerlane soldiers are " << total << ", killed " << total - alive << ", left " << left << "remain in field" << total - left;
-		file << "\n kill rate is " << killed / total << "\n";
+		file << "\n kill rate is " << Tamerlane_casualty_Rate << "\n";
+		RESULTFILE << Tamerlane_casualty_Rate << "\n";
 
 	}
 }
@@ -126,7 +131,7 @@ void Battle::write_agent_stats(std::ofstream & file, int r, Agent * a)
 	}
 }
 
-void Battle::one_battle(ofstream& file, ofstream & agentstat, int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds)
+void Battle::one_battle(std::ofstream& RESULTFILE, ofstream& file, ofstream & agentstat, int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds)
 {
 	start = time(0);
 	initiate_battle(is_water_poisoned, marching_from_constantinople, increase_amount);
@@ -180,11 +185,23 @@ void Battle::one_battle(ofstream& file, ofstream & agentstat, int offensive, int
 		++r;
 	}
 
-	if (r >= rounds) printf("\n==========DRAW===================");
-	else if (no_alive_agent_still_fighting(Bayezid)) printf("Bayezid lost.");
-	else if (no_alive_agent_still_fighting(Tamerlane)) printf("Tamerlane lost");
+	RESULTFILE << r << "			" << rounds << "		";
 
-	write_statistics(file, r, rounds);
+	if (r >= rounds) {
+		RESULTFILE << "DRAW		";
+		printf("\n==========DRAW===================");
+	}
+	else if (no_alive_agent_still_fighting(Bayezid))
+	{
+		RESULTFILE << "Bayezid LOST		";
+		printf("Bayezid lost.");
+	}
+	else if (no_alive_agent_still_fighting(Tamerlane)) {
+		RESULTFILE << "Tamerlane LOST	";
+		printf("Tamerlane lost");
+	}
+
+	write_statistics(RESULTFILE, file, r, rounds);
 
 	int seconds_since_start = difftime(time(0), start);
 	printf("when finish, r is %d, time is %d seconds", r, seconds_since_start);
