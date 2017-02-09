@@ -116,7 +116,7 @@ public:
 	bool is_able_to_fight_to_death();
 	bool is_size_below_20_percent();
 	bool is_morale_below_zero();
-	bool is_morale_below_10();
+	bool is_morale_below_20();
 	bool is_size_below_50_percent();
 	bool not_able_to_shoot();
 

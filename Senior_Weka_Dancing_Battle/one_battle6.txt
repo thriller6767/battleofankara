@@ -1,0 +1,473 @@
+one battle with attributes is_ottoman_offensive = 0, betrayal = 0, march_from_constantinople = 0, is_water_poisoned = 0, size_increase = 1, rounds = 150
+
+r is 1: Ottoman in battle: 56, left 0, broken 0, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 0, retreat 0, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 2: Ottoman in battle: 56, left 0, broken 0, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 0, retreat 0, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 3: Ottoman in battle: 56, left 0, broken 0, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 0, retreat 0, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 4: Ottoman in battle: 56, left 0, broken 0, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 0, retreat 0, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 5: Ottoman in battle: 56, left 0, broken 0, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 0, retreat 0, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 6: Ottoman in battle: 56, left 0, broken 0, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 0, retreat 0, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 7: Ottoman in battle: 56, left 0, broken 0, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 0, retreat 0, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 8: Ottoman in battle: 56, left 0, broken 0, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 0, retreat 0, fight to death 0, dead 0
+Ottoman engaged: 19, Tamerlane engaged: 10
+
+r is 9: Ottoman in battle: 56, left 0, broken 19, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 10, retreat 0, fight to death 0, dead 0
+Ottoman engaged: 8, Tamerlane engaged: 21
+
+r is 10: Ottoman in battle: 56, left 0, broken 27, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 31, retreat 0, fight to death 0, dead 0
+Ottoman engaged: 6, Tamerlane engaged: 12
+
+r is 11: Ottoman in battle: 56, left 0, broken 33, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 43, retreat 1, fight to death 0, dead 0
+Ottoman engaged: 3, Tamerlane engaged: 2
+
+r is 12: Ottoman in battle: 56, left 0, broken 36, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 45, retreat 16, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 13: Ottoman in battle: 56, left 0, broken 36, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 45, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 3, Tamerlane engaged: 1
+
+r is 14: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 15: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 16: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 17: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 18: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 19: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 20: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 61, left 0, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 21: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 59, left 2, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 22: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 59, left 2, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 23: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 57, left 4, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 24: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 54, left 7, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 25: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 51, left 10, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 26: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 48, left 13, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 27: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 47, left 14, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 28: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 47, left 14, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 29: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 47, left 14, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 30: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 31: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 32: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 33: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 34: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 35: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 36: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 37: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 38: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 39: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 40: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 41: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 42: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 43: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 44: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 45: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 46: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 47: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 48: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 49: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 50: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 51: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 52: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 53: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 54: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 55: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 56: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 57: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 58: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 59: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 60: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 61: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 62: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 63: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 64: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 65: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 66: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 67: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 68: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 69: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 70: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 71: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 72: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 73: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 74: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 75: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 76: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 77: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 78: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 79: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 80: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 81: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 82: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 83: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 84: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 85: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 86: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 87: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 88: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 89: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 90: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 91: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 92: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 93: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 94: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 95: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 96: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 97: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 98: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 99: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 100: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 101: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 102: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 103: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 104: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 105: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 106: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 107: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 108: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 109: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 110: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 111: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 112: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 113: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 114: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 115: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 116: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 117: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0
+
+r is 118: Ottoman in battle: 56, left 0, broken 39, retreat 0, fight to death 0, dead 0, betray 0
+	Tamerlane in battle 46, left 15, broken 46, retreat 15, fight to death 0, dead 0
+Ottoman engaged: 0, Tamerlane engaged: 0

@@ -1,0 +1,9 @@
+Constantinople	Offensive	Poisoned	Betrayal	Size Increase	End Rounds	Given Rounds	Result	O_Casualty		T_Casualty
+(0, 1)	(0, 1, 2)	(0, 1)	(0, 1)	[1, 10]			
+----------------------------------------------------------------------------------
+0				0		0				0			1				89			100		Bayezid LOST		0.445506		0.395795
+0				0		0				0			1				101			100		DRAW				0.506702		0.337748
+0				0		0				0			1				135			150		Tamerlane LOST		0.509393		0.334792
+0				0		0				0			1				86			150		Bayezid LOST		0.537262		0.357603
+0				0		0				0			1				86			150		Bayezid LOST		0.537262		0.357603
+

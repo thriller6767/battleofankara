@@ -200,7 +200,7 @@ morale will only influenced by four factors: casualty_rate, fatigue, neighbor an
 void Agent::updateMorale(ConReader cr)
 {
 	double remaining_ratio =  (double)size / (double)initial_size;
-	morale = (int) remaining_ratio * (double)initial_morale;
+	morale = (int) (remaining_ratio * (double)initial_morale);
 
 	//influenced by neighbor
 	if (is_neighbor_broken()) morale -= 10;
@@ -211,7 +211,7 @@ void Agent::updateMorale(ConReader cr)
 	if (is_standing_on_high_ground(cr)) morale += 5;
 
 	//influenced by fatigue
-	if (fatigue >= 25) morale -= 10;
+	if (fatigue >= 25) morale -= 8;
 	else if (fatigue >= 50) morale -= 15;
 	else if (fatigue >= 100) morale -= 20;
 
@@ -410,9 +410,9 @@ bool Agent::is_morale_below_zero()
 	return (morale <= 0);
 }
 
-bool Agent::is_morale_below_10()
+bool Agent::is_morale_below_20()
 {
-	return (morale < 10);
+	return (morale < 20);
 }
 
 bool Agent::is_size_below_50_percent()

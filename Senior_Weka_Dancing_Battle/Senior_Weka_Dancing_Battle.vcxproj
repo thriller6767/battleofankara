@@ -150,7 +150,6 @@
     <ClCompile Include="Battle.cpp" />
     <ClCompile Include="ConReader.cpp" />
     <ClCompile Include="Initial_val_mapper.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="RangeSearch.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Test.cpp" />

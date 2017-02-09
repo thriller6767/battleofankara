@@ -241,7 +241,7 @@ void test_one_battle()
 	int is_water_poisoned = 0;
 	int any_betrayal = 0;
 	int size_increase_ratio = 1;
-	int rounds = 50;
+	int rounds = 150;
 
 	ofstream RESULTFILE("results.txt", ios::app);
 	if (RESULTFILE) {
@@ -249,14 +249,14 @@ void test_one_battle()
 		RESULTFILE << "(0, 1)	" << "(0, 1, 2)	" << "(0, 1)	" << "(0, 1)	" << "[1, 10]		\n";
 		RESULTFILE << "----------------------------------------------------------------------------------\n";
 
-		int i = 1;
-		while (i <= 3) {
+		int i = 6;
+		//while (i <= 3) {
 
-			RESULTFILE << march_from_constantinople << "				" << is_ottoman_offensive << "		" << is_water_poisoned << "				" << any_betrayal << "			" << size_increase_ratio << "		";
+			RESULTFILE << march_from_constantinople << "				" << is_ottoman_offensive << "		" << is_water_poisoned << "				" << any_betrayal << "			" << size_increase_ratio << "				";
 
-			battle.simple_result_of_one_battle(RESULTFILE, i, is_ottoman_offensive, any_betrayal, march_from_constantinople, is_water_poisoned, size_increase_ratio, 100);
-			i++;
-		}
+			battle.simple_result_of_one_battle(RESULTFILE, i, is_ottoman_offensive, any_betrayal, march_from_constantinople, is_water_poisoned, size_increase_ratio, 150);
+		/*	i++;
+		}*/
 	}
 }
 
