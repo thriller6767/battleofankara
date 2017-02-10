@@ -19,8 +19,8 @@
 #define DIRECTION_STANDARD 50
 
 #define SPECIAL_BONUS_TO_ATTACK 20
-#define FATIGUE_INCREASE_IF_ATTACK 5
-#define FATIGUE_INCREASE_IF_MOVE 2
+#define FATIGUE_INCREASE_IF_ATTACK 2
+#define FATIGUE_INCREASE_IF_MOVE 1
 
 /*The precondition of ATTACK is WITHIN ChargeRange. If within ChargeRange, more possibility to ATTACK,
   If an eney's status is ENGAGED, ATTACK.
@@ -39,7 +39,8 @@ public:
 	enum class Actions{IDLE, ATTACK, WITHDRAW, MOVE, RUNING_FOR_LIFE, MAKE_LAST_STAND, DISENGAGE, SHOOT};
 
 	Initial_val_mapper ivm; // for test
-	
+	ConReader cr;
+
 	int simple_result_of_one_battle(std::ofstream& file, int fileIndex, int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds);
 
 	void one_battle(std::ofstream& resultFILE, std::ofstream& file, std::ofstream & agentstat, int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds);
@@ -61,9 +62,7 @@ public:
 private:
 	
 	std::time_t start;
-	double duration;
 	RangeSearch rsTree;
-	ConReader cr;
 
 	int Ottoman_size, Tamerlane_size;
 	
@@ -82,7 +81,7 @@ private:
 
 	/*just for statistcs*/
 	int Ottoman_fight_to_death = 0, Tamerlane_fight_to_death = 0;
-	int Ottoman_dead, Tamerlane_dead, Ottoman_engaged, Tamerlane_engaged, Ottoman_ready, Tamerlane_ready;
+	int Ottoman_dead, Tamerlane_dead, Ottoman_still_fighting, Tamerlane_still_fighting, Ottoman_ready, Tamerlane_ready;
 
 	/*-----------decide which action, and do it------------------*/
 
@@ -118,13 +117,15 @@ private:
 
 	/*There more more than 30% of this side agent in broken or retreat*/
 	bool more_than_70percent_in_flight(int side);
-	bool no_alive_agent_still_fighting(int side);
+	bool no_one_is_able_to_fight(int side);
 	
 	void populate(int poisoned_well, int marching_from_Constantinople);
 	void updateMorale_shootingR_sightR(Agent *a);
 
 	void write_statistics(std::ofstream& RESULTFILE, std::ofstream& file, int r, int rounds);
 	void write_agent_stats(std::ofstream& file, int r, Agent * a);
+
+	void annihilate_all_properties_of_battle();
 };
 
 

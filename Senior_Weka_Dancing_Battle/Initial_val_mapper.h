@@ -32,9 +32,6 @@ public:
 
 	void populate_battlefield(int poisoned_well, int marching_from_Constantinople, ConReader cr);
 	void fancyPrint();
-	bool are_two_agents_overlap(Agent *, Agent *);
-	bool is_thos_agent_overlap_with_any_other(Agent *);
-	bool is_overlap();
 
 	void deleteAllAgent();
 	void printOneUnit();

@@ -79,6 +79,17 @@ public:
 	bool getBetrayBit();//GETTERS
 	/*-----------------------------------------*/
 
+	//remap setters
+	void setSize(int s);
+	void setMorale(int m);
+	void setFatigue(int f);
+	void setAttackDamage(int d);
+	void setBetrayBit(bool b);
+	void setSide(int s);
+	void setSightRange(double r);
+	void setMissleRange(double r);
+
+	/*------------------------------------*/
 	void setCurrentEnemyIndex(int enemy_index);
 	void setFrontLineSize();
 	void updateMorale(ConReader cr);

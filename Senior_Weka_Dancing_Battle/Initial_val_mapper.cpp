@@ -15,32 +15,34 @@ void Initial_val_mapper::populate_battlefield(int poisoned_well, int marching_fr
 {
 	initialVal_fileReader(poisoned_well, marching_from_Constantinople);
 	setRanges(cr);
+	fancyPrint();
 }
 
 void Initial_val_mapper::fancyPrint()
 {
 	Agent * a;
 		printf("Total number of agent is %d\n", AgentList.size());
-		printf("\n---------------\nOttoman side has %d agents, they are: \n", Ottoman_last_index + 1);
+		printf("\n---------------\nOttoman side has %d agents, they are: \n", Ottoman_last_index);
 		printf("________________________________________________________________________________________________\n");
 		printf("NAME		CATEGORY	SIZE	MORALE	FATIGUE	   DIRECTION	AD	MD	RANGE	    ACCURACY	DEFEND	INDEX	POS		Sight_Range	Width	Depth\n");
-		for (int i = 0; i <= Ottoman_last_index; ++i) {
+		for (int i = 0; i < Ottoman_last_index; ++i) {
 			a = AgentList.at(i);
 			(*a).print();
 		}
 
 		printf("\n\n---------------\nTamerlane side has %d agents, they are: \n", AgentList.size() -1- Ottoman_last_index);
-		printf("________________________________________________________________________________________________\n");
+	/*	printf("________________________________________________________________________________________________\n");
 		printf("NAME			CATEGORY	SIZE	MORALE	FATIGUE	   DIRECTION	AD	MD	RANGE	        ACCURACY	DEFEND	INDEX	POS		Sight_Range	Width	Depth\n");
-		for (int i = Ottoman_last_index + 1; i < AgentList.size(); ++i) {
+		for (int i = Ottoman_last_index; i < AgentList.size(); ++i) {
 			a = AgentList.at(i);
 			(*a).print();
-		}
+		}*/
 
 }
 
 int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_from_Constantinople)
 {
+	Ottoman_last_index = 0;
 	ifstream inFile("basicData.txt");
 	if (!inFile) {
 		cerr << "File basicData.txt not found." << endl;
@@ -134,16 +136,18 @@ int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_fr
 		
 		++count;
 	}
+	//fancyPrint();
+
 	return 0;
 }
 
 void Initial_val_mapper::setRanges(ConReader contour)
 {
 	for (Agent * ag : AgentList) {
-		//(*ag).print();
+		//printf("getting shooting range\n");
 		(*ag).updateShootingRange(contour);
 		(*ag).updateSightRange(contour);
-		if ((*ag).is_standing_on_high_ground(contour)) (*ag).increaseAttackDamage(1.2);
+		if ((*ag).is_standing_on_high_ground(contour))  (*ag).increaseAttackDamage(1.2) ;
 	}
 
 }
@@ -202,71 +206,6 @@ int Initial_val_mapper::agentNum(int totalSize, int sizePerAgent)
 bool Initial_val_mapper::valueInRange(double value, double min, double max)
 {
 	return (value > min) && (value < max);
-}
-
-/*
-Return true if two agents overlap 
-*/
-bool Initial_val_mapper::are_two_agents_overlap(Agent * a, Agent * b)
-{
-	double a_y2, a_x1, b_x1, b_y2;
-
-	double a_x0 = (*a).getPos().at(0);
-	double a_y0 = (*a).getPos().at(1);
-	double b_x0 = (*b).getPos().at(0);
-	double b_y0 = (*b).getPos().at(1);
-
-	if ((*a).getDirection() == Agent::Direction::NE || (*a).getDirection() == Agent::Direction::SW) {	
-		a_x1 = a_x0 + (*a).getWidth() / sqrt(2);
-		a_x0 -= (*a).getDepth() / sqrt(2);
-		a_y2 = a_y0 + (*a).getDepth() / sqrt(2) + (*a).getWidth() / sqrt(2);
-	}
-	else if ((*a).getDirection() == Agent::Direction::NW || (*a).getDirection() == Agent::Direction::SE) {
-		a_y2 = a_y0 - (*a).getWidth() / sqrt(2);
-		a_y0 += (*a).getDepth() / sqrt(2);
-		a_x1 = a_x0 + (*a).getDepth() / sqrt(2) + (*a).getWidth() / sqrt(2);
-	}
-	else {
-		a_y2 = a_y0 + (*a).getDepth();
-		a_x1 = a_x0 + (*a).getWidth();
-	}
-
-	if ((*b).getDirection() == Agent::Direction::NE || (*b).getDirection() == Agent::Direction::SW) {
-		b_x1 = b_x0 + (*b).getWidth() / sqrt(2);
-		b_x0 -= (*b).getDepth() / sqrt(2);
-		b_y2 = b_y0 + (*b).getDepth() / sqrt(2) + (*b).getWidth() / sqrt(2);
-	}
-	else if ((*b).getDirection() == Agent::Direction::NW || (*b).getDirection() == Agent::Direction::SE) {
-		b_y2 = b_y0 - (*b).getWidth() / sqrt(2);
-		b_y0 += (*b).getDepth() / sqrt(2);
-		b_x1 = b_x0 + (*b).getDepth() / sqrt(2) + (*b).getWidth() / sqrt(2);
-	}
-	else {
-		b_y2 = b_y0 + (*b).getDepth();
-		b_x1 = b_x0 + (*b).getWidth();
-	}
-
-
-	bool xOverlap = valueInRange(a_x0, b_x0, b_x1 )
-		|| valueInRange(b_x0, a_x0, a_x1);
-
-	bool yOverlap = valueInRange(a_y0, b_y0, b_y2 )
-		|| valueInRange(b_y0, a_y0, a_y2);
-
-	return xOverlap && yOverlap;
-				
-}
-
-bool Initial_val_mapper::is_thos_agent_overlap_with_any_other(Agent * target)
-{
-	bool toReturn = false;
-	for (Agent* agent : AgentList) { if (are_two_agents_overlap(agent, target)) toReturn = true; }
-	return toReturn;
-}
-
-bool Initial_val_mapper::is_overlap()
-{
-	return false;
 }
 
 

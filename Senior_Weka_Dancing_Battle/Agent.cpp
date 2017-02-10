@@ -174,6 +174,48 @@ bool Agent::getBetrayBit()
 	return betray;
 }
 
+void Agent::setSize(int s)
+{
+	size = s;
+	initial_size = s;
+}
+
+void Agent::setMorale(int m)
+{
+	morale = m;
+	initial_morale = m;
+}
+
+void Agent::setFatigue(int f)
+{
+	fatigue = f;
+}
+
+void Agent::setAttackDamage(int d)
+{
+	attack_damage = d;
+}
+
+void Agent::setBetrayBit(bool b)
+{
+	betray = b;
+}
+
+void Agent::setSide(int s)
+{
+	side = s;
+}
+
+void Agent::setSightRange(double r)
+{
+	sight_range = r;
+}
+
+void Agent::setMissleRange(double r)
+{
+	missile_range = r;
+}
+
 /*
 Enemy_index = -1 if this agent is not currently attacking anyone.
 */
@@ -203,17 +245,16 @@ void Agent::updateMorale(ConReader cr)
 	morale = (int) (remaining_ratio * (double)initial_morale);
 
 	//influenced by neighbor
-	if (is_neighbor_broken()) morale -= 10;
-	if (does_neighbor_betray()) morale -= 10;
-	if (is_surrounded()) morale -= 5;
+	if (is_neighbor_broken()) morale -= 3;
+	if (does_neighbor_betray()) morale -= 5;
+	if (is_surrounded()) morale -= 2;
 
 	//influenced by height
 	if (is_standing_on_high_ground(cr)) morale += 5;
 
-	//influenced by fatigue
-	if (fatigue >= 25) morale -= 8;
-	else if (fatigue >= 50) morale -= 15;
-	else if (fatigue >= 100) morale -= 20;
+	//influenced by fatigue*************************************************
+	if (fatigue >= 50 && fatigue < 100) morale -= 1;
+	else if (fatigue >= 100) morale -= 2;
 
 }
 
@@ -294,7 +335,7 @@ void Agent::strengthenMorale()
 
 void Agent::weakenMorale()
 {
-	morale -= 5;
+	morale -= 2;
 }
 
 void Agent::increaseAttackDamage(double rate)
@@ -488,10 +529,10 @@ double Agent::getPos_in_front(int times, ConReader cr )
 	case Agent::Direction::SW: posInFront = { pos[0] - getRightTriangleSide(SAMLE_POINT_DISTANCE * times), pos[1] - getRightTriangleSide(SAMLE_POINT_DISTANCE*times) };  break;
 	}
 
-	if (posInFront[0] < 0) { posInFront[0] = 0; return -1.0; }
-	if (posInFront[1] < 0) {posInFront[1] = 0; return -1.0;}
-	if (posInFront[0] > SAMLE_POINT_DISTANCE * 19) { posInFront[0] = SAMLE_POINT_DISTANCE * 19; return -1.0; }
-	if (posInFront[1] > SAMLE_POINT_DISTANCE * 24) {posInFront[1] = SAMLE_POINT_DISTANCE * 24; return -1.0; }
+	if (posInFront[0] <= 0) { posInFront[0] = 0; return -1.0; }
+	if (posInFront[1] <= 0) {posInFront[1] = 0; return -1.0;}
+	if (posInFront[0] >= SAMLE_POINT_DISTANCE * 19) { posInFront[0] = SAMLE_POINT_DISTANCE * 19; return -1.0; }
+	if (posInFront[1] >= SAMLE_POINT_DISTANCE * 24) {posInFront[1] = SAMLE_POINT_DISTANCE * 24; return -1.0; }
 
 
 	return cr.getHeight(posInFront);
@@ -501,8 +542,8 @@ double Agent::getPos_in_front(int times, ConReader cr )
 double Agent::getPlace_of_max_sight_range(double height, ConReader cr) 
 {
 	int i = 1;
-	double height_in_front = getPos_in_front(i, cr); // get the altitude of a place 500m forward
 
+	double height_in_front = getPos_in_front(i, cr); // get the altitude of a place 500m forward
 	while (height_in_front != -1.0    // not out of the battelfield
 		&& (height_in_front <= height  || (height_in_front > height && height_in_front <= getPos_in_front(i + 1, cr)))
 		)

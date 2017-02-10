@@ -5,5 +5,6 @@ Constantinople	Offensive	Poisoned	Betrayal	Size Increase	End Rounds	Given Rounds
 0				0		0				0			1				101			100		DRAW				0.506702		0.337748
 0				0		0				0			1				135			150		Tamerlane LOST		0.509393		0.334792
 0				0		0				0			1				86			150		Bayezid LOST		0.537262		0.357603
-0				0		0				0			1				86			150		Bayezid LOST		0.537262		0.357603
-
+0				0		0				0			1				151			150		DRAW				0.519488		0.382875
+0				0		0				0			1				151			150		DRAW				0.656893		0.349872
+0				0		0				0			1				

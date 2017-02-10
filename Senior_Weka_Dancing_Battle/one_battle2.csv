@@ -1,0 +1,649 @@
+one battle with attributes : is_ottoman_offensive = 0, betrayal = 0, march_from_constantinople = 0, is_water_poisoned = 0, size_increase = 0, rounds = 160
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 1,56,0,56,0,0,0,56,0,0, 
+Tamerlane, 1,61,0,61,0,0,0,61,0,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 2,56,0,56,0,0,0,56,0,0, 
+Tamerlane, 2,61,0,61,0,0,0,61,0,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 3,56,0,56,0,0,0,56,0,0, 
+Tamerlane, 3,61,0,61,0,0,0,61,0,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 4,56,0,56,0,0,0,56,0,0, 
+Tamerlane, 4,61,0,61,0,0,0,61,0,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 5,56,0,56,0,0,0,56,0,0, 
+Tamerlane, 5,61,0,61,0,0,0,61,0,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 6,56,0,56,0,0,0,56,0,0, 
+Tamerlane, 6,61,0,61,0,0,0,61,0,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 7,56,0,56,0,0,0,55,1,0, 
+Tamerlane, 7,61,0,61,0,0,0,60,1,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 8,56,0,56,0,0,0,38,18,0, 
+Tamerlane, 8,61,0,61,0,0,0,46,15,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 9,56,0,56,0,0,0,27,29,0, 
+Tamerlane, 9,61,0,61,0,0,0,28,33,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 10,56,0,56,0,0,0,23,33,0, 
+Tamerlane, 10,61,0,61,0,0,0,22,39,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 11,56,0,56,0,0,0,21,35,0, 
+Tamerlane, 11,61,0,61,0,0,0,14,47,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 12,56,0,56,0,0,0,20,36,0, 
+Tamerlane, 12,61,0,61,0,0,0,11,50,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 13,56,0,56,0,1,0,20,35,0, 
+Tamerlane, 13,61,0,61,0,1,0,13,47,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 14,56,0,56,0,5,0,16,35,0, 
+Tamerlane, 14,61,0,61,0,1,0,17,43,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 15,56,0,56,0,10,0,15,31,0, 
+Tamerlane, 15,61,0,61,0,1,0,22,38,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 16,56,0,56,0,11,0,16,29,0, 
+Tamerlane, 16,61,0,61,0,2,0,17,42,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 17,56,0,56,0,13,0,15,28,0, 
+Tamerlane, 17,61,0,61,0,3,0,20,38,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 18,56,0,56,0,17,0,19,20,0, 
+Tamerlane, 18,61,0,61,0,4,0,26,31,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 19,56,0,56,0,22,0,16,18,0, 
+Tamerlane, 19,61,0,61,0,4,0,25,32,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 20,56,0,56,0,27,0,19,10,0, 
+Tamerlane, 20,61,0,61,0,4,0,34,23,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 21,56,0,56,0,29,0,20,7,0, 
+Tamerlane, 21,61,0,61,0,5,0,26,30,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 22,56,0,56,0,31,0,20,5,0, 
+Tamerlane, 22,61,0,61,0,5,0,36,20,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 23,56,0,56,0,31,0,19,6,0, 
+Tamerlane, 23,61,0,61,0,5,0,26,30,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 24,56,0,56,0,31,0,19,6,0, 
+Tamerlane, 24,61,0,61,0,5,0,32,24,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 25,56,0,56,0,33,0,17,6,0, 
+Tamerlane, 25,61,0,61,0,5,0,31,25,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 26,56,0,56,0,35,0,16,5,0, 
+Tamerlane, 26,61,0,61,0,5,0,34,22,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 27,56,0,56,0,36,0,16,4,0, 
+Tamerlane, 27,61,0,61,0,5,0,27,29,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 28,56,0,56,0,36,0,15,5,0, 
+Tamerlane, 28,61,0,61,0,5,0,24,32,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 29,56,0,56,0,37,0,10,9,0, 
+Tamerlane, 29,61,0,61,0,5,0,29,27,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 30,56,0,56,0,37,0,10,9,0, 
+Tamerlane, 30,61,0,61,0,5,0,22,34,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 31,56,0,56,0,38,0,10,8,0, 
+Tamerlane, 31,61,0,61,0,5,0,30,26,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 32,56,0,56,0,39,0,10,7,0, 
+Tamerlane, 32,61,0,61,0,5,0,27,29,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 33,56,0,56,0,39,0,10,7,0, 
+Tamerlane, 33,61,0,61,0,6,0,32,23,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 34,56,0,56,0,40,0,12,4,0, 
+Tamerlane, 34,61,0,61,0,6,0,27,28,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 35,56,0,56,0,40,0,12,4,0, 
+Tamerlane, 35,61,0,61,0,7,0,35,19,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 36,56,0,56,0,40,0,14,2,0, 
+Tamerlane, 36,61,0,61,0,7,0,28,26,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 37,56,0,56,0,40,0,12,4,0, 
+Tamerlane, 37,61,0,61,0,7,0,36,18,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 38,56,0,54,2,40,0,14,2,0, 
+Tamerlane, 38,61,0,61,0,8,0,30,23,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 39,56,0,50,6,41,0,11,4,0, 
+Tamerlane, 39,61,0,61,0,8,0,33,20,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 40,56,0,47,9,42,0,12,2,0, 
+Tamerlane, 40,61,0,61,0,8,0,35,18,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 41,56,0,47,9,42,0,11,3,0, 
+Tamerlane, 41,61,0,61,0,9,0,37,15,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 42,56,0,47,9,42,0,11,3,0, 
+Tamerlane, 42,61,0,61,0,9,0,39,13,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 43,56,0,45,11,42,0,9,5,0, 
+Tamerlane, 43,61,0,61,0,9,0,35,17,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 44,56,0,45,11,43,0,11,2,0, 
+Tamerlane, 44,61,0,61,0,9,0,43,9,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 45,56,0,44,12,43,0,9,4,0, 
+Tamerlane, 45,61,0,61,0,9,0,35,17,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 46,56,0,43,13,43,0,10,3,0, 
+Tamerlane, 46,61,0,61,0,9,0,42,10,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 47,56,0,43,13,43,0,9,4,0, 
+Tamerlane, 47,61,0,61,0,9,0,35,17,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 48,56,0,43,13,43,0,9,4,0, 
+Tamerlane, 48,61,0,61,0,9,0,43,9,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 49,56,0,43,13,43,0,9,4,0, 
+Tamerlane, 49,61,0,61,0,10,0,34,17,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 50,56,0,43,13,43,0,8,5,0, 
+Tamerlane, 50,61,0,61,0,10,0,40,11,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 51,56,0,43,13,43,0,3,10,0, 
+Tamerlane, 51,61,0,61,0,10,0,33,18,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 52,56,0,42,14,44,0,4,8,0, 
+Tamerlane, 52,61,0,61,0,10,0,42,9,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 53,56,0,41,15,44,0,3,9,0, 
+Tamerlane, 53,61,0,61,0,10,0,33,18,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 54,56,0,41,15,44,0,4,8,0, 
+Tamerlane, 54,61,0,61,0,11,0,42,8,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 55,56,0,41,15,44,0,5,7,0, 
+Tamerlane, 55,61,0,61,0,11,0,37,13,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 56,56,0,41,15,45,0,3,8,0, 
+Tamerlane, 56,61,0,61,0,11,0,41,9,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 57,56,0,41,15,45,0,5,6,0, 
+Tamerlane, 57,61,0,61,0,11,0,38,12,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 58,56,0,40,16,45,0,3,8,0, 
+Tamerlane, 58,61,0,61,0,11,0,41,9,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 59,56,0,39,17,46,0,4,6,0, 
+Tamerlane, 59,61,0,61,0,11,0,39,11,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 60,56,0,39,17,46,0,3,7,0, 
+Tamerlane, 60,61,0,61,0,11,0,43,7,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 61,56,0,39,17,46,0,4,6,0, 
+Tamerlane, 61,61,0,61,0,12,0,44,5,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 62,56,0,39,17,46,0,4,6,0, 
+Tamerlane, 62,61,0,61,0,13,0,43,5,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 63,56,0,39,17,46,0,5,5,0, 
+Tamerlane, 63,61,0,61,0,13,0,44,4,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 64,56,0,39,17,46,0,4,6,0, 
+Tamerlane, 64,61,0,61,0,13,0,42,6,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 65,56,0,39,17,46,0,5,5,0, 
+Tamerlane, 65,61,0,61,0,13,0,44,4,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 66,56,0,39,17,46,0,4,6,0, 
+Tamerlane, 66,61,0,61,0,13,0,42,6,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 67,56,0,39,17,46,0,5,5,0, 
+Tamerlane, 67,61,0,61,0,13,0,44,4,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 68,56,0,38,18,47,0,4,5,0, 
+Tamerlane, 68,61,0,61,0,14,0,43,4,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 69,56,0,38,18,47,0,7,2,0, 
+Tamerlane, 69,61,0,61,0,14,0,43,4,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 70,56,0,38,18,47,0,4,5,0, 
+Tamerlane, 70,61,0,61,0,14,0,44,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 71,56,0,38,18,48,0,6,2,0, 
+Tamerlane, 71,61,0,61,0,14,0,43,4,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 72,56,0,38,18,48,0,4,4,0, 
+Tamerlane, 72,61,0,61,0,14,0,44,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 73,56,0,38,18,48,0,5,3,0, 
+Tamerlane, 73,61,0,61,0,14,0,42,5,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 74,56,0,38,18,48,0,1,7,0, 
+Tamerlane, 74,61,0,61,0,14,0,42,5,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 75,56,0,38,18,48,0,2,6,0, 
+Tamerlane, 75,61,0,61,0,14,0,42,5,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 76,56,0,38,18,48,0,1,7,0, 
+Tamerlane, 76,61,0,61,0,14,0,42,5,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 77,56,0,38,18,48,0,0,8,0, 
+Tamerlane, 77,61,0,61,0,14,0,42,5,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 78,56,0,38,18,48,0,1,7,0, 
+Tamerlane, 78,61,0,61,0,14,0,42,5,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 79,56,0,38,18,48,0,0,8,0, 
+Tamerlane, 79,61,0,61,0,15,0,42,4,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 80,56,0,38,18,48,0,4,4,0, 
+Tamerlane, 80,61,0,61,0,15,0,42,4,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 81,56,0,38,18,48,0,0,8,0, 
+Tamerlane, 81,61,0,61,0,15,0,42,4,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 82,56,0,38,18,49,0,3,4,0, 
+Tamerlane, 82,61,0,61,0,15,0,43,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 83,56,0,38,18,49,0,0,7,0, 
+Tamerlane, 83,61,0,61,0,15,0,42,4,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 84,56,0,38,18,49,0,3,4,0, 
+Tamerlane, 84,61,0,61,0,15,0,43,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 85,56,0,38,18,49,0,0,7,0, 
+Tamerlane, 85,61,0,61,0,15,0,40,6,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 86,56,0,38,18,49,0,3,4,0, 
+Tamerlane, 86,61,0,61,0,15,0,43,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 87,56,0,38,18,49,0,0,7,0, 
+Tamerlane, 87,61,0,61,0,15,0,40,6,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 88,56,0,38,18,49,0,3,4,0, 
+Tamerlane, 88,61,0,61,0,15,0,43,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 89,56,0,38,18,49,0,0,7,0, 
+Tamerlane, 89,61,0,61,0,15,0,41,5,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 90,56,0,38,18,50,0,2,4,0, 
+Tamerlane, 90,61,0,61,0,15,0,43,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 91,56,0,38,18,50,0,0,6,0, 
+Tamerlane, 91,61,0,61,0,15,0,41,5,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 92,56,0,38,18,50,0,2,4,0, 
+Tamerlane, 92,61,0,61,0,15,0,43,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 93,56,0,38,18,50,0,0,6,0, 
+Tamerlane, 93,61,0,61,0,15,0,41,5,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 94,56,0,38,18,50,0,2,4,0, 
+Tamerlane, 94,61,0,61,0,15,0,43,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 95,56,0,38,18,51,0,0,5,0, 
+Tamerlane, 95,61,0,61,0,15,0,41,5,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 96,56,0,38,18,51,0,1,4,0, 
+Tamerlane, 96,61,0,61,0,15,0,43,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 97,56,0,38,18,51,0,0,5,0, 
+Tamerlane, 97,61,0,61,0,15,0,41,5,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 98,56,0,38,18,51,0,0,5,0, 
+Tamerlane, 98,61,0,61,0,15,0,43,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 99,56,0,38,18,51,0,0,5,0, 
+Tamerlane, 99,61,0,61,0,15,0,41,5,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 100,56,0,38,18,51,0,0,5,0, 
+Tamerlane, 100,61,0,61,0,15,0,43,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 101,56,0,38,18,52,0,0,4,0, 
+Tamerlane, 101,61,0,61,0,15,0,42,4,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 102,56,0,38,18,52,0,0,4,0, 
+Tamerlane, 102,61,0,61,0,16,0,43,2,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 103,56,0,38,18,52,0,3,1,0, 
+Tamerlane, 103,61,0,61,0,16,0,42,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 104,56,0,38,18,52,0,0,4,0, 
+Tamerlane, 104,61,0,61,0,16,0,42,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 105,56,0,38,18,52,0,1,3,0, 
+Tamerlane, 105,61,0,61,0,16,0,42,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 106,56,0,38,18,52,0,0,4,0, 
+Tamerlane, 106,61,0,61,0,16,0,42,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 107,56,0,38,18,52,0,0,4,0, 
+Tamerlane, 107,61,0,61,0,16,0,42,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 108,56,0,38,18,52,0,0,4,0, 
+Tamerlane, 108,61,0,61,0,16,0,42,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 109,56,0,38,18,52,0,0,4,0, 
+Tamerlane, 109,61,0,61,0,17,0,42,2,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 110,56,0,38,18,52,0,3,1,0, 
+Tamerlane, 110,61,0,61,0,17,0,42,2,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 111,56,0,38,18,52,0,0,4,0, 
+Tamerlane, 111,61,0,61,0,17,0,43,1,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 112,56,0,38,18,52,0,3,1,0, 
+Tamerlane, 112,61,0,61,0,17,0,42,2,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 113,56,0,38,18,52,0,0,4,0, 
+Tamerlane, 113,61,0,61,0,17,0,43,1,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 114,56,0,38,18,52,0,3,1,0, 
+Tamerlane, 114,61,0,61,0,17,0,42,2,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 115,56,0,38,18,52,0,0,4,0, 
+Tamerlane, 115,61,0,61,0,17,0,43,1,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 116,56,0,38,18,52,0,3,1,0, 
+Tamerlane, 116,61,0,61,0,17,0,42,2,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 117,56,0,38,18,52,0,0,4,0, 
+Tamerlane, 117,61,0,61,0,17,0,43,1,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 118,56,0,38,18,52,0,2,2,0, 
+Tamerlane, 118,61,0,61,0,17,0,42,2,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 119,56,0,38,18,52,0,0,4,0, 
+Tamerlane, 119,61,0,61,0,17,0,42,2,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 120,56,0,38,18,52,0,2,2,0, 
+Tamerlane, 120,61,0,61,0,17,0,42,2,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 121,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 121,61,0,61,0,17,0,42,2,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 122,56,0,38,18,53,0,2,1,0, 
+Tamerlane, 122,61,0,61,0,17,0,42,2,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 123,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 123,61,0,61,0,17,0,42,2,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 124,56,0,38,18,53,0,2,1,0, 
+Tamerlane, 124,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 125,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 125,61,0,61,0,17,0,42,2,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 126,56,0,38,18,53,0,2,1,0, 
+Tamerlane, 126,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 127,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 127,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 128,56,0,38,18,53,0,1,2,0, 
+Tamerlane, 128,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 129,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 129,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 130,56,0,38,18,53,0,1,2,0, 
+Tamerlane, 130,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 131,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 131,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 132,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 132,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 133,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 133,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 134,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 134,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 135,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 135,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 136,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 136,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 137,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 137,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 138,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 138,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 139,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 139,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 140,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 140,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 141,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 141,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 142,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 142,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 143,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 143,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 144,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 144,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 145,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 145,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 146,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 146,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 147,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 147,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 148,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 148,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 149,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 149,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 150,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 150,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 151,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 151,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 152,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 152,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 153,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 153,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 154,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 154,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 155,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 155,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 156,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 156,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 157,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 157,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 158,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 158,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 159,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 159,61,0,61,0,17,0,41,3,0, 
+
+side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, 
+Ottoman, 160,56,0,38,18,53,0,0,3,0, 
+Tamerlane, 160,61,0,61,0,17,0,41,3,0, 
+
+
+
+DRAW,
+
+total Ottoman soldiers, killed, in battlefield, left, total kill rate,
+84000,68750,79492,4508,0.818452,
+148500,61246,148500,0,0.412431,

@@ -8,7 +8,6 @@
 #include "RangeSearch.h"
 
 using namespace std;
-
 Battle battle;
 RangeSearch kdtree;
 
@@ -29,7 +28,11 @@ void test_one_battle();
 
 void test_attack_damage();
 
-int main() {
+void test_remapper();
+int test();
+
+int test() {
+
 
 	//battle.initiate_battle(0, 0, 1);
 	//test_attack_damage();
@@ -45,8 +48,9 @@ int main() {
 
 	//battle.deleteAllAgent();
 
-	test_one_battle();
+	//test_one_battle();
 
+	test_remapper();
 	//printf(" 0.1 * 56 is %d\n", (int) (0.1 * 56));
 	//test_while();
 
@@ -243,20 +247,20 @@ void test_one_battle()
 	int size_increase_ratio = 1;
 	int rounds = 150;
 
-	ofstream RESULTFILE("results.txt", ios::app);
+	battle.cr.loadAltitude();
+	battle.ivm.populate_battlefield(is_water_poisoned, march_from_constantinople, battle.cr);
+	ofstream RESULTFILE("results.csv", ios::app);
+
 	if (RESULTFILE) {
-		RESULTFILE << "Constantinople	" << "Offensive	" << "Poisoned	" << "Betrayal	" << "Size Increase	" << "End Rounds	" <<"Given Rounds	" <<  "Result	O_Casualty		T_Casualty\n";
-		RESULTFILE << "(0, 1)	" << "(0, 1, 2)	" << "(0, 1)	" << "(0, 1)	" << "[1, 10]		\n";
-		RESULTFILE << "----------------------------------------------------------------------------------\n";
+		RESULTFILE << "Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, T_Casualty, \n";
+		int i = 1;
+		while (i <= 9) {
 
-		int i = 6;
-		//while (i <= 3) {
+			RESULTFILE << march_from_constantinople << "," << is_ottoman_offensive <<" ," << is_water_poisoned << "," << any_betrayal << "," << size_increase_ratio << ",";
 
-			RESULTFILE << march_from_constantinople << "				" << is_ottoman_offensive << "		" << is_water_poisoned << "				" << any_betrayal << "			" << size_increase_ratio << "				";
-
-			battle.simple_result_of_one_battle(RESULTFILE, i, is_ottoman_offensive, any_betrayal, march_from_constantinople, is_water_poisoned, size_increase_ratio, 150);
-		/*	i++;
-		}*/
+			battle.simple_result_of_one_battle(RESULTFILE, i, is_ottoman_offensive, any_betrayal, march_from_constantinople, is_water_poisoned, size_increase_ratio, rounds + 5*i);
+			i++;
+		}
 	}
 }
 
@@ -267,5 +271,22 @@ void test_attack_damage()
 
 
 	printf(" A -> B DAMAGE is %d\n", (*a).attack_damage_delivered(0, (*b).getArmorDefence()));
+}
+
+void test_remapper()
+{
+	battle.cr.loadAltitude();
+	battle.ivm.populate_battlefield(0, 0, battle.cr);
+
+	(*battle.ivm.AgentList[0]).changeAgentState(DEAD);
+	printf("state should be 222 , it is %d\n", (*battle.ivm.AgentList[0]).getAgentState());
+
+	battle.ivm.deleteAllAgent();
+	battle.ivm.AgentList.clear();
+
+	battle.ivm.populate_battlefield(0, 0, battle.cr);
+	
+	printf("now agent 0 state is %d\n", (*battle.ivm.AgentList[0]).getAgentState());
+
 }
 
