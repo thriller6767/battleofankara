@@ -9,4 +9,8 @@ Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given 
 0,0 ,0,0,0,170,170,DRAW, 0.898583,0.101417,0.528848,0,
 0,0 ,0,0,0,170,170,DRAW, 0.609548,0.0005,0.753939,0.245273,
 0,0 ,0,0,0,170,170,DRAW, 0.996667,0.00259524,0.751246,0.000632997,
-0,0 ,0,0,0,
+0,0 ,0,0,0,Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend
+0,0 ,0,0,0,170,170,DRAW, 0.898583,0.101417,0.528848,0,Ottoman Might Lost, 
+0,0 ,0,0,0,170,170,DRAW, 0.609548,0.0005,0.753939,0.245273,Tamerlane Might Lost, 
+0,0 ,0,0,0,170,170,DRAW, 0.996667,0.00259524,0.751246,0.000632997,Ottoman Might Lost, 
+0,0 ,0,0,0,58,170,Bayezid LOST,0.945964,0.00185714,0.723212,0.00102357,Ottoman Might Lost, 

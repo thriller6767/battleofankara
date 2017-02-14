@@ -496,8 +496,19 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 				if ((*a).getSide() == Tamerlane) ++Tamerlane_retreat;
 
 			}
-			else {}
-			//remain still
+			else {
+				Agent * e_in_neighbor = find_enemy_in_neighbor(a);
+				if (e_in_neighbor != nullptr) {
+
+					int random = rand() % 2;
+
+					if (random == 0) charge_newly_chosen_enemy(a, e_in_neighbor);
+					else {
+						charge_newly_chosen_enemy(a, chooseTheWeakestEnemy(a));
+					}
+				}
+				else {}//remain still
+			}		
 		}
 		break;
 	case RETREAT: 
