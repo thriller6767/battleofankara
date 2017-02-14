@@ -1,2 +1,11 @@
-﻿  Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.exe
+﻿  main.cpp
+  Battle.cpp
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(91): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(123): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(839): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(942): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(850): warning C4715: 'Battle::distance_between_two_points': not all control paths return a value
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(944): warning C4700: uninitialized local variable 'x_dis' used
+  Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.exe
   Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.pdb (Full PDB)

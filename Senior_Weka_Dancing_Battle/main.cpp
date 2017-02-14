@@ -41,7 +41,7 @@ void run(int rounds)
 
 	if (RESULTFILE) {
 		RESULTFILE << "Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend\n";
-		int i = 0;
+		int i = 3;
 		while (i <= 6) {
 
 			RESULTFILE << march_from_constantinople << "," << is_ottoman_offensive << " ," << is_water_poisoned << "," << any_betrayal << "," << size_increase_ratio << ",";
