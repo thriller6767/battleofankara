@@ -30,7 +30,9 @@
 class Initial_val_mapper {
 public:
 
-	void populate_battlefield(int poisoned_well, int marching_from_Constantinople, ConReader cr);
+	void remapping(int poisoned_well, int marching_from_Constantinople, bool betray,ConReader cr);
+
+	void populate_battlefield(int poisoned_well, int marching_from_Constantinople, bool betray,  ConReader cr);
 	void fancyPrint();
 
 	void deleteAllAgent();
@@ -42,7 +44,8 @@ public:
 
 private:
 
-	int initialVal_fileReader(int poisoned_well, int marching_from_Constantinople);
+	int remapper(int poisoned_well, int marching_from_Constantinople, bool betray);
+	int initialVal_fileReader(int poisoned_well, int marching_from_Constantinople, bool betray);
 	void setRanges(ConReader contour);
 
 	Agent::Direction chooseDir(std::string dir);

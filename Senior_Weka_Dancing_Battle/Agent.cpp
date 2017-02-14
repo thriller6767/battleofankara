@@ -56,8 +56,8 @@ string Agent::printCate()
 }
 
 Agent::Agent(Name n, Category t, Direction d, int sid, int siz, int mor, int fat, double sr, int ad, int md, double mr, double acc, int armor, int index, vector<int> p, int f, double ratio, double wi, double de, int currentEnemyIndex, bool b) :
-	name(n), type(t), dir(d), side(sid), size(siz), initial_size(siz), morale(mor), fatigue(fat), sight_range(sr), attack_damage(ad),
-	missile_damage(md), missile_range(mr), accuracy(acc), armor_defence(armor), agent_Index(index), pos(p), agent_state(f), missile_range_ratio(ratio),
+	name(n), type(t), dir(d), side(sid), size(siz), initial_size(siz), morale(mor), initial_morale(mor), fatigue(fat), sight_range(sr), attack_damage(ad), initial_ad(ad),
+	missile_damage(md), missile_range(mr), accuracy(acc), armor_defence(armor), agent_Index(index), pos(p), initial_pos(p),agent_state(f), missile_range_ratio(ratio),
 	width(wi), depth(de), current_enemy_index_this_agent_is_attacking(currentEnemyIndex), betray(b){}
 
 
@@ -174,6 +174,21 @@ bool Agent::getBetrayBit()
 	return betray;
 }
 
+int Agent::getInitialMorale()
+{
+	return initial_morale;
+}
+
+std::vector<int> Agent::getInitialPos()
+{
+	return initial_pos;
+}
+
+int Agent::getInitialAd()
+{
+	return initial_ad;
+}
+
 void Agent::setSize(int s)
 {
 	size = s;
@@ -241,9 +256,12 @@ morale will only influenced by four factors: casualty_rate, fatigue, neighbor an
 */
 void Agent::updateMorale(ConReader cr)
 {
-	double remaining_ratio =  (double)size / (double)initial_size;
-	morale = (int) (remaining_ratio * (double)initial_morale);
-
+	double remaining_ratio = (double)size / (double)initial_size;
+	double morale_d = remaining_ratio * (double)initial_morale;
+	morale = (int)morale_d;
+	if (agent_Index == 100){
+		printf("size is %d, now morale is %d, state is %s, fatigue is %d\n", size, morale, printState().c_str(), fatigue);
+	}
 	//influenced by neighbor
 	if (is_neighbor_broken()) morale -= 3;
 	if (does_neighbor_betray()) morale -= 5;
@@ -340,22 +358,30 @@ void Agent::weakenMorale()
 
 void Agent::increaseAttackDamage(double rate)
 {
-	attack_damage = (int) attack_damage* rate;
+	double attack = (double)attack_damage* rate;
+	attack_damage = (int) attack ;
 }
 
 int Agent::attack_damage_delivered(int special_bonus, double enemy_defend)
 {
-	double attack = ((double)attack_damage + (double)special_bonus - enemy_defend -  fatigue);
+	double attack = ((double)attack_damage + (double)special_bonus - enemy_defend - 0.2*(double) fatigue);
 
 	if (attack <= 0.0) return 1;
-	else return (int) (((double)size/(double)initial_size) * attack);
+	else {
+		double deliver = ((double)size / (double)initial_size) * attack;
+		if (deliver <= 1.0) return 1;
+		return (int)deliver;
+	}
 }
 
 int Agent::missile_damage_delivered(double enemy_defend)
 {
 	double missile = (double)missile_damage * (double)(accuracy) -(double)fatigue - enemy_defend;
 	if (missile <= 0) return 1;
-	else return (int)(((double)size / (double)initial_size) * missile);
+	else {
+		double deliver = ((double)size / (double)initial_size) * missile;
+		return (int)deliver;
+	}
 }
 
 void Agent::add_neighbor(Agent * neighbor)
@@ -565,6 +591,18 @@ void Agent::print()
 		missile_range, accuracy, armor_defence, agent_Index, pos[0], pos[1], sight_range, (int)width, (int)depth);
 }
 
+string Agent::printState()
+{
+	switch (agent_state) {
+	case READY: return "READY";
+	case ENGAGED: return "ENGAGED";
+	case BROKEN: return "BROKEN";
+	case RETREAT: return "RETREAT";
+	case DEAD: return "DEAD";
+	case FIGHT_TO_DEATH: return "FIGHT TO D";
+	}
+}
+
 void Agent::print_neighbors()
 {
 	printf("Agent %d's neighbors: ", agent_Index);
@@ -624,6 +662,7 @@ Agent::Builder & Agent::Builder::initSize(int size)
 Agent::Builder & Agent::Builder::initMorale(int morale)
 {
 	this->morale = morale;
+	this->initial_morale = morale;
 	return *this;
 }
 
@@ -711,11 +750,6 @@ Agent:: Builder & Agent::Builder::initBetrayBoolean(bool b)
 	return *this;
 }
 
-Agent::Builder & Agent::Builder::initInitialMorale(int morale)
-{
-	this->initial_morale = morale;
-	return *this;
-}
 
 Agent* Agent::Builder::build()
 {

@@ -135,16 +135,22 @@ void RangeSearch::rangeSearch(node * n, Agent * agent, double range, int which_s
 			int distance = sqrt(pow(n->x - x, 2) + pow(n->y - y, 2));
 
 			if (distance != 0 && distance <= range) {
-				if (which_search == neighbor_search && (*n->ag).is_alive && (*n->ag).in_battlefield) {
-					(*agent).add_neighbor(n->ag);
+				if (n->ag != nullptr) {
+
+					if (which_search == neighbor_search && (*n->ag).is_alive && (*n->ag).in_battlefield) {
+						(*agent).add_neighbor(n->ag);
+					}
+					else if (which_search == enemies_in_sight_search && (*agent).getSide() != (*n->ag).getSide()
+						&& is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield) {
+						(*agent).add_enemies(n->ag);
+					}
+					else if (which_search == enemies_in_shooting_search && (*agent).getSide() != (*n->ag).getSide()
+						&& is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield) {
+						(*agent).add_enemies_to_shoot(n->ag);
+					}
 				}
-				else if (which_search == enemies_in_sight_search && (*agent).getSide() != (*n->ag).getSide()
-						 && is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield){
-					(*agent).add_enemies(n->ag);
-				}
-				else if (which_search == enemies_in_shooting_search && (*agent).getSide() != (*n->ag).getSide()
-					     && is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield) {
-					(*agent).add_enemies_to_shoot(n->ag);
+				else {
+					printf("\nnullptr---------------\n");
 				}
 			}
 			// if agent is within the left boundary of n
@@ -169,17 +175,22 @@ void RangeSearch::rangeSearch(node * n, Agent * agent, double range, int which_s
 
 			int distance = sqrt(pow(n->x - x, 2) + pow(n->y - y, 2));
 			if (distance != 0 && distance <= range) {
+				if (n->ag != nullptr) {
 
-				if (which_search == neighbor_search && (*n->ag).is_alive && (*n->ag).in_battlefield) {
-					(*agent).add_neighbor(n->ag);
+					if (which_search == neighbor_search && (*n->ag).is_alive && (*n->ag).in_battlefield) {
+						(*agent).add_neighbor(n->ag);
+					}
+					else if (which_search == enemies_in_sight_search && (*agent).getSide() != (*n->ag).getSide()
+						&& is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield) {
+						(*agent).add_enemies(n->ag);
+					}
+					else if (which_search == enemies_in_shooting_search && (*agent).getSide() != (*n->ag).getSide()
+						&& is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield) {
+						(*agent).add_enemies_to_shoot(n->ag);
+					}
 				}
-				else if (which_search == enemies_in_sight_search && (*agent).getSide() != (*n->ag).getSide()
-					&& is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield) {
-					(*agent).add_enemies(n->ag);
-				}
-				else if (which_search == enemies_in_shooting_search && (*agent).getSide() != (*n->ag).getSide()
-					&& is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield) {
-					(*agent).add_enemies_to_shoot(n->ag);
+				else {
+					printf("\nnullptr!------------\n");
 				}
 			}
 			// if agent is within the left boundary of n

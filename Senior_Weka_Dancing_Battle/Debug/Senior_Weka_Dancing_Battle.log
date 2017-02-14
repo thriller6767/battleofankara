@@ -1,14 +1,2 @@
-﻿  Agent.cpp
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(230): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(231): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(233): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(234): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(326): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(327): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(328): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(343): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(500): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(500): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(510): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-  Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.exe
+﻿  Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.exe
   Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.pdb (Full PDB)

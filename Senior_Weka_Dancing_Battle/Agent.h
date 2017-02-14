@@ -76,7 +76,11 @@ public:
 	int getIndex();
 	double getHeight(ConReader); 
 	int getCurrentEnemyIndex();
-	bool getBetrayBit();//GETTERS
+	bool getBetrayBit();
+	int getInitialMorale();
+	std::vector<int> getInitialPos();
+	int getInitialAd();
+//GETTERS
 	/*-----------------------------------------*/
 
 	//remap setters
@@ -136,6 +140,7 @@ public:
 
 	/*------------print--------------------------------*/
 	void print();
+	std::string printState();
 	void print_neighbors();
 	void print_enemies();
 	std::string printName();
@@ -146,6 +151,7 @@ private:
 	Direction dir;
 	int side;
 	std::vector<int> pos;
+	std::vector<int>initial_pos;
 	int size;
 	int initial_size;
 	int initial_morale;
@@ -156,6 +162,7 @@ private:
 	double depth;
 	double sight_range;
 	int attack_damage;
+	int initial_ad;
 	int missile_damage;
 	double missile_range;
 	double accuracy;
@@ -233,7 +240,6 @@ public:
 	Builder& initDepth(double depth);
 	Builder& initCurrentEenemy(int index);
 	Builder& initBetrayBoolean(bool b);
-	Builder& initInitialMorale(int morale);
 
 	Agent* build();
 

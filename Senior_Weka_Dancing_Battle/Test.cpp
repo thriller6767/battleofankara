@@ -226,7 +226,7 @@ void test_range_search_in_battle()
 void test_while()
 {
 	int c = 1;
-	battle.initiate_battle(0, 0, 1);
+	//battle.initiate_battle(0, 0, 1);
 	
 	while (c <= 2){
 		battle.put_rangetree_boundaries();
@@ -248,7 +248,7 @@ void test_one_battle()
 	int rounds = 150;
 
 	battle.cr.loadAltitude();
-	battle.ivm.populate_battlefield(is_water_poisoned, march_from_constantinople, battle.cr);
+	battle.ivm.populate_battlefield(is_water_poisoned, march_from_constantinople, false, battle.cr);
 	ofstream RESULTFILE("results.csv", ios::app);
 
 	if (RESULTFILE) {
@@ -276,7 +276,7 @@ void test_attack_damage()
 void test_remapper()
 {
 	battle.cr.loadAltitude();
-	battle.ivm.populate_battlefield(0, 0, battle.cr);
+	battle.ivm.populate_battlefield(0, 0, false, battle.cr);
 
 	(*battle.ivm.AgentList[0]).changeAgentState(DEAD);
 	printf("state should be 222 , it is %d\n", (*battle.ivm.AgentList[0]).getAgentState());
@@ -284,7 +284,7 @@ void test_remapper()
 	battle.ivm.deleteAllAgent();
 	battle.ivm.AgentList.clear();
 
-	battle.ivm.populate_battlefield(0, 0, battle.cr);
+	battle.ivm.populate_battlefield(0, 0, false, battle.cr);
 	
 	printf("now agent 0 state is %d\n", (*battle.ivm.AgentList[0]).getAgentState());
 

@@ -41,11 +41,13 @@ public:
 	Initial_val_mapper ivm; // for test
 	ConReader cr;
 
-	int simple_result_of_one_battle(std::ofstream& file, int fileIndex, int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds);
+	void first_time_populate(int is_water_poisoned, int march_from_constantinople, bool any_betrayal);
+
+	int simple_result_of_one_battle(std::ofstream& file, int fileIndex, int offensive, bool betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds);
 
 	void one_battle(std::ofstream& resultFILE, std::ofstream& file, std::ofstream & agentstat, int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds);
 
-	void initiate_battle(int poisoned_well, int marching_from_Constantinople, int increase_amount);
+	
 	void deleteAllAgent();
 	
 	/*-----range tree----------------*/
@@ -120,12 +122,13 @@ private:
 	bool no_one_is_able_to_fight(int side);
 	
 	void populate(int poisoned_well, int marching_from_Constantinople);
-	void updateMorale_shootingR_sightR(Agent *a);
+	int updateMorale_shootingR_sightR(Agent *a);
 
 	void write_statistics(std::ofstream& RESULTFILE, std::ofstream& file, int r, int rounds);
 	void write_agent_stats(std::ofstream& file, int r, Agent * a);
 
 	void annihilate_all_properties_of_battle();
+	void initiate_battle(int poisoned_well, int marching_from_Constantinople, int increase_amount);
 };
 
 

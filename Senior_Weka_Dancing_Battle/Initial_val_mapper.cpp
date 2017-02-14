@@ -11,11 +11,17 @@
 
 using namespace std;
 
-void Initial_val_mapper::populate_battlefield(int poisoned_well, int marching_from_Constantinople, ConReader cr)
+void Initial_val_mapper::remapping(int poisoned_well, int marching_from_Constantinople, bool betray,ConReader cr)
 {
-	initialVal_fileReader(poisoned_well, marching_from_Constantinople);
+	remapper(poisoned_well, marching_from_Constantinople, betray);
 	setRanges(cr);
-	fancyPrint();
+}
+
+void Initial_val_mapper::populate_battlefield(int poisoned_well, int marching_from_Constantinople, bool betray, ConReader cr)
+{
+	initialVal_fileReader(poisoned_well, marching_from_Constantinople, betray);
+	setRanges(cr);
+	//fancyPrint();
 }
 
 void Initial_val_mapper::fancyPrint()
@@ -40,7 +46,37 @@ void Initial_val_mapper::fancyPrint()
 
 }
 
-int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_from_Constantinople)
+int Initial_val_mapper::remapper(int poisoned_well, int marching_from_Constantinople, bool betray)
+{
+	for (Agent * a : AgentList) {
+		(*a).changePos((*a).getInitialPos());
+		(*a).setSize((*a).getInitialSize() - poisoned_well);
+		(*a).setMorale((*a).getInitialMorale());
+		//(*a).setMissleRange(0.0);
+		(*a).setFatigue(marching_from_Constantinople);
+		(*a).changeAgentState(READY);
+		(*a).setBetrayBit(betray);
+		(*a).setCurrentEnemyIndex(-1);
+		//(*a).setSightRange(0.0);
+		(*a).setAttackDamage((*a).getInitialAd());
+		(*a).in_battlefield = true;
+		(*a).is_alive = true;
+		(*a).is_being_attacked = false;
+
+		if ((*a).getName() == Agent::Name::TARTAR || (*a).getName() == Agent::Name::ANATOLIAN) {
+			(*a).setSide(Bayezid);
+		}
+
+		if ((*a).getSide() == Bayezid) { 
+			(*a).changeDirection(Agent::Direction::SOUTH);
+			++Ottoman_last_index;
+		}
+		else (*a).changeDirection(Agent::Direction::NORTH);
+	}
+	return 0;
+}
+
+int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_from_Constantinople, bool betray)
 {
 	Ottoman_last_index = 0;
 	ifstream inFile("basicData.txt");
@@ -123,8 +159,8 @@ int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_fr
 											.initWidth(width)
 											.initDepth(depth)
 											.initCurrentEenemy(-1)
-											.initBetrayBoolean(false)
-										    .initInitialMorale (morale - poisoned_well)
+											.initBetrayBoolean(betray)
+								
 											.build();
 
 				AgentList.push_back(ag);
@@ -136,7 +172,10 @@ int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_fr
 		
 		++count;
 	}
-	//fancyPrint();
+	printf("#1 morale is %d, initial morale is %d\n", (*AgentList[1]).getMorale(), (*AgentList[1]).getInitialMorale());
+	printf("#1 size is %d, initial size is %d\n", (*AgentList[1]).getSize(), (*AgentList[1]).getInitialSize());
+	if ((*AgentList[1]).is_alive) printf("it is alive");
+	else printf("not alive");
 
 	return 0;
 }
