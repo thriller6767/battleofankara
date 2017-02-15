@@ -57,7 +57,7 @@ string Agent::printCate()
 
 Agent::Agent(Name n, Category t, Direction d, int sid, int siz, int mor, int fat, double sr, int ad, int md, double mr, double acc, int armor, int index, vector<int> p, int f, double ratio, double wi, double de, int currentEnemyIndex, bool b) :
 	name(n), type(t), dir(d), side(sid), size(siz), initial_size(siz), morale(mor), initial_morale(mor), fatigue(fat), sight_range(sr), attack_damage(ad), initial_ad(ad),
-	missile_damage(md), missile_range(mr), accuracy(acc), armor_defence(armor), agent_Index(index), pos(p), initial_pos(p),agent_state(f), missile_range_ratio(ratio),
+	missile_damage(md), initial_md(md), missile_range(mr), accuracy(acc), armor_defence(armor), initial_armor(armor), agent_Index(index), pos(p), initial_pos(p),agent_state(f), missile_range_ratio(ratio),
 	width(wi), depth(de), current_enemy_index_this_agent_is_attacking(currentEnemyIndex), betray(b){}
 
 
@@ -231,6 +231,16 @@ void Agent::setMissleRange(double r)
 	missile_range = r;
 }
 
+void Agent::setArmor()
+{
+	armor_defence = initial_armor;
+}
+
+void Agent::setMD()
+{
+	missile_damage = initial_md;
+}
+
 /*
 Enemy_index = -1 if this agent is not currently attacking anyone.
 */
@@ -260,7 +270,7 @@ void Agent::updateMorale(ConReader cr)
 	double morale_d = remaining_ratio * (double)initial_morale;
 	morale = (int)morale_d;
 	if (agent_Index == 100){
-		printf("size is %d, now morale is %d, state is %s, fatigue is %d\n", size, morale, printState().c_str(), fatigue);
+		//printf("size is %d, now morale is %d, state is %s, fatigue is %d, current enemy is %d\n", size, morale, printState().c_str(), fatigue, current_enemy_index_this_agent_is_attacking);
 	}
 	//influenced by neighbor
 	if (is_neighbor_broken()) morale -= 3;
@@ -268,7 +278,7 @@ void Agent::updateMorale(ConReader cr)
 	if (is_surrounded()) morale -= 2;
 
 	//influenced by height
-	if (is_standing_on_high_ground(cr)) morale += 5;
+	if (is_standing_on_high_ground(cr)) morale += 10;
 
 	//influenced by fatigue*************************************************
 	if (fatigue >= 50 && fatigue < 100) morale -= 1;
@@ -364,13 +374,13 @@ void Agent::increaseAttackDamage(double rate)
 
 int Agent::attack_damage_delivered(int special_bonus, double enemy_defend)
 {
-	double attack = ((double)attack_damage + (double)special_bonus - enemy_defend - 0.2*(double) fatigue);
-
-	if (attack <= 0.0) return 1;
+	double attack = ((double)attack_damage + (double)special_bonus - enemy_defend - 0.5*(double) fatigue);
+	
+	if (attack <= 1.0) return 1;
 	else {
 		double deliver = ((double)size / (double)initial_size) * attack;
 		if (deliver <= 1.0) return 1;
-		return (int)deliver;
+		else return (int)deliver;
 	}
 }
 
@@ -434,6 +444,11 @@ bool Agent::does_neighbor_betray()
 	return false;
 }
 
+bool Agent::is_higher_than_enemy(Agent * e, ConReader cr)
+{
+	return (cr.getHeight(pos) > cr.getHeight((*e).getPos()));
+}
+
 bool Agent::is_surrounded()
 {
 	if (neighbors.size() <= 3) return false;
@@ -491,6 +506,12 @@ bool Agent::is_size_below_50_percent()
 bool Agent::not_able_to_shoot()
 {
 	return (name == Agent::Name::SERB_CAL || name == Agent::Name::SERB_INF);
+}
+
+bool Agent::is_size_below_1_percent()
+{
+	double result = (double)size / (double)initial_size;
+	return (result <= 0.01);
 }
 
 

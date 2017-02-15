@@ -80,6 +80,7 @@ public:
 	int getInitialMorale();
 	std::vector<int> getInitialPos();
 	int getInitialAd();
+
 //GETTERS
 	/*-----------------------------------------*/
 
@@ -92,6 +93,8 @@ public:
 	void setSide(int s);
 	void setSightRange(double r);
 	void setMissleRange(double r);
+	void setArmor();
+	void setMD();
 
 	/*------------------------------------*/
 	void setCurrentEnemyIndex(int enemy_index);
@@ -125,6 +128,7 @@ public:
 
 	bool is_neighbor_broken();
 	bool does_neighbor_betray();
+	bool is_higher_than_enemy(Agent * e, ConReader cr);
 	bool is_surrounded();
 	bool is_standing_on_high_ground(ConReader cr);
 	bool is_betrayable_unit();
@@ -134,6 +138,7 @@ public:
 	bool is_morale_below_20();
 	bool is_size_below_50_percent();
 	bool not_able_to_shoot();
+	bool is_size_below_1_percent();
 
 	double find_sightRange( ConReader cr);
 	double find_shootingRange(ConReader cr);
@@ -163,9 +168,11 @@ private:
 	double sight_range;
 	int attack_damage;
 	int initial_ad;
+	int initial_md;
 	int missile_damage;
 	double missile_range;
 	double accuracy;
+	int initial_armor;
 	int armor_defence;
 	int agent_Index;
 	int agent_state;

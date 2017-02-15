@@ -15,13 +15,14 @@ void Initial_val_mapper::remapping(int poisoned_well, int marching_from_Constant
 {
 	remapper(poisoned_well, marching_from_Constantinople, betray);
 	setRanges(cr);
+	fancyPrint();
 }
 
 void Initial_val_mapper::populate_battlefield(int poisoned_well, int marching_from_Constantinople, bool betray, ConReader cr)
 {
 	initialVal_fileReader(poisoned_well, marching_from_Constantinople, betray);
 	setRanges(cr);
-	//fancyPrint();
+	fancyPrint();
 }
 
 void Initial_val_mapper::fancyPrint()
@@ -37,18 +38,22 @@ void Initial_val_mapper::fancyPrint()
 		}
 
 		printf("\n\n---------------\nTamerlane side has %d agents, they are: \n", AgentList.size() -1- Ottoman_last_index);
-	/*	printf("________________________________________________________________________________________________\n");
+		printf("________________________________________________________________________________________________\n");
 		printf("NAME			CATEGORY	SIZE	MORALE	FATIGUE	   DIRECTION	AD	MD	RANGE	        ACCURACY	DEFEND	INDEX	POS		Sight_Range	Width	Depth\n");
 		for (int i = Ottoman_last_index; i < AgentList.size(); ++i) {
 			a = AgentList.at(i);
 			(*a).print();
-		}*/
+		}
 
 }
 
 int Initial_val_mapper::remapper(int poisoned_well, int marching_from_Constantinople, bool betray)
 {
 	for (Agent * a : AgentList) {
+		(*a).clear_enemies();
+		(*a).clear_enemies_to_shoot();
+		(*a).clear_neighbor();
+
 		(*a).changePos((*a).getInitialPos());
 		(*a).setSize((*a).getInitialSize() - poisoned_well);
 		(*a).setMorale((*a).getInitialMorale());
@@ -62,6 +67,8 @@ int Initial_val_mapper::remapper(int poisoned_well, int marching_from_Constantin
 		(*a).in_battlefield = true;
 		(*a).is_alive = true;
 		(*a).is_being_attacked = false;
+		(*a).setArmor();
+		(*a).setMD();
 
 		if ((*a).getName() == Agent::Name::TARTAR || (*a).getName() == Agent::Name::ANATOLIAN) {
 			(*a).setSide(Bayezid);
@@ -73,6 +80,7 @@ int Initial_val_mapper::remapper(int poisoned_well, int marching_from_Constantin
 		}
 		else (*a).changeDirection(Agent::Direction::NORTH);
 	}
+
 	return 0;
 }
 

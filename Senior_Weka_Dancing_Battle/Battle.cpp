@@ -15,15 +15,31 @@ void Battle::one_battle(std::ofstream& RESULTFILE, ofstream& file, ofstream & ag
 {
 	start = time(0);
 	initiate_battle(is_water_poisoned, marching_from_constantinople, increase_amount);
+	
+	int r = 0;
+	for (Agent *a : ivm.AgentList) {
+		write_agent_stats(agentstat, r, a);
+	}
 
-	int r = 1;
+	file << "side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, \n";
+	file << "Ottoman, " << r << "," << Ottoman_size - Ottoman_dead << "," << Ottoman_dead << "," << Ottoman_alive_in_battle << "," << Ottoman_left_battle << ","
+			<< Ottoman_broken << "," << Ottoman_retreat << "," << Ottoman_ready << "," << Ottoman_still_fighting << ","
+			<< Ottoman_fight_to_death << ", \n";
+
+	file << "Tamerlane, " << r << "," << Tamerlane_size - Tamerlane_dead << "," << Tamerlane_dead << "," << Tamerlane_alive_in_battle << "," << Tamerlane_left_battle << ","
+			<< Tamerlane_broken << "," << Tamerlane_retreat << "," << Tamerlane_ready << "," << Tamerlane_still_fighting << ","
+			<< Tamerlane_fight_to_death << ", \n";
+
+	file << "\n";
+
+	++r;
+	
 	while (r <= rounds &&
 		(!no_one_is_able_to_fight(Bayezid) && !no_one_is_able_to_fight(Tamerlane))) {
 
 		file << "side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, \n";
 
 		printf("\nr is %d", r);
-		agentstat << "\nr is " << r << "\n";
 
 		put_rangetree_boundaries();
 		map_neighbor_and_enemies();
@@ -67,6 +83,7 @@ void Battle::one_battle(std::ofstream& RESULTFILE, ofstream& file, ofstream & ag
 			file << "\n";
 
 		}
+		agentstat << "\n";
 		++r;
 	}
 
@@ -159,7 +176,7 @@ int Battle::simple_result_of_one_battle(std::ofstream& RESULTFILE, int fileIndex
 	file1.close();
 	file2.close();
 
-	ivm.remapping(is_water_poisoned, marching_from_constantinople, betray, cr);
+	//ivm.remapping(is_water_poisoned, marching_from_constantinople, betray, cr);
 
 	return 0;
 }
@@ -232,9 +249,10 @@ void Battle::write_statistics(ofstream& RESULTFILE, ofstream& file, int r, int r
 void Battle::write_agent_stats(std::ofstream & file, int r, Agent * a)
 {
 	if (file) {
-		file << (*a).getIndex() << "," << (*a).printName() << "," << (*a).getPos()[0] << ", " 
-			<< (*a).getPos()[1] << "," << (*a).getSide()<< "," << (*a).getAgentState() <<","
-			<< (*a).getSize() << "," << (*a).getMorale() << "," << (*a).getFatigue() << "\n";
+		file << (*a).getIndex() << "	" << (*a).getPos()[0] << "	 " 
+			<< (*a).getPos()[1] << "	" << (*a).getSide()<< "	" << (*a).getAgentState() <<"	"
+	/*		<< (*a).getSize() << "," << (*a).getMorale() << "," << (*a).getFatigue() */
+			<< "\n";
 	}
 }
 
@@ -267,7 +285,7 @@ Here properties need to update:
 */
 int Battle::updateMorale_shootingR_sightR(Agent * a)
 {
-	if ((*a).getSize() <= 10 && (*a).is_alive ) {
+	if ((*a).is_size_below_1_percent() && (*a).is_alive ) {
 
 		if ((*a).getSide() == Bayezid) --Ottoman_alive_in_battle;
 		else --Tamerlane_alive_in_battle;
@@ -342,6 +360,8 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 
 			if (idle_or_move(a, offensive) == Battle::Actions::IDLE) {} //no thing to change.
 			else {
+
+
 				//move to built-in direction.
 				move_to_built_in_dir(a);
 				(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
@@ -349,56 +369,69 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 		}
 		//if there are enemies in sight range, and is not retreating
 		else {
-			Agent * e_in_neighbor = find_enemy_in_neighbor(a);
 
-			//if there is an enemy in neighbor range, ATTACK
-			if (e_in_neighbor != nullptr) {
+			int random = rand() % 2;
 
-				int random = rand() % 2;
-				
-				if (random == 0) charge_newly_chosen_enemy(a, e_in_neighbor);
+			if (random == 0) {
+				if (idle_or_move(a, offensive) == Battle::Actions::IDLE) {} //no thing to change.
 				else {
-					charge_newly_chosen_enemy(a, chooseTheWeakestEnemy(a));
+					//move to built-in direction.
+					move_to_built_in_dir(a);
+					(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
 				}
-
-				//change state to ENGAGED, increase fatigue
-				(*a).changeAgentState(ENGAGED);
-				(*a).changeFatigue(FATIGUE_INCREASE_IF_ATTACK);
 			}
 			else {
-				//shoot and move
-				double shooting_range = (*a).getMissileRange();
-				Agent *enemy = chooseTheWeakestEnemy(a);
-				vector<int> enemy_pos = (*enemy).getPos();
+				Agent * e_in_neighbor = find_enemy_in_neighbor(a);
 
-				// if not able to shoot
-				if ((*a).not_able_to_shoot()) {}
+				//if there is an enemy in neighbor range, ATTACK
+				if (e_in_neighbor != nullptr) {
 
-				// if the chosen enemy is in shooting range
-				else if (distance_between_two_points(enemy_pos, (*a).getPos()) <= shooting_range) {
+					int random = rand() % 2;
 
-					//shoot this enemy
-					shoot_the_enemy(a, enemy);
+					if (random == 0) charge_newly_chosen_enemy(a, e_in_neighbor);
+					else {
+						charge_newly_chosen_enemy(a, chooseTheWeakestEnemy(a));
+					}
 
+					//change state to ENGAGED, increase fatigue
+					(*a).changeAgentState(ENGAGED);
+					(*a).changeFatigue(FATIGUE_INCREASE_IF_ATTACK);
 				}
 				else {
-					// else we need to range search enemies in shooting range
-					rsTree.findAgent_within_range(a, shooting_range, enemies_in_shooting_search);
+					//shoot and move
+					double shooting_range = (*a).getMissileRange();
+					Agent *enemy = chooseTheWeakestEnemy(a);
+					vector<int> enemy_pos = (*enemy).getPos();
 
-					// If we can find a enemy to shoot
-					if (!(*a).getEnemies_in_missile().empty()) {
-						//printf("# of enmies in missile range is %d\n", (*a).getEnemies_in_missile().size());
-						//int random = rand() % ((*a).getEnemies_in_missile().size()); // randomly pick one
-						Agent *enemy_to_shoot = (*a).getEnemies_in_missile()[0];
+					// if not able to shoot
+					if ((*a).not_able_to_shoot()) {}
 
-						//shoot the enemy
-						shoot_the_enemy(a, enemy_to_shoot);
+					// if the chosen enemy is in shooting range
+					else if (distance_between_two_points(enemy_pos, (*a).getPos()) <= shooting_range) {
+
+						//shoot this enemy
+						shoot_the_enemy(a, enemy);
+
 					}
-				}
+					else {
+						// else we need to range search enemies in shooting range
+						rsTree.findAgent_within_range(a, shooting_range, enemies_in_shooting_search);
 
-				//and move to it.
-				move_to_chosen_enemy(a, enemy);
-				(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
+						// If we can find a enemy to shoot
+						if (!(*a).getEnemies_in_missile().empty()) {
+							//printf("# of enmies in missile range is %d\n", (*a).getEnemies_in_missile().size());
+							//int random = rand() % ((*a).getEnemies_in_missile().size()); // randomly pick one
+							Agent *enemy_to_shoot = (*a).getEnemies_in_missile()[0];
+
+							//shoot the enemy
+							shoot_the_enemy(a, enemy_to_shoot);
+						}
+					}
+
+					//and move to it.
+					move_to_chosen_enemy(a, enemy);
+					(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
+				}
 			}
 		}
 		break;
@@ -500,12 +533,7 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 				Agent * e_in_neighbor = find_enemy_in_neighbor(a);
 				if (e_in_neighbor != nullptr) {
 
-					int random = rand() % 2;
-
-					if (random == 0) charge_newly_chosen_enemy(a, e_in_neighbor);
-					else {
-						charge_newly_chosen_enemy(a, chooseTheWeakestEnemy(a));
-					}
+					charge_newly_chosen_enemy(a, e_in_neighbor);
 				}
 				else {}//remain still
 			}		
@@ -597,7 +625,7 @@ void Battle::move_to_chosen_enemy(Agent * a, Agent * chosenEnemy)
 */
 void Battle::charge_newly_chosen_enemy(Agent * a, Agent * chosenEnemy)
 {
-	Agent::Direction dir_after_move = find_new_dir_after_move((*a).getPos(), (*chosenEnemy).getPos());
+	Agent::Direction dir_after_move = find_new_dir_after_move((*a).getPos(), { (*chosenEnemy).getPos()[0] - 20, (*chosenEnemy).getPos()[1] - 20 });
 
 	(*a).changeDirection(dir_after_move); //move there
 	(*a).changePos((*chosenEnemy).getPos());
@@ -616,7 +644,12 @@ void Battle::attack_enemy(Agent * a, Agent * enemy)
 	(*a).is_being_attacked = true;
 	(*enemy).is_being_attacked = true;
 
-	int special_bonus = SPECIAL_BONUS_TO_ATTACK * has_special_bonus_against(a, enemy);
+	int special_bonus = 0;
+	if ((*a).is_standing_on_high_ground(cr) || (*a).is_higher_than_enemy(enemy, cr)) {
+		special_bonus += SPECIAL_BONUS_TO_ATTACK * 4;
+	}
+
+	special_bonus= SPECIAL_BONUS_TO_ATTACK * has_special_bonus_against(a, enemy);
 	int damage = (*enemy).attack_damage_delivered(special_bonus, (*enemy).getArmorDefence());
 	//if (damage = 1) { printf("afkdajflkajjjjjjkkkkk-------------------\n"); }
 	(*enemy).decrease(damage);
@@ -1043,7 +1076,7 @@ int Battle::find_distance_to_move(Agent * a, Agent * chosenEnemy)
 	if (chosenEnemy == nullptr) max_to_move = -1;
 	else max_to_move = (int)distance_between_two_points((*a).getPos(), (*chosenEnemy).getPos());
 
-	distance = rand() % (NEIGHBOR_RANGE + 1) + 100; //So it will be easier to check whether overlap 
+	distance = rand() % (NEIGHBOR_RANGE/2 + 1) + 100; //So it will be easier to check whether overlap 
 	
 	// If the distance between this agent and its enemy is smaller than the distance decide to move
 	if (max_to_move != -1 && distance > max_to_move) { //should not happen
