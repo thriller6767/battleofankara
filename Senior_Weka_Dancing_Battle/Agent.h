@@ -39,13 +39,13 @@
 #define WAR_ELEPHANT_WIDTH 10
 #define WAR_ELEPHANT_DEPTH 15
 
-#define MINIMUM_GAPE 10
+#define MINIMUM_GAPE 30
 
 class Agent {
 public:
 	enum class Direction { NORTH, SOUTH, EAST, WEST, NE, NW, SE, SW };
 	enum class Category { HEAVY_CAL, HEAVY_INF, LIGHT_CAL, LIGHT_INF, WAR_ELEPHANT };
-	enum class Name { JANISSARY, KAPUKULU, AZAPS, ANATOLIAN, RUMELIAN, TARTAR, SERB_INF, SERB_CAL, 
+	enum class Name { JANISSARY, KAPIKULU, AZAPS, ANATOLIAN, RUMELIAN, TARTAR, SERB_INF, SERB_CAL, 
 		OTTO_RESERVES, TAMER_HORSE_ARCHER, TAMER_GAURDS, TAMERLANE,TAMER_RESERVES, ELEPHANT};
 
 	class Builder;
@@ -83,6 +83,9 @@ public:
 
 //GETTERS
 	/*-----------------------------------------*/
+
+	Agent::Direction getOppositeDir(Agent::Direction d);
+	Agent::Direction getDirectionTowardCenter(Agent::Direction d);
 
 	//remap setters
 	void setSize(int s);
@@ -126,6 +129,7 @@ public:
 	void clear_enemies();	
 	void clear_enemies_to_shoot();
 
+	bool is_neighbor_dead();
 	bool is_neighbor_broken();
 	bool does_neighbor_betray();
 	bool is_higher_than_enemy(Agent * e, ConReader cr);

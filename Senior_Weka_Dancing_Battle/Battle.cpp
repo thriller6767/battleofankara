@@ -11,13 +11,16 @@
 
 using namespace std;
 
-void Battle::one_battle(std::ofstream& RESULTFILE, ofstream& file, ofstream & agentstat, int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds)
+void Battle::one_battle(std::ofstream& RESULTFILE, ofstream& file, ofstream & agentstat, ofstream& file3, int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds)
 {
 	start = time(0);
 	initiate_battle(is_water_poisoned, marching_from_constantinople, increase_amount);
 	
+	/*-------------Write stats-------------------------------------*/
 	int r = 0;
 	for (Agent *a : ivm.AgentList) {
+		if ((*a).getSide() == Bayezid) Ottoman_soldier += (*a).getInitialSize();
+		else Tamerlane_soldier += (*a).getInitialSize();
 		write_agent_stats(agentstat, r, a);
 	}
 
@@ -34,21 +37,53 @@ void Battle::one_battle(std::ofstream& RESULTFILE, ofstream& file, ofstream & ag
 
 	++r;
 	
+	/*----------------------battle------------------------------------*/
 	while (r <= rounds &&
 		(!no_one_is_able_to_fight(Bayezid) && !no_one_is_able_to_fight(Tamerlane))) {
 
-		file << "side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, \n";
+		file << "side, rounds, Alive, Dead, In Battlefield, Left Battlefield, Broken, Retreat, Ready, Engaged, Fight to Death, Casualty\n";
 
 		printf("\nr is %d", r);
 
-		put_rangetree_boundaries();
-		map_neighbor_and_enemies();
-
 		Ottoman_still_fighting = 0, Ottoman_ready = 0, Tamerlane_ready = 0, Tamerlane_still_fighting = 0;
+		int O_alive = 0, T_alive = 0;
 
 		for (Agent * a : ivm.AgentList) {
+
 			updateMorale_shootingR_sightR(a);
-			choose_and_Execute_Action(a, offensive, betray);
+
+			if ((*a).getSide() == Bayezid) {
+				if ((*a).is_alive && (*a).getAgentState() != DEAD)	O_alive += (*a).getSize();
+			}
+			if ((*a).getSide() == Tamerlane) {
+				if ((*a).is_alive && (*a).getAgentState() != DEAD)	T_alive += (*a).getSize();
+			}
+		}
+
+		put_rangetree_boundaries();
+
+		rsTree.printSize();
+
+		map_neighbor_and_enemies();
+
+		for (Agent * a : ivm.AgentList) {
+			if ((*a).getIndex() == 6) {
+				printf(" size is %d, current enemy is %d, position is (%d, %d), state is %s\n", (*a).getSize(),
+					(*a).getCurrentEnemyIndex(), (*a).getPos()[0], (*a).getPos()[1], (*a).printState().c_str());
+				printf("#6's neighbor list size is %d***\n", (*a).getNeighbor().size());
+
+
+				if ((*a).getCurrentEnemyIndex() != -1) {
+					Agent * e = ivm.AgentList[(*a).getCurrentEnemyIndex()];
+					printf(" ENEMY size is %d, current enemy is %d, position is (%d, %d), state is %s\n", (*e).getSize(),
+						(*e).getCurrentEnemyIndex(), (*e).getPos()[0], (*e).getPos()[1], (*e).printState().c_str());
+				}
+			}
+			choose_and_Execute_Action(a, offensive, betray,r );
+
+			if ((*a).getIndex() == 6) {
+				printf("after choose action, #6 is now at (%d, %d)\n", (*a).getPos()[0], (*a).getPos()[1]);
+			}
 
 			write_agent_stats(agentstat, r, a);
 
@@ -59,7 +94,7 @@ void Battle::one_battle(std::ofstream& RESULTFILE, ofstream& file, ofstream & ag
 		}
 
 		for (Agent * a : ivm.AgentList) {
-			if ((*a).is_alive && (*a).in_battlefield) {
+			if ((*a).is_alive && (*a).in_battlefield && (*a).getAgentState() != DEAD) {
 				(*a).clear_enemies();
 				(*a).clear_enemies_to_shoot();
 				(*a).clear_neighbor();
@@ -74,15 +109,16 @@ void Battle::one_battle(std::ofstream& RESULTFILE, ofstream& file, ofstream & ag
 		if (file) {
 			file << "Ottoman, " << r << "," << Ottoman_size - Ottoman_dead << "," << Ottoman_dead << "," << Ottoman_alive_in_battle << "," << Ottoman_left_battle << ","
 				<< Ottoman_broken << "," << Ottoman_retreat << "," << Ottoman_ready << "," << Ottoman_still_fighting << ","
-				<< Ottoman_fight_to_death << ", \n";
+				<< Ottoman_fight_to_death << ",\n";
 
 			file << "Tamerlane, " << r << "," << Tamerlane_size - Tamerlane_dead << "," << Tamerlane_dead << "," << Tamerlane_alive_in_battle << "," << Tamerlane_left_battle << ","
 				<< Tamerlane_broken << "," << Tamerlane_retreat << "," << Tamerlane_ready << "," << Tamerlane_still_fighting << ","
-				<< Tamerlane_fight_to_death << ", \n";
+				<< Tamerlane_fight_to_death <<   ", \n";
 
 			file << "\n";
 
 		}
+		file3 <<r << ","<< (double)O_alive / (double)Ottoman_soldier << "," << (double)T_alive / (double)Tamerlane_soldier << ",\n";
 		agentstat << "\n";
 		++r;
 	}
@@ -117,12 +153,12 @@ void Battle::put_rangetree_boundaries()
 
 	for (int i = center; i >= 0; --i) {
 		Agent *a = ivm.AgentList.at(i);
-		if ((*a).is_alive && (*a).in_battlefield) { rsTree.put(a, (*a).getPos().at(0), (*a).getPos().at(1)); }
+		if ((*a).is_alive && (*a).in_battlefield && (*a).getAgentState() != DEAD) {rsTree.put(a, (*a).getPos().at(0), (*a).getPos().at(1)); }
 	}
 	for (int i = center + 1; i < total_size; ++i)
 	{
 		Agent *a = ivm.AgentList.at(i);
-		if ((*a).is_alive && (*a).in_battlefield) { rsTree.put(a, (*a).getPos().at(0), (*a).getPos().at(1)); }
+		if ((*a).is_alive && (*a).in_battlefield && (*a).getAgentState() != DEAD) { rsTree.put(a, (*a).getPos().at(0), (*a).getPos().at(1)); }
 	}	
 }
 
@@ -130,7 +166,7 @@ void Battle::map_neighbor_and_enemies()
 {
 	//range search for neighbors
 	for (Agent *a : ivm.AgentList) {
-		if ((*a).is_alive && (*a).in_battlefield) {
+		if ((*a).is_alive && (*a).in_battlefield && (*a).getAgentState() != DEAD) {
 			rsTree.findAgent_within_range(a, NEIGHBOR_RANGE, neighbor_search);
 		}
 		//(*a).print_neighbors();
@@ -138,28 +174,29 @@ void Battle::map_neighbor_and_enemies()
 	//range search for enemies
 	for (Agent *a : ivm.AgentList) {
 		int sightrange = (*a).getSightRange();
-		if ((*a).is_alive && (*a).in_battlefield) {
+		if ((*a).is_alive && (*a).in_battlefield && (*a).getAgentState() != DEAD) {
 			rsTree.findAgent_within_range(a, sightrange, enemies_in_sight_search);
 		}
 		//(*a).print_enemies();
 	}
 }
 
-void Battle::first_time_populate(int is_water_poisoned, int march_from_constantinople, bool any_betrayal)
+void Battle::first_time_populate(int is_water_poisoned, int march_from_constantinople, int agent_increase, bool any_betrayal)
 {
-	ivm.populate_battlefield(is_water_poisoned, march_from_constantinople, any_betrayal, cr);
+	ivm.populate_battlefield(is_water_poisoned, march_from_constantinople, any_betrayal, agent_increase , cr);
 }
 
 int Battle::simple_result_of_one_battle(std::ofstream& RESULTFILE, int fileIndex,  int offensive, bool betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds)
 {
-	ofstream file1, file2;
-	string n = "one_battle" + to_string(fileIndex) + ".csv";
+	ofstream file1, file2, file3;
+	string n = "one_battle_" + to_string(fileIndex) + ".csv";
 	file1.open(n.c_str());
 	string m = "agent_stat_per_round_" + to_string(fileIndex) + ".txt";
 	file2.open(m.c_str());
+	string s = "casualty_per_round_" + to_string(fileIndex) + ".csv";
+	file3.open(s.c_str());
 
-
-	if (file1 && file2) {
+	if (file1 && file2 && file3) {
 		printf("Successfully open a file, filename: %s \n", n.c_str());
 
 		//first line of csv
@@ -168,7 +205,8 @@ int Battle::simple_result_of_one_battle(std::ofstream& RESULTFILE, int fileIndex
 			<< ", size_increase = " << increase_amount << ", rounds = " << rounds << "\n";
 
 		file1 << "\n";
-		one_battle(RESULTFILE, file1, file2, offensive, betray, marching_from_constantinople, is_water_poisoned, increase_amount, rounds);
+		file3 << "round, Ottoman Casualty, Tamerlane Casualty, \n";
+		one_battle(RESULTFILE, file1, file2, file3,offensive, betray, marching_from_constantinople, is_water_poisoned, increase_amount, rounds);
 	}
 
 	annihilate_all_properties_of_battle();
@@ -266,7 +304,14 @@ void Battle::annihilate_all_properties_of_battle()
 	Ottoman_betray = 0, Ottoman_broken = 0, Ottoman_retreat = 0, Tamerlane_retreat = 0, Tamerlane_broken = 0;
 	Ottoman_fight_to_death = 0, Tamerlane_fight_to_death = 0;
 	Ottoman_dead = 0, Tamerlane_dead = 0, Ottoman_still_fighting = 0, Tamerlane_still_fighting = 0, Ottoman_ready = 0, Tamerlane_ready = 0;
-	
+	Ottoman_soldier = 0, Tamerlane_soldier = 0;
+
+	for (Agent* a : ivm.AgentList) {
+		(*a).clear_enemies();
+		(*a).clear_enemies_to_shoot();
+		(*a).clear_neighbor();
+	}
+	delete_searchTree();
 }
 
 
@@ -312,7 +357,7 @@ Based on current situation, choose among IDLE, MOVE, ATTACK, RETREAT
   If offensive = 1, Ottoman move, Tamerlane stay.
   If offensive = 2, both move
 */
-void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
+void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray, int round){
 	
 	//dead
 	if ((*a).getAgentState() == DEAD) {
@@ -323,19 +368,19 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 
 	int current_state = (*a).getAgentState();
 	switch (current_state) {
-	case READY: 
+	case READY:
 
 		/* if input attribute indicates that there is betray in the battle, it will have 50% percent
-		chance to betray. 
+		chance to betray.
 		It also requires that this agent belongs to betrayable_unit (Tartar or Anatolina) and satisfies
 		either (morale < 10% or size < 50%)
 		*/
-		if (betray == 1) { 
+		if (betray == 1) {
 			int betray_rand = rand() % 2;// throw an int [0 , 1]
 
 			if (betray_rand == 1 && (*a).is_betrayable_unit()
 				&& ((*a).is_morale_below_20() || (*a).is_size_below_50_percent())) {
-				
+
 				(*a).changeSide();
 				++Tamerlane_alive_in_battle;
 				--Ottoman_alive_in_battle;
@@ -344,7 +389,7 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 		}
 		// if less than 30% of agent in this side remain fighting, WITHDRAW
 		if (more_than_70percent_in_flight((*a).getSide())
-			 &&(!(*a).is_morale_below_zero())) {
+			&& (!(*a).is_morale_below_zero())) {
 
 			withdraw_to_built_in_dir(a);
 			(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
@@ -360,38 +405,52 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 
 			if (idle_or_move(a, offensive) == Battle::Actions::IDLE) {} //no thing to change.
 			else {
+				if (round > 15) {
+					//move toward the center
 
-
-				//move to built-in direction.
-				move_to_built_in_dir(a);
-				(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
-			}
-		}
-		//if there are enemies in sight range, and is not retreating
-		else {
-
-			int random = rand() % 2;
-
-			if (random == 0) {
-				if (idle_or_move(a, offensive) == Battle::Actions::IDLE) {} //no thing to change.
-				else {
-					//move to built-in direction.
-					move_to_built_in_dir(a);
+					Agent::Direction dir = find_new_dir_after_move((*a).getPos(), { 4500, 8500 });
+					int distance = rand() % (150 + 1) + 100;
+					(*a).changeDirection(dir);
+					//printf("----move toward center, index %d, (%d, %d) ", (*a).getIndex(), (*a).getPos()[0], (*a).getPos()[1]);
+					(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, dir, false));
 					(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
+
+					//printf("now pos (%d. %d)\n",  (*a).getPos()[0], (*a).getPos()[1]);
+				}
+				else {
+					int random = rand() % 7;
+					if ((*a).getSide() == Bayezid) {
+						if (random <= 2) {} //idle
+						else if (random > 2 && random < 5) { move_to_flank(a); }
+						else { move_straight(a); }
+					}
+					else {
+						move_to_built_in_dir(a);
+						(*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
+					}
 				}
 			}
+		}
+
+		//if there are enemies in sight range, and is not retreating
+		else {
+			int r = rand() % 9 + 4;
+			if (idle_or_move(a, offensive) == Battle::Actions::IDLE && round < r) {}
 			else {
+
 				Agent * e_in_neighbor = find_enemy_in_neighbor(a);
 
 				//if there is an enemy in neighbor range, ATTACK
-				if (e_in_neighbor != nullptr) {
+				if (e_in_neighbor != nullptr && r < 6 && distance_between_two_points((*a).getPos(), (*e_in_neighbor).getPos()) <= NEIGHBOR_RANGE) {
 
-					int random = rand() % 2;
 
-					if (random == 0) charge_newly_chosen_enemy(a, e_in_neighbor);
-					else {
-						charge_newly_chosen_enemy(a, chooseTheWeakestEnemy(a));
-					}
+					//int random = rand() % 2;
+
+					//if (random == 0) 
+					charge_newly_chosen_enemy(a, e_in_neighbor);
+					/*else {
+						charge_newly_chosen_enemy(a, find_the_closest_enemy(a));
+					}*/
 
 					//change state to ENGAGED, increase fatigue
 					(*a).changeAgentState(ENGAGED);
@@ -486,10 +545,10 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 		}
 		else {
 			Agent * current_enemy = ivm.AgentList[(*a).getCurrentEnemyIndex()];
-			
+
 			//if enemy routs or die, DISENGAGE
-			if (!(*current_enemy).is_alive || (*current_enemy).getAgentState() == BROKEN
-				|| (*current_enemy).getAgentState() == RETREAT) {
+			if (!(*current_enemy).is_alive || (*current_enemy).getAgentState() == BROKEN || !(*current_enemy).is_being_attacked
+				|| (*current_enemy).getAgentState() == RETREAT || (*current_enemy).getAgentState() == DEAD) {
 
 				(*a).changeAgentState(READY);
 				(*a).is_being_attacked = false;
@@ -505,17 +564,39 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 	case BROKEN:
 		running_for_life(a);
 		break;
-	case FIGHT_TO_DEATH: 
-		//remain still unless it is being attacked.
-		if ((*a).is_being_attacked) {
+	case FIGHT_TO_DEATH:
 
-			attack_enemy(a, ivm.AgentList[(*a).getCurrentEnemyIndex()]);
-			//(*a).changeFatigue(FATIGUE_INCREASE_IF_ATTACK);
+		if ((*a).getCurrentEnemyIndex() != -1) {
+			Agent * current_enemy = ivm.AgentList[(*a).getCurrentEnemyIndex()];
 
-		}
-		else {
-			//WITHDRAW
-			if (more_than_70percent_in_flight((*a).getSide())
+			if (!(*current_enemy).is_alive || (*current_enemy).getAgentState() == BROKEN || !(*current_enemy).is_being_attacked
+				|| (*current_enemy).getAgentState() == RETREAT || (*current_enemy).getAgentState() == DEAD) {
+
+				(*a).is_being_attacked = false;
+				(*a).setCurrentEnemyIndex(-1);
+
+				Agent * e_in_neighbor = find_enemy_in_neighbor(a);
+				if (e_in_neighbor != nullptr) {
+
+					charge_newly_chosen_enemy(a, e_in_neighbor);
+				}
+				else {
+					Agent::Direction dir = find_new_dir_after_move((*a).getPos(), { 4500, 8500 });
+					int distance = rand() % (150 + 1) + 100;
+					(*a).changeDirection(dir);
+					//printf("----move toward center, index %d, (%d, %d) ", (*a).getIndex(), (*a).getPos()[0], (*a).getPos()[1]);
+					(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, dir, false));
+				}
+
+			}
+			//remain still unless it is being attacked.
+			else if ((*a).is_being_attacked && (*current_enemy).is_alive) {
+
+				attack_enemy(a, current_enemy);
+				//(*a).changeFatigue(FATIGUE_INCREASE_IF_ATTACK);
+
+			}//WITHDRAW
+			else if (more_than_70percent_in_flight((*a).getSide())
 				&& (!(*a).is_morale_below_zero())
 				&& (!(*a).is_surrounded())) {
 
@@ -529,17 +610,25 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 				if ((*a).getSide() == Tamerlane) ++Tamerlane_retreat;
 
 			}
-			else {
+		}
+		else {
 				Agent * e_in_neighbor = find_enemy_in_neighbor(a);
 				if (e_in_neighbor != nullptr) {
 
 					charge_newly_chosen_enemy(a, e_in_neighbor);
 				}
-				else {}//remain still
-			}		
-		}
+				else {
+					Agent::Direction dir = find_new_dir_after_move((*a).getPos(), { 4500, 8500 });
+					int distance = rand() % (100 + 1) + 50;
+					(*a).changeDirection(dir);
+					//printf("----move toward center, index %d, (%d, %d) ", (*a).getIndex(), (*a).getPos()[0], (*a).getPos()[1]);
+					(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, dir, false));
+				}
+			}
+
 		break;
-	case RETREAT: 
+
+	case RETREAT:
 		// fight to death
 		if ((*a).is_able_to_fight_to_death()
 			&& (*a).is_size_below_20_percent() && (!(*a).is_morale_below_zero())) {
@@ -558,7 +647,7 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 
 			//remain still. 
 
-		}	
+		}
 		// RUN for life
 		else if ((*a).is_morale_below_zero()) {
 
@@ -598,6 +687,47 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray){
 
 
 
+void Battle::move_to_flank(Agent * a)
+{
+	Agent::Direction dir;
+	if ((*a).getSide() == Bayezid) {
+
+		if ((*a).getName() == Agent::Name::SERB_CAL || (*a).getName() == Agent::Name::SERB_INF
+			|| (*a).getName() == Agent::Name::ANATOLIAN || (*a).getName() == Agent::Name::KAPIKULU) {
+			dir = Agent::Direction::SW;
+		}
+		else if ((*a).getName() == Agent::Name::TARTAR || (*a).getName() == Agent::Name::RUMELIAN) {
+			dir = Agent::Direction::SE;
+		}
+
+		int distance = rand() % (int)(NEIGHBOR_RANGE)+100;
+		//Have not consider the problem of overlapping
+		vector<int> newPos = find_new_pos_after_move((*a).getPos(), distance, dir, false);
+
+		(*a).changeDirection(dir);
+		(*a).changePos(newPos);
+	}
+
+}
+
+void Battle::move_straight(Agent * a)
+{
+	Agent::Direction dir;
+	if ((*a).getName() != Agent::Name::SERB_CAL
+		&& (*a).getName() != Agent::Name::SERB_INF && (*a).getName() != Agent::Name::ANATOLIAN
+		&& (*a).getName() != Agent::Name::TARTAR && (*a).getName() != Agent::Name::KAPIKULU) {
+
+		dir = Agent::Direction::SOUTH;
+		int distance = rand() % (int)(NEIGHBOR_RANGE)+100;
+		//Have not consider the problem of overlapping
+		vector<int> newPos = find_new_pos_after_move((*a).getPos(), distance, dir, false);
+
+		(*a).changeDirection(dir);
+		(*a).changePos(newPos);
+	}
+
+}
+
 /*
 If this enemy choose to move, move to the chosen enemy's direction with a random distance 
 (it should be the same pace with its neighbors, BUT so far still not know how to do
@@ -628,9 +758,21 @@ void Battle::charge_newly_chosen_enemy(Agent * a, Agent * chosenEnemy)
 	Agent::Direction dir_after_move = find_new_dir_after_move((*a).getPos(), { (*chosenEnemy).getPos()[0] - 20, (*chosenEnemy).getPos()[1] - 20 });
 
 	(*a).changeDirection(dir_after_move); //move there
-	(*a).changePos((*chosenEnemy).getPos());
+	(*a).changePos({ (*chosenEnemy).getPos()[0] - 20, (*chosenEnemy).getPos()[1] - 20 });
 
 	attack_enemy(a, chosenEnemy); //deliver damage
+
+	int special_bonus_received = 0;
+	if ((*chosenEnemy).is_standing_on_high_ground(cr)) {
+		special_bonus_received += SPECIAL_BONUS_TO_ATTACK;
+	}
+	if ((*chosenEnemy).is_higher_than_enemy(a, cr)) {
+		special_bonus_received += SPECIAL_BONUS_TO_ATTACK;
+	}
+
+	// charge will cause damage to itself
+	if (special_bonus_received > 0) (*a).decrease(special_bonus_received);
+	else (*a).decrease(5);
 }
 
 /*
@@ -645,22 +787,28 @@ void Battle::attack_enemy(Agent * a, Agent * enemy)
 	(*enemy).is_being_attacked = true;
 
 	int special_bonus = 0;
-	if ((*a).is_standing_on_high_ground(cr) || (*a).is_higher_than_enemy(enemy, cr)) {
-		special_bonus += SPECIAL_BONUS_TO_ATTACK * 4;
+	if ((*a).is_standing_on_high_ground(cr)) {
+		special_bonus += SPECIAL_BONUS_TO_ATTACK * 2;
 	}
+	if ((*a).is_higher_than_enemy(enemy, cr)) {
+		special_bonus += SPECIAL_BONUS_TO_ATTACK;
+	}
+	if ((*enemy).is_higher_than_enemy(a, cr)) special_bonus -= SPECIAL_BONUS_TO_ATTACK;
 
-	special_bonus= SPECIAL_BONUS_TO_ATTACK * has_special_bonus_against(a, enemy);
+	special_bonus+= SPECIAL_BONUS_TO_ATTACK * has_special_bonus_against(a, enemy);
 	int damage = (*enemy).attack_damage_delivered(special_bonus, (*enemy).getArmorDefence());
-	//if (damage = 1) { printf("afkdajflkajjjjjjkkkkk-------------------\n"); }
+	
 	(*enemy).decrease(damage);
 }
 
 void Battle::move_to_built_in_dir(Agent * a)
 {
 	Agent::Direction dir;
-	int distance = NEIGHBOR_RANGE;
+	int distance = rand()% (int)NEIGHBOR_RANGE + 100;
 
-	if ((*a).getSide() == Bayezid) dir = Agent::Direction::SOUTH;	
+	if ((*a).getSide() == Bayezid) { 
+		dir = Agent::Direction::SOUTH; 
+	}
 	else dir = Agent::Direction::NORTH;
 
 	(*a).changeDirection(dir);
@@ -674,7 +822,7 @@ If it is a bayezid agent, retreat to south
 void Battle::withdraw_to_built_in_dir(Agent * a)
 {
 	Agent::Direction dir;
-	int distance = NEIGHBOR_RANGE;
+	int distance = 200;
 
 	if ((*a).getSide() == Bayezid) dir = Agent::Direction::NORTH;
 	else dir = Agent::Direction::SOUTH;
@@ -902,7 +1050,7 @@ void Battle::running_for_life(Agent * a)
 {
 	Agent::Direction direction_from;
 	Agent * closestEnemy = find_the_closest_enemy(a);
-	int distance = NEIGHBOR_RANGE;
+	int distance = (int)NEIGHBOR_RANGE;
 
 	if (closestEnemy == nullptr) {
 		if ((*a).getSide() == Bayezid) direction_from = Agent::Direction::NORTH;
@@ -911,16 +1059,7 @@ void Battle::running_for_life(Agent * a)
 	else {
 		Agent::Direction direction_toward_enemy = find_new_dir_after_move((*a).getPos(), (*closestEnemy).getPos());
 	
-		switch (direction_toward_enemy) {
-		case Agent::Direction::NORTH: direction_from = Agent::Direction::SOUTH; break;
-		case Agent::Direction::SOUTH: direction_from = Agent::Direction::NORTH; break;
-		case Agent::Direction::WEST: direction_from = Agent::Direction::EAST; break;
-		case Agent::Direction::EAST: direction_from = Agent::Direction::WEST; break;
-		case Agent::Direction::NE: direction_from = Agent::Direction::SW; break;
-		case Agent::Direction::SW: direction_from = Agent::Direction::NE; break;
-		case Agent::Direction::NW: direction_from = Agent::Direction::SE; break;
-		default: direction_from = Agent::Direction::NW; break;
-		}
+		direction_from = (*a).getOppositeDir(direction_toward_enemy);
 	}
 
 	(*a).changeDirection(direction_from);
@@ -942,12 +1081,12 @@ Return the direction at which this agent should face after moving toward the ene
 */
 Agent::Direction Battle::find_new_dir_after_move(std::vector<int> pos, std::vector<int> enemy_pos)
 {
-	if (enemy_pos[0] <= pos[0] + DIRECTION_STANDARD || enemy_pos[0] >= pos[0] - DIRECTION_STANDARD) {
+	if (enemy_pos[0] <= pos[0] + DIRECTION_STANDARD && enemy_pos[0] >= pos[0] - DIRECTION_STANDARD) {
 
 		if (enemy_pos[1] <= pos[1]) return Agent::Direction::NORTH;
 		else return Agent::Direction::SOUTH;
 	}
-	else if (enemy_pos[1] <= pos[1] + DIRECTION_STANDARD || enemy_pos[1] >= pos[1] - DIRECTION_STANDARD) {
+	else if (enemy_pos[1] <= pos[1] + DIRECTION_STANDARD && enemy_pos[1] >= pos[1] - DIRECTION_STANDARD) {
 		if (enemy_pos[0] <= pos[0]) return Agent::Direction::WEST;
 		else return Agent::Direction::EAST;
 	}
@@ -983,12 +1122,12 @@ std::vector<int> Battle::find_new_pos_after_move(std::vector<int> pos, int dista
 	else if (dir == Agent::Direction::SOUTH) newPos[1] += distance;
 
 	else {
-		int x_dis, y_dis = sqrt(pow(distance, 2) / 2);
+		int x_dis = sqrt(pow(distance, 2) / 2), y_dis = sqrt(pow(distance, 2) / 2);
 
 		if (dir == Agent::Direction::NW) { newPos[0] -= x_dis; newPos[1] -= y_dis; }
 		else if (dir == Agent::Direction::SE) { newPos[0] += x_dis; newPos[1] += y_dis; }
-		else if (dir == Agent::Direction::NE) { newPos[0] -= x_dis; newPos[1] += y_dis; }
-		else { newPos[0] += x_dis; newPos[1] -= y_dis; }
+		else if (dir == Agent::Direction::NE) { newPos[0] += x_dis; newPos[1] -= y_dis; }
+		else { newPos[0] -= x_dis; newPos[1] += y_dis; }
 	}
 
 	//If WITHDRAW OR RUN_FOR_LIFE
@@ -1016,7 +1155,7 @@ std::vector<int> Battle::find_new_pos_after_move(std::vector<int> pos, int dista
 
 void Battle::move_to_default_enemy_direciton(Agent * a)
 {
-	int distance = rand() % (NEIGHBOR_RANGE + 1) + 100;
+	int distance = rand() % ((int)NEIGHBOR_RANGE + 1) + 100;
 	//Ottomans are supposed to move south
 	if ((*a).getSide() == Bayezid) {
 		(*a).changePos(find_new_pos_after_move((*a).getPos(), distance, Agent::Direction::SOUTH, false));
@@ -1030,8 +1169,8 @@ void Battle::move_to_default_enemy_direciton(Agent * a)
 bool Battle::more_than_70percent_in_flight(int side)
 {
 	return 
-		((side == Bayezid && 0.1 *(Ottoman_broken + Ottoman_retreat + Ottoman_dead) / (0.1 * Ottoman_size) >= 0.7)
-		|| (side == Tamerlane && 0.1*(Tamerlane_broken + Tamerlane_retreat + Tamerlane_dead) / (0.1 * Tamerlane_size) >= 0.7));
+		((side == Bayezid && (double)(Ottoman_broken + Ottoman_retreat + Ottoman_dead) / (double) Ottoman_size >= 0.7)
+		|| (side == Tamerlane && (double)(Tamerlane_broken + Tamerlane_retreat + Tamerlane_dead) / (double) Tamerlane_size >= 0.7));
 }
 
 bool Battle::no_one_is_able_to_fight(int side)
@@ -1054,12 +1193,17 @@ If offensive = 2, both move
 Battle::Actions Battle::idle_or_move(Agent * a, int offensive)
 {
 	if (offensive == 0) {
-		if ((*a).getSide() == Bayezid) { return Battle::Actions::IDLE; }
+		if ((*a).getSide() == Bayezid && (*a).getName() != Agent::Name::SERB_CAL && (*a).getName() != Agent::Name::RUMELIAN
+			&& (*a).getName() != Agent::Name::SERB_INF && (*a).getName() != Agent::Name::ANATOLIAN
+			&& (*a).getName() != Agent::Name::TARTAR && (*a).getName() != Agent::Name::KAPIKULU)
+		{
+			return Battle::Actions::IDLE;
+		}
 		else { return Battle::Actions::MOVE; }
 	}
-	else if (offensive == 1) {
-		if ((*a).getSide() == Bayezid) { return Battle::Actions::MOVE; }
-		else { return Battle::Actions::IDLE; }
+	else if (offensive == 2) {
+		if ((*a).getSide() == Tamerlane) { return Battle::Actions::IDLE; }
+		else { return Battle::Actions::MOVE; }
 	}
 	else {
 		return Battle::Actions::MOVE;
@@ -1076,7 +1220,7 @@ int Battle::find_distance_to_move(Agent * a, Agent * chosenEnemy)
 	if (chosenEnemy == nullptr) max_to_move = -1;
 	else max_to_move = (int)distance_between_two_points((*a).getPos(), (*chosenEnemy).getPos());
 
-	distance = rand() % (NEIGHBOR_RANGE/2 + 1) + 100; //So it will be easier to check whether overlap 
+	distance = rand() % (200 + 1) + 100; //So it will be easier to check whether overlap 
 	
 	// If the distance between this agent and its enemy is smaller than the distance decide to move
 	if (max_to_move != -1 && distance > max_to_move) { //should not happen

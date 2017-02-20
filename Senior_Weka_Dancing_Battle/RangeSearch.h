@@ -29,6 +29,8 @@ struct node {
 		parent = NULL;
 	}
 
+	~node() { delete left; delete right; left = NULL; right = NULL; }
+
 };
 
 class RangeSearch {
@@ -40,15 +42,17 @@ public:
 	void findAgent_within_range(Agent *a, double range, int which_search);
 	void printTree();
 	void printHeight();
+	void printSize();
 	
 private:
 	node * root = NULL;
+	int size = 0;
 
 	node * putBoundaries(Agent *a, node * n, int key_x, int key_y, node * parent, int parentColor);
 
 	void postOrder(node * n, int indent = 0);
 
-	int getTreeHeight(node *n);
+	int getTreeHeight(node * n, int h, int hMax);
 
 	void freeBST(node *);
 

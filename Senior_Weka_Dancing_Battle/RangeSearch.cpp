@@ -14,7 +14,10 @@ using namespace std;
 
 RangeSearch::~RangeSearch()
 {
-	freeBST(root);
+	delete root;
+	root = NULL;
+	size = 0;
+	//freeBST(root);
 }
 
 /* ----------------------Insert-------------------*/
@@ -36,6 +39,7 @@ node * RangeSearch::putBoundaries(Agent *a, node * n, int key_x, int key_y, node
 		toReturn->color = -parentColor;
 		toReturn->parent = parent;
 		toReturn->ag = a;
+		++size;
 		return toReturn;
 	}
 	else {
@@ -77,7 +81,12 @@ void RangeSearch::printTree()
 
 void RangeSearch::printHeight()
 {
-	printf("\n The tree height is %d\n",getTreeHeight(root));
+	printf("\n The tree height is %d\n",getTreeHeight(root, 0 , 0));
+}
+
+void RangeSearch::printSize()
+{
+	printf("size of tree is %d\n", size);
 }
 
 void RangeSearch::postOrder(node * n, int indent)
@@ -95,30 +104,29 @@ void RangeSearch::postOrder(node * n, int indent)
 
 }
 
-int RangeSearch::getTreeHeight(node * n)
+int RangeSearch::getTreeHeight(node * n, int h, int hMax)
 {
 	int left, right;
-	if (n == NULL) return 0;
-	else {
-		left = getTreeHeight(n->left);
-		right = getTreeHeight(n->right);
+	if (n != NULL) {
+		if (h > hMax) hMax = h;
 
-		return 1 + std::max(left, right);
+		if (n->left != NULL) hMax = getTreeHeight(n->left, h + 1, hMax);
+
+		if (n->right != NULL) hMax = getTreeHeight(n->right, h + 1, hMax);
 	}
+	return hMax;
 }
 
 void RangeSearch::freeBST(node * t)
 {
 	if (t != NULL) {
-		if (t->left != NULL) freeBST(t->left);
-		if (t->right != NULL) freeBST(t->right);	
-		
-		//if (t->ag != NULL) t->ag = NULL;
-		//if (t->parent != NULL) t->parent = NULL;
-
-		t = NULL;
+		freeBST(t->left);
+		freeBST(t->right);		
 		delete t;
-		
+
+		if (t->left != NULL) t->left = NULL;
+		if (t->right != NULL) t->right = NULL;
+		t = NULL;
 	}
 }
 
@@ -131,21 +139,28 @@ void RangeSearch::rangeSearch(node * n, Agent * agent, double range, int which_s
 
 		// odd level, compare x
 		if (n->color == BLACK) {
-
-			int distance = sqrt(pow(n->x - x, 2) + pow(n->y - y, 2));
+			double distance = sqrt(pow(n->x - x, 2) + pow(n->y - y, 2));
 
 			if (distance != 0 && distance <= range) {
 				if (n->ag != nullptr) {
 
-					if (which_search == neighbor_search && (*n->ag).is_alive && (*n->ag).in_battlefield) {
+					if (which_search == neighbor_search 
+						&& (*n->ag).is_alive 
+						&& (*n->ag).in_battlefield 
+						&& (*n->ag).getAgentState() != DEAD
+						) {
 						(*agent).add_neighbor(n->ag);
 					}
 					else if (which_search == enemies_in_sight_search && (*agent).getSide() != (*n->ag).getSide()
-						&& is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield) {
+						&& is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield
+						&& (*n->ag).getAgentState() != DEAD
+						) {
 						(*agent).add_enemies(n->ag);
 					}
 					else if (which_search == enemies_in_shooting_search && (*agent).getSide() != (*n->ag).getSide()
-						&& is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield) {
+						&& is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield
+						&& (*n->ag).getAgentState() != DEAD
+						) {
 						(*agent).add_enemies_to_shoot(n->ag);
 					}
 				}
@@ -172,20 +187,25 @@ void RangeSearch::rangeSearch(node * n, Agent * agent, double range, int which_s
 		}
 		// Even level, compare y
 		else{
-
-			int distance = sqrt(pow(n->x - x, 2) + pow(n->y - y, 2));
+			double distance = sqrt(pow(n->x - x, 2) + pow(n->y - y, 2));
 			if (distance != 0 && distance <= range) {
 				if (n->ag != nullptr) {
 
-					if (which_search == neighbor_search && (*n->ag).is_alive && (*n->ag).in_battlefield) {
+					if (which_search == neighbor_search && (*n->ag).is_alive && (*n->ag).in_battlefield 
+						&& (*n->ag).getAgentState() != DEAD
+						) {
 						(*agent).add_neighbor(n->ag);
 					}
 					else if (which_search == enemies_in_sight_search && (*agent).getSide() != (*n->ag).getSide()
-						&& is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield) {
+						&& is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield
+						&& (*n->ag).getAgentState() != DEAD
+						) {
 						(*agent).add_enemies(n->ag);
 					}
 					else if (which_search == enemies_in_shooting_search && (*agent).getSide() != (*n->ag).getSide()
-						&& is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield) {
+						&& is_agent_facing_enemy(agent, n->ag) && (*n->ag).is_alive && (*n->ag).in_battlefield
+						&& (*n->ag).getAgentState() != DEAD
+						) {
 						(*agent).add_enemies_to_shoot(n->ag);
 					}
 				}

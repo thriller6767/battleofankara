@@ -1,36 +1,3 @@
-﻿  Battle.cpp
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(108): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(140): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(883): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(986): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  Agent.cpp
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(255): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(256): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(258): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(259): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(354): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(355): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(356): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(547): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(547): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(557): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-  Generating Code...
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\agent.cpp(625): warning C4715: 'Agent::printState': not all control paths return a value
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(894): warning C4715: 'Battle::distance_between_two_points': not all control paths return a value
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(988): warning C4700: uninitialized local variable 'x_dis' used
-  Compiling...
-  main.cpp
-  Test.cpp
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\test.cpp(84): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\test.cpp(119): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\test.cpp(261): warning C4800: 'int': forcing value to bool 'true' or 'false' (performance warning)
-  RangeSearch.cpp
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\rangesearch.cpp(135): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\rangesearch.cpp(176): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  Initial_val_mapper.cpp
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\initial_val_mapper.cpp(43): warning C4018: '<': signed/unsigned mismatch
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\initial_val_mapper.cpp(149): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-  Generating Code...
-d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\rangesearch.cpp(249): warning C4715: 'RangeSearch::is_agent_facing_enemy': not all control paths return a value
+﻿  main.cpp
   Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.exe
   Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.pdb (Full PDB)

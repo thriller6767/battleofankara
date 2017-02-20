@@ -14,7 +14,7 @@ string Agent::printName()
 {
 	switch (name) {
 		case Agent::Name::JANISSARY: return "Janissary";
-		case Agent::Name::KAPUKULU: return "Kapikulu";
+		case Agent::Name::KAPIKULU: return "Kapikulu";
 		case Agent::Name::AZAPS: return "Azaps inf";
 		case Agent::Name::ANATOLIAN: return "Anatolian";
 		case Agent::Name::RUMELIAN: return "Rumelian";
@@ -189,6 +189,38 @@ int Agent::getInitialAd()
 	return initial_ad;
 }
 
+Agent::Direction Agent::getOppositeDir(Agent::Direction d)
+{
+	Agent::Direction direction_from;
+	switch (d) {
+	case Agent::Direction::NORTH: direction_from = Agent::Direction::SOUTH; break;
+	case Agent::Direction::SOUTH: direction_from = Agent::Direction::NORTH; break;
+	case Agent::Direction::WEST: direction_from = Agent::Direction::EAST; break;
+	case Agent::Direction::EAST: direction_from = Agent::Direction::WEST; break;
+	case Agent::Direction::NE: direction_from = Agent::Direction::SW; break;
+	case Agent::Direction::SW: direction_from = Agent::Direction::NE; break;
+	case Agent::Direction::NW: direction_from = Agent::Direction::SE; break;
+	default: direction_from = Agent::Direction::NW; break;
+	}
+	return direction_from;
+}
+
+Agent::Direction Agent::getDirectionTowardCenter(Agent::Direction d)
+{
+	Agent::Direction center;
+	switch (d) {
+	case Agent::Direction::NORTH: center = Agent::Direction::WEST; break;
+	case Agent::Direction::SOUTH: center = Agent::Direction::EAST; break;
+	case Agent::Direction::WEST: center = Agent::Direction::SOUTH; break;
+	case Agent::Direction::EAST: center = Agent::Direction::NORTH; break;
+	case Agent::Direction::NE: center = Agent::Direction::NW; break;
+	case Agent::Direction::SW: center = Agent::Direction::SE; break;
+	case Agent::Direction::NW: center = Agent::Direction::NE; break;
+	default: center = Agent::Direction::SW; break;
+	}
+	return center;
+}
+
 void Agent::setSize(int s)
 {
 	size = s;
@@ -273,15 +305,16 @@ void Agent::updateMorale(ConReader cr)
 		//printf("size is %d, now morale is %d, state is %s, fatigue is %d, current enemy is %d\n", size, morale, printState().c_str(), fatigue, current_enemy_index_this_agent_is_attacking);
 	}
 	//influenced by neighbor
+	if (is_neighbor_dead()) morale -= 2;
 	if (is_neighbor_broken()) morale -= 3;
-	if (does_neighbor_betray()) morale -= 5;
+	if (side == Bayezid && does_neighbor_betray()) morale -= 5;
 	if (is_surrounded()) morale -= 2;
 
 	//influenced by height
 	if (is_standing_on_high_ground(cr)) morale += 10;
 
 	//influenced by fatigue*************************************************
-	if (fatigue >= 50 && fatigue < 100) morale -= 1;
+	if (fatigue >= 60 && fatigue < 100) morale -= 1;
 	else if (fatigue >= 100) morale -= 2;
 
 }
@@ -350,10 +383,9 @@ If it is fighting to death, all abilities will increase.
 */
 void Agent::strengthenAbilities()
 {
-	missile_range *= 1.5;
-	missile_damage *= 1.5;
-	attack_damage *= 1.5;
-	armor_defence *= 1.5;
+	missile_damage += 25 ;
+	attack_damage += 25;
+	armor_defence += 25;
 }
 
 void Agent::strengthenMorale()
@@ -374,11 +406,24 @@ void Agent::increaseAttackDamage(double rate)
 
 int Agent::attack_damage_delivered(int special_bonus, double enemy_defend)
 {
-	double attack = ((double)attack_damage + (double)special_bonus - enemy_defend - 0.5*(double) fatigue);
-	
+	double attack;
+	//if (fatigue >= 300) {
+	//	attack = ((double)attack_damage - enemy_defend - 0.1*(double)fatigue + (double)special_bonus);
+	//}
+	//else if (fatigue >= 200 && fatigue < 300) {
+	//	attack = ((double)attack_damage - enemy_defend - 0.2*(double)fatigue + (double)special_bonus);
+	//}
+	//else if (fatigue >= 100 && fatigue < 200){
+	//	attack = ((double)attack_damage - enemy_defend - 0.3*(double)fatigue + (double)special_bonus);
+	//}
+	//else {
+	//	attack = ((double)attack_damage - enemy_defend - 0.5*(double)fatigue + (double)special_bonus);
+	//}
+
+	attack = ((double)attack_damage - enemy_defend + (double)special_bonus- 0.1*(double)fatigue);
 	if (attack <= 1.0) return 1;
 	else {
-		double deliver = ((double)size / (double)initial_size) * attack;
+		double deliver = ((double)size / (double)initial_size) * attack ;
 		if (deliver <= 1.0) return 1;
 		else return (int)deliver;
 	}
@@ -423,6 +468,13 @@ void Agent::clear_enemies_to_shoot()
 {
 	if (enemies_in_missile.size() != 0) enemies_in_missile.clear();
 }
+bool Agent::is_neighbor_dead()
+{
+	for (Agent * a : neighbors) {
+		if ((*a).getAgentState() == DEAD && (*a).getSide() == side) { return true; }
+	}
+	return false;
+}
 /*
 Returns true if a neighbor of this side is broken.
 */
@@ -439,7 +491,7 @@ Returns true if a neighbor of your side betray.
 bool Agent::does_neighbor_betray()
 {
 	for (Agent * a : neighbors) {
-		if ((*a).getBetrayBit() && (*a).getSide() == side) { return true; }
+		if ((*a).getBetrayBit()) { return true; }
 	}
 	return false;
 }
@@ -477,14 +529,14 @@ bool Agent::is_betrayable_unit()
 bool Agent::is_able_to_fight_to_death()
 {
 	return 
-		(name == Agent::Name::JANISSARY || name == Agent::Name::KAPUKULU || name == Agent::Name::SERB_CAL
+		(name == Agent::Name::JANISSARY || name == Agent::Name::KAPIKULU || name == Agent::Name::SERB_CAL
 		|| name == Agent::Name::SERB_INF || name == Agent::Name::TAMERLANE || name == Agent::Name::TAMER_GAURDS);
 }
 
 bool Agent::is_size_below_20_percent()
 {
 	double result = ((double)size) / ((double)initial_size);
-	return result < 0.2;
+	return result <= 0.2;
 }
 
 bool Agent::is_morale_below_zero()

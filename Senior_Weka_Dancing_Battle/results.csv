@@ -1,42 +1,22 @@
-Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty,O_left_Rate, T_Casualty,T_left_rate,Trend,,,
-,,,,,,,,,,,,,,,
-0,0,0,0,0,180,180,DRAW,0.959917,0.0400833,0.570088,0.000491582,Ottoman Might Lost,,,
-0,0,0,0,0,96,170,Bayezid LOST,0.963786,0.0360357,0.544599,0,Ottoman Might Lost,,,
-0,0,0,0,0,138,170,Tamerlane LOST,0.512869,0,0.74499,0.25501,Tamerlane Might Lost,,, 
-0,0,0,0,0,170,170,DRAW,0.997548,0.000607143,0.70398,0,Ottoman Might Lost,,, 
-0,0,0,0,0,79,170,Bayezid LOST,0.965821,0,0.758923,0.000626263,Ottoman Might Lost,,,
-,,,,,,,,,,,,,,,
-0,0,0,0,0,170,170,DRAW,0.898583,0.101417,0.528848,0,Ottoman Might Lost,,,
-0,0,0,0,0,170,170,DRAW,0.609548,0.0005,0.753939,0.245273,Tamerlane Might Lost,,,
-0,0,0,0,0,170,170,DRAW,0.996667,0.00259524,0.751246,0.000632997,Ottoman Might Lost,,,
-,,,,,,,,,,,,,,,
-0,0,0,0,0,170,170,DRAW,0.898583,0.101417,0.528848,0,Ottoman Might Lost, ,,
-0,0,0,0,0,170,170,DRAW,0.609548,0.0005,0.753939,0.245273,Tamerlane Might Lost, ,,
-0,0,0,0,0,170,170,DRAW,0.996667,0.00259524,0.751246,0.000632997,Ottoman Might Lost, ,,
-0,0,0,0,0,58,170,Bayezid LOST,0.945964,0.00185714,0.723212,0.00102357,Ottoman Might Lost, ,,
-,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,
->,,,,,,,,,,,,,,,
-Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend
-0,0 ,0,0,0,80,170,Bayezid LOST,0.992583,0,0.558296,0.00026936,Ottoman Might Lost, 
-0,0 ,0,0,0,Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend
-0,0 ,0,0,0,Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend
-0,0 ,0,0,0,Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend
-0,0 ,0,0,0,170,170,DRAW, 0.981702,0.017869,0.499111,0,Ottoman Might Lost, 
-0,0 ,0,0,0,Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend
-0,0 ,0,0,0,170,170,DRAW, 0.963476,0.0351786,0.581919,0,Ottoman Might Lost, 
-0,0 ,0,0,0,Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend
-0,0 ,0,0,0,Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend
-0,0 ,0,0,0,170,170,DRAW, 0.93631,0.0632738,0.567327,0,Ottoman Might Lost, 
-0,0 ,0,0,0,113,170,Bayezid LOST,0.962524,0.0308571,0.649912,0,Ottoman Might Lost, 
-0,0 ,0,0,0,170,170,DRAW, 0.987262,0.0121429,0.681246,0,Ottoman Might Lost, 
-Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend
-0,0 ,0,0,0,Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend
-0,0 ,0,0,0,95,200,Bayezid LOST,0.976321,0.0211905,0.556801,0,Ottoman Might Lost, 
-0,0 ,0,0,0,200,200,DRAW, 0.895024,0.0945,0.645118,0.000356902,Ottoman Might Lost, 
-Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend
-0,0 ,0,0,0,95,200,Bayezid LOST,0.976321,0.0211905,0.556801,0,Ottoman Might Lost, 
-0,0 ,0,0,0,Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend
-0,0 ,0,0,0,101,200,Bayezid LOST,0.94244,0.056131,0.595125,0,Ottoman Might Lost, 
-Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend
-0,0 ,0,0,0,112,200,Bayezid LOST,0.948714,0.050619,0.636162,0,Ottoman Might Lost, 
+Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend,
+,,,,,,,,,,,,,
+0,0,0,0,0,101,200,Bayezid LOST,1,0,0.640842,0,Ottoman Might Lost, 
+,,,,,,,,,,,,,
+0,0,0,0,0,68,200,Bayezid LOST,0.98375,0,0.61204,0,Ottoman Might Lost, 
+,,,,,,,,,,,,,
+0,0,0,0,0,97,200,Bayezid LOST,0.857143,0.142857,0.547529,0,Ottoman Might Lost, 
+,,,,,,,,,,,,,
+0,0,0,0,0,99,200,Bayezid LOST,0.970274,0.0295357,0.669071,0,Ottoman Might Lost, 
+,,,,,,,,,,,,,
+0,0,0,0,0,107,200,Bayezid LOST,0.970595,0.0294048,0.555286,0,Ottoman Might Lost, 
+,,,,,,,,,,,,,
+0,0,0,0,0,97,200,Bayezid LOST,0.981595,0.0178571,0.509825,0,Ottoman Might Lost, 
+,,,,,,,,,,,,,
+0,0,0,0,0,93,200,Bayezid LOST,0.977286,0.0178571,0.578081,0,Ottoman Might Lost, 
+,,,,,,,,,,,,,
+0,0,0,0,0,93,200,Bayezid LOST,0.964286,0.0357143,0.60501,0,Ottoman Might Lost, 
+0,0,0,0,0,101,200,Bayezid LOST,1,0,0.661502,0,Ottoman Might Lost, 
+,,,,,,,,,,,,,
+0,0,0,0,0,106,200,Bayezid LOST,0.98131,0.017869,0.622121,0,Ottoman Might Lost, 
+,,,,,,,,,,,,,
+0,0,0,0,0,112,200,Bayezid LOST,0.930071,0.0446667,0.526404,0,Ottoman Might Lost, 

@@ -244,7 +244,7 @@ void test_one_battle()
 	int is_ottoman_offensive = 0;
 	int is_water_poisoned = 0;
 	int any_betrayal = 0;
-	int size_increase_ratio = 1;
+	int size_increase = 1;
 	int rounds = 150;
 
 	battle.cr.loadAltitude();
@@ -256,9 +256,9 @@ void test_one_battle()
 		int i = 1;
 		while (i <= 9) {
 
-			RESULTFILE << march_from_constantinople << "," << is_ottoman_offensive <<" ," << is_water_poisoned << "," << any_betrayal << "," << size_increase_ratio << ",";
+			RESULTFILE << march_from_constantinople << "," << is_ottoman_offensive <<" ," << is_water_poisoned << "," << any_betrayal << "," << size_increase << ",";
 
-			battle.simple_result_of_one_battle(RESULTFILE, i, is_ottoman_offensive, any_betrayal, march_from_constantinople, is_water_poisoned, size_increase_ratio, rounds + 5*i);
+			battle.simple_result_of_one_battle(RESULTFILE, i, is_ottoman_offensive, any_betrayal, march_from_constantinople, is_water_poisoned, size_increase, rounds + 5*i);
 			i++;
 		}
 	}

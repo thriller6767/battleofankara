@@ -13,7 +13,7 @@
 
 #define BATTLEFIELD_Y_MAX 12000
 #define BATTLEFIELD_X_MAX 9500
-#define NEIGHBOR_RANGE 270
+#define NEIGHBOR_RANGE 200.0
 #define SHIT_NULL -100
 #define HEIGHT_SCORE_INTERVAL 25
 #define DIRECTION_STANDARD 50
@@ -40,12 +40,13 @@ public:
 
 	Initial_val_mapper ivm; // for test
 	ConReader cr;
+	RangeSearch rsTree;
 
-	void first_time_populate(int is_water_poisoned, int march_from_constantinople, bool any_betrayal);
+	void first_time_populate(int is_water_poisoned, int march_from_constantinople, int agent_increase, bool any_betrayal);
 
 	int simple_result_of_one_battle(std::ofstream& file, int fileIndex, int offensive, bool betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds);
 
-	void one_battle(std::ofstream& resultFILE, std::ofstream& file, std::ofstream & agentstat, int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds);
+	void one_battle(std::ofstream& resultFILE, std::ofstream& file, std::ofstream & agentstat, std::ofstream& file3, int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds);
 
 	
 	void deleteAllAgent();
@@ -59,18 +60,19 @@ public:
 	void initial_chart_print();
 
 	/*---------just for test-----------*/
-	void choose_and_Execute_Action(Agent * a, int offensive, int betray);
+	void choose_and_Execute_Action(Agent * a, int offensive, int betray, int round);
 
 private:
 	
 	std::time_t start;
-	RangeSearch rsTree;
 
 	int Ottoman_size, Tamerlane_size;
 	
 	/*Agent still alive and in the battle field
 	(alive_in_battle + left_battle + dead = n)
 	*/
+	int Ottoman_soldier = 0, Tamerlane_soldier = 0;
+
 	int Ottoman_alive_in_battle, Tamerlane_alive_in_battle;
 
 	/*Agent has already left the battle field*/
@@ -87,6 +89,8 @@ private:
 
 	/*-----------decide which action, and do it------------------*/
 
+	void move_to_flank(Agent *a);
+	void move_straight(Agent *a);
 	void move_to_chosen_enemy(Agent *a, Agent * chosenEnemy);
 	void running_for_life(Agent * a);
 	void charge_newly_chosen_enemy(Agent *a, Agent * chosenEnemy);
@@ -121,7 +125,6 @@ private:
 	bool more_than_70percent_in_flight(int side);
 	bool no_one_is_able_to_fight(int side);
 	
-	void populate(int poisoned_well, int marching_from_Constantinople);
 	int updateMorale_shootingR_sightR(Agent *a);
 
 	void write_statistics(std::ofstream& RESULTFILE, std::ofstream& file, int r, int rounds);
@@ -129,6 +132,7 @@ private:
 
 	void annihilate_all_properties_of_battle();
 	void initiate_battle(int poisoned_well, int marching_from_Constantinople, int increase_amount);
+
 };
 
 

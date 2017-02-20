@@ -15,12 +15,12 @@ void Initial_val_mapper::remapping(int poisoned_well, int marching_from_Constant
 {
 	remapper(poisoned_well, marching_from_Constantinople, betray);
 	setRanges(cr);
-	fancyPrint();
+	//fancyPrint();
 }
 
-void Initial_val_mapper::populate_battlefield(int poisoned_well, int marching_from_Constantinople, bool betray, ConReader cr)
+void Initial_val_mapper::populate_battlefield(int poisoned_well, int marching_from_Constantinople, bool betray, int agent_increase, ConReader cr)
 {
-	initialVal_fileReader(poisoned_well, marching_from_Constantinople, betray);
+	initialVal_fileReader(poisoned_well, marching_from_Constantinople, betray, agent_increase);
 	setRanges(cr);
 	fancyPrint();
 }
@@ -84,7 +84,7 @@ int Initial_val_mapper::remapper(int poisoned_well, int marching_from_Constantin
 	return 0;
 }
 
-int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_from_Constantinople, bool betray)
+int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_from_Constantinople, bool betray, int agent_increase_Ottoman)
 {
 	Ottoman_last_index = 0;
 	ifstream inFile("basicData.txt");
@@ -122,12 +122,18 @@ int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_fr
 				width = sqrt(size * TAMER_RESERVE_RATIO);
 			}
 			else if (nam == "Azaps") {
-				num_of_agent_for_this_type = size / DEFAULT_AGENT_SIZE;
+				num_of_agent_for_this_type = size / DEFAULT_AGENT_SIZE + agent_increase_Ottoman;
 				size = DEFAULT_AGENT_SIZE;
 				width = sqrt(size * LIGHT_INF_WIDTH_DEPTH_RATIO);
 			}
-			else {
+			else if (nam == "Guards" || nam == "Tamurlane") {
 				num_of_agent_for_this_type = size / DEFAULT_AGENT_SIZE;
+				size = DEFAULT_AGENT_SIZE;
+				width = sqrt(size * DEFAULT_WIDTH_DEPTH_RATIO);
+			}
+			else {
+				num_of_agent_for_this_type = (int)(size / DEFAULT_AGENT_SIZE) + agent_increase_Ottoman;
+				//printf("num of this type %s is %d, increase is %d\n", nam.c_str(), num_of_agent_for_this_type, agent_increase_Ottoman);
 				size = DEFAULT_AGENT_SIZE;
 				width = sqrt(size * DEFAULT_WIDTH_DEPTH_RATIO);
 			}
@@ -138,11 +144,14 @@ int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_fr
 			else { width *= CAVALRY_WIDTH; depth *= CAVALRY_DEPTH; }
 
 			if (count == 9) { side = Tamerlane; pos = { TAMERLANE_DEFAULT_START_X * SAMLE_POINT_DISTANCE, (int)(TAMERLANE_DEFAULT_START_Y * SAMLE_POINT_DISTANCE )}; }
-			if (count == 10 || count == 11) pos = { TAMERLANE_SECOND_LINE_X * SAMLE_POINT_DISTANCE, TAMERLANE_SECOND_LINE_Y * SAMLE_POINT_DISTANCE };
-			if (count == 12) pos = { TAMERLANE_RESERVE_X *SAMLE_POINT_DISTANCE, TAMERLANE_RESERVE_Y * SAMLE_POINT_DISTANCE };
-			if (count >= 4 && count < 9) pos = { OTTO_FIRST_LINE_START_X * SAMLE_POINT_DISTANCE , (int)(OTTO_SECOND_LINE_START_Y*SAMLE_POINT_DISTANCE) };
-			if (count == 1) pos = { (int)(AZAPS_START_X * SAMLE_POINT_DISTANCE), (int)(AZAPS_START_Y * SAMLE_POINT_DISTANCE) };
-			if (count == 5) pos = { (int)(SERB_CAL_START_X * SAMLE_POINT_DISTANCE), (int)(SERB_CAL_START_Y * SAMLE_POINT_DISTANCE) };
+			else if (count == 10 || count == 11) pos = { TAMERLANE_SECOND_LINE_X * SAMLE_POINT_DISTANCE, (int) (TAMERLANE_SECOND_LINE_Y * SAMLE_POINT_DISTANCE) };
+			else if (count == 12) pos = { TAMERLANE_RESERVE_X *SAMLE_POINT_DISTANCE, TAMERLANE_RESERVE_Y * SAMLE_POINT_DISTANCE };
+			else if (count == 5) pos = { (int)(SERB_CAL_START_X * SAMLE_POINT_DISTANCE), (int)(SERB_CAL_START_Y * SAMLE_POINT_DISTANCE) };
+			else if (count == 4 || count == 6) pos = { OTTO_FIRST_LINE_START_X * SAMLE_POINT_DISTANCE , (int)(OTTO_SECOND_LINE_START_Y*SAMLE_POINT_DISTANCE) };
+			else if (count == 1) pos = { (int)(AZAPS_START_X * SAMLE_POINT_DISTANCE), (int)(AZAPS_START_Y * SAMLE_POINT_DISTANCE) };
+			else if (count == 7) pos = { (int)(TARTAR_X * SAMLE_POINT_DISTANCE), (int)(OTTO_SECOND_LINE_START_Y * SAMLE_POINT_DISTANCE) };
+			else if (count == 8) pos = { (int)(TARTAR_X * SAMLE_POINT_DISTANCE), (int)(RESERV_Y * SAMLE_POINT_DISTANCE) };
+			
 
 
 			for (int i = 0; i < num_of_agent_for_this_type; ++i) {
@@ -174,7 +183,7 @@ int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_fr
 				AgentList.push_back(ag);
 				++index;
 
-				if (count < 9) ++Ottoman_last_index;
+				if ((*ag).getSide() == Bayezid) ++Ottoman_last_index;
 			}
 		}
 		
@@ -210,7 +219,7 @@ Agent::Name Initial_val_mapper::chooseName(int count)
 		case 3: return Agent::Name::RUMELIAN;
 		case 4: return Agent::Name::SERB_INF;
 		case 5: return Agent::Name::SERB_CAL;
-		case 6: return Agent::Name::KAPUKULU ;
+		case 6: return Agent::Name::KAPIKULU ;
 		case 7: return Agent::Name::TARTAR;
 		case 8: return Agent::Name::OTTO_RESERVES;
 		case 9: return Agent::Name::TAMER_HORSE_ARCHER;
@@ -259,6 +268,7 @@ bool Initial_val_mapper::valueInRange(double value, double min, double max)
 void Initial_val_mapper::deleteAllAgent()
 {
 	for (Agent* agent : AgentList) { delete agent; }
+	AgentList.clear();
 }
 
 void Initial_val_mapper::printOneUnit()
