@@ -40,7 +40,8 @@ void run(int rounds)
 
 	ofstream RESULTFILE("data/results.csv", ios::app);
 	if (RESULTFILE) {
-		RESULTFILE << "Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend\n";
+		RESULTFILE << "Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty,T_Casualty, Trend,\n";
+		
 		int i = 0, k = 0;
 		while (k <= 1){
 			while (is_water_poisoned <= 1) {

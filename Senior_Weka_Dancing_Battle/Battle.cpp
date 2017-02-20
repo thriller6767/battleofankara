@@ -254,7 +254,7 @@ void Battle::write_statistics(ofstream& RESULTFILE, ofstream& file, int r, int r
 		double Ottoman_left_rate = (double)left / (double)total;
 		file << "\ntotal Ottoman soldiers, killed, in battlefield, left, total kill rate,\n";
 		file << total << "," << total - alive << "," << total - left << "," << left << "," << ottoman_casualty_rate << ",\n";
-		RESULTFILE << ottoman_casualty_rate << "," << Ottoman_left_rate << ",";
+		RESULTFILE << ottoman_casualty_rate << "," ;
 
 
 		file << "\nTamerlane statistics,\n";
@@ -275,7 +275,7 @@ void Battle::write_statistics(ofstream& RESULTFILE, ofstream& file, int r, int r
 		double Tamerlane_left_rate = (double)left / (double)total;
 		file << "\ntotal Tamerlane soldiers, killed, in battlefield, left, total kill rate,\n";
 		file << total << "," << total - alive << "," << total - left << "," << left << "," << Tamerlane_casualty_Rate << ",\n";
-		RESULTFILE << Tamerlane_casualty_Rate << "," << Tamerlane_left_rate<< ",";
+		RESULTFILE << Tamerlane_casualty_Rate << ",";
 
 		if (Tamerlane_casualty_Rate > ottoman_casualty_rate) {
 			RESULTFILE << "Tamerlane Might Lost, \n";
