@@ -39,34 +39,33 @@ void run(int rounds)
 	
 	battle1.first_time_populate(is_water_poisoned, march_from_constantinople, size_increase, any_betrayal);
 
-	//battle1.put_rangetree_boundaries();
-	//battle1.rsTree.printHeight();
-
-	//printf("after delete\n");
-	//battle1.delete_searchTree();
-	//battle1.rsTree.printHeight();
-
-	//printf("remap\n");
-	//battle1.put_rangetree_boundaries();
-	//battle1.rsTree.printHeight();
-
-	//battle1.delete_searchTree();
-
 	ofstream RESULTFILE("results.csv", ios::app);
 	if (RESULTFILE) {
 		RESULTFILE << "Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty, O_Left_Rate, T_Casualty, T_left_Rate, Trend\n";
-		int i = 4;
-		while (i <= 5) {
+		int i = 0;
+		while (i <50) {
 
-			RESULTFILE << march_from_constantinople << "," << is_ottoman_offensive << " ," << is_water_poisoned << "," << any_betrayal << "," << size_increase << ",";
+			int x = 0;
+			while (x <= 10) {
 
-			battle1.simple_result_of_one_battle(RESULTFILE, i, is_ottoman_offensive, any_betrayal, march_from_constantinople, is_water_poisoned, size_increase, 200);	
-			
-			battle1.ivm.remapping(is_water_poisoned, march_from_constantinople, any_betrayal, battle1.cr);
-			//battle1.ivm.deleteAllAgent();
-			//battle1.first_time_populate(is_water_poisoned, march_from_constantinople, size_increase, any_betrayal);
+				RESULTFILE << march_from_constantinople << "," << is_ottoman_offensive << " ," << is_water_poisoned << "," << any_betrayal << "," << size_increase << ",";
 
-			i++;
+				battle1.simple_result_of_one_battle(RESULTFILE, i,
+													is_ottoman_offensive, 
+													any_betrayal, 
+													march_from_constantinople, 
+													is_water_poisoned, 
+													size_increase, 
+													200);
+
+				battle1.ivm.remapping(is_water_poisoned, march_from_constantinople, any_betrayal, battle1.cr);
+				//battle1.ivm.deleteAllAgent();
+				//battle1.first_time_populate(is_water_poisoned, march_from_constantinople, size_increase, any_betrayal);
+
+				x++;
+				i++;
+			}
+			size_increase++;
 		}
 	}
 	else {
