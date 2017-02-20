@@ -189,11 +189,11 @@ void Battle::first_time_populate(int is_water_poisoned, int march_from_constanti
 int Battle::simple_result_of_one_battle(std::ofstream& RESULTFILE, int fileIndex,  int offensive, bool betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds)
 {
 	ofstream file1, file2, file3;
-	string n = "one_battle_" + to_string(fileIndex) + ".csv";
+	string n = "data/one_battle_" + to_string(fileIndex) + ".csv";
 	file1.open(n.c_str());
-	string m = "agent_stat_per_round_" + to_string(fileIndex) + ".txt";
+	string m = "data/agent_stat_per_round_" + to_string(fileIndex) + ".txt";
 	file2.open(m.c_str());
-	string s = "casualty_per_round_" + to_string(fileIndex) + ".csv";
+	string s = "data/casualty_per_round_" + to_string(fileIndex) + ".csv";
 	file3.open(s.c_str());
 
 	if (file1 && file2 && file3) {
@@ -207,6 +207,9 @@ int Battle::simple_result_of_one_battle(std::ofstream& RESULTFILE, int fileIndex
 		file1 << "\n";
 		file3 << "round, Ottoman Casualty, Tamerlane Casualty, \n";
 		one_battle(RESULTFILE, file1, file2, file3,offensive, betray, marching_from_constantinople, is_water_poisoned, increase_amount, rounds);
+	}
+	else {
+
 	}
 
 	annihilate_all_properties_of_battle();
@@ -274,7 +277,7 @@ void Battle::write_statistics(ofstream& RESULTFILE, ofstream& file, int r, int r
 		file << total << "," << total - alive << "," << total - left << "," << left << "," << Tamerlane_casualty_Rate << ",\n";
 		RESULTFILE << Tamerlane_casualty_Rate << "," << Tamerlane_left_rate<< ",";
 
-		if (Tamerlane_casualty_Rate + Tamerlane_left_rate > ottoman_casualty_rate + Ottoman_left_rate) {
+		if (Tamerlane_casualty_Rate > ottoman_casualty_rate) {
 			RESULTFILE << "Tamerlane Might Lost, \n";
 		}
 		else {

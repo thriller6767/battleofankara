@@ -159,8 +159,8 @@ int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_fr
 				Agent* ag = Agent::Builder().initName(chooseName(count))
 											.initCate(chooseCat(cat))
 											.initSize(size)
-											.initMorale(morale - poisoned_well)
-											.initFatigue(fatigue + marching_from_Constantinople)
+											.initMorale(morale)
+											.initFatigue(fatigue)
 											.initDir(chooseDir(dir))
 											.initAD(ad)
 											.initMD(md)
@@ -189,10 +189,14 @@ int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_fr
 		
 		++count;
 	}
-	printf("#1 morale is %d, initial morale is %d\n", (*AgentList[1]).getMorale(), (*AgentList[1]).getInitialMorale());
-	printf("#1 size is %d, initial size is %d\n", (*AgentList[1]).getSize(), (*AgentList[1]).getInitialSize());
-	if ((*AgentList[1]).is_alive) printf("it is alive");
-	else printf("not alive");
+	
+	for (Agent *a : AgentList) {
+		if ((*a).getSide() == Bayezid) {
+			(*a).setFatigue((*a).getFatigue() + marching_from_Constantinople * 25);
+			(*a).setMorale((*a).getMorale() - poisoned_well * 30);
+			(*a).setSize((*a).getSize() - poisoned_well * 75);
+		}
+	}
 
 	return 0;
 }
@@ -267,7 +271,7 @@ bool Initial_val_mapper::valueInRange(double value, double min, double max)
 
 void Initial_val_mapper::deleteAllAgent()
 {
-	for (Agent* agent : AgentList) { delete agent; }
+	for (Agent* agent : AgentList) { delete agent; agent = NULL; }
 	AgentList.clear();
 }
 
