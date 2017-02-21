@@ -39,7 +39,7 @@
 #define WAR_ELEPHANT_WIDTH 10
 #define WAR_ELEPHANT_DEPTH 15
 
-#define MINIMUM_GAPE 30
+#define MINIMUM_GAPE 20
 
 class Agent {
 public:

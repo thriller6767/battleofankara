@@ -692,23 +692,32 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray, int
 
 void Battle::move_to_flank(Agent * a)
 {
-	Agent::Direction dir;
+	
 	if ((*a).getSide() == Bayezid) {
-
+		Agent::Direction dir;
 		if ((*a).getName() == Agent::Name::SERB_CAL || (*a).getName() == Agent::Name::SERB_INF
 			|| (*a).getName() == Agent::Name::ANATOLIAN || (*a).getName() == Agent::Name::KAPIKULU) {
 			dir = Agent::Direction::SW;
+
+			int distance = rand() % (int)(NEIGHBOR_RANGE)+100;
+			//Have not consider the problem of overlapping
+			vector<int> newPos = find_new_pos_after_move((*a).getPos(), distance, dir, false);
+
+			(*a).changeDirection(dir);
+			(*a).changePos(newPos);
 		}
 		else if ((*a).getName() == Agent::Name::TARTAR || (*a).getName() == Agent::Name::RUMELIAN) {
 			dir = Agent::Direction::SE;
+
+			int distance = rand() % (int)(NEIGHBOR_RANGE)+100;
+			//Have not consider the problem of overlapping
+			vector<int> newPos = find_new_pos_after_move((*a).getPos(), distance, dir, false);
+
+			(*a).changeDirection(dir);
+			(*a).changePos(newPos);
 		}
 
-		int distance = rand() % (int)(NEIGHBOR_RANGE)+100;
-		//Have not consider the problem of overlapping
-		vector<int> newPos = find_new_pos_after_move((*a).getPos(), distance, dir, false);
-
-		(*a).changeDirection(dir);
-		(*a).changePos(newPos);
+		
 	}
 
 }
@@ -825,7 +834,7 @@ If it is a bayezid agent, retreat to south
 void Battle::withdraw_to_built_in_dir(Agent * a)
 {
 	Agent::Direction dir;
-	int distance = 200;
+	int distance = 250;
 
 	if ((*a).getSide() == Bayezid) dir = Agent::Direction::NORTH;
 	else dir = Agent::Direction::SOUTH;
@@ -1179,12 +1188,12 @@ bool Battle::more_than_70percent_in_flight(int side)
 bool Battle::no_one_is_able_to_fight(int side)
 {
 	if (side == Bayezid) {
-	/*	printf("Ottoman size is %d, Ottoman dead is %d, Ottoman_left is %d, Ottoman broken is %d\n", Ottoman_size
-			, Ottoman_dead, Ottoman_left_battle, Ottoman_broken);*/
-		return (Ottoman_size - Ottoman_dead - Ottoman_left_battle - Ottoman_broken) == 0;
+		printf("Ottoman size is %d, Ottoman dead is %d, Ottoman_left is %d, Ottoman broken is %d\n", Ottoman_size
+			, Ottoman_dead, Ottoman_left_battle, Ottoman_broken);
+		return (Ottoman_size - Ottoman_dead - Ottoman_left_battle - Ottoman_broken) <= 0;
 	}
 	else {
-		return (Tamerlane_size - Tamerlane_dead - Tamerlane_left_battle - Tamerlane_broken ) == 0;
+		return (Tamerlane_size - Tamerlane_dead - Tamerlane_left_battle - Tamerlane_broken ) <= 0;
 	}
 }
 

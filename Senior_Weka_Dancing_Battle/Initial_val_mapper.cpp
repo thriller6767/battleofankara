@@ -100,7 +100,7 @@ int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_fr
 	string line, nam, cat, dir;
 	int size, morale, fatigue, ad, md, defend, num_of_agent_for_this_type;
 	double width, depth,shooting_r, accuracy;
-	vector<int> pos = { OTTO_FIRST_LINE_START_X*SAMLE_POINT_DISTANCE, OTTO_FIRST_LINE_START_Y*SAMLE_POINT_DISTANCE };
+	vector<int> pos = {(int) (OTTO_FIRST_LINE_START_X*SAMLE_POINT_DISTANCE), OTTO_FIRST_LINE_START_Y*SAMLE_POINT_DISTANCE };
 
 	getline(inFile, line); //skip header
 
@@ -147,7 +147,7 @@ int Initial_val_mapper::initialVal_fileReader(int poisoned_well, int marching_fr
 			else if (count == 10 || count == 11) pos = { TAMERLANE_SECOND_LINE_X * SAMLE_POINT_DISTANCE, (int) (TAMERLANE_SECOND_LINE_Y * SAMLE_POINT_DISTANCE) };
 			else if (count == 12) pos = { TAMERLANE_RESERVE_X *SAMLE_POINT_DISTANCE, TAMERLANE_RESERVE_Y * SAMLE_POINT_DISTANCE };
 			else if (count == 5) pos = { (int)(SERB_CAL_START_X * SAMLE_POINT_DISTANCE), (int)(SERB_CAL_START_Y * SAMLE_POINT_DISTANCE) };
-			else if (count == 4 || count == 6) pos = { OTTO_FIRST_LINE_START_X * SAMLE_POINT_DISTANCE , (int)(OTTO_SECOND_LINE_START_Y*SAMLE_POINT_DISTANCE) };
+			else if (count == 4 || count == 6) pos = {(int)( OTTO_FIRST_LINE_START_X * SAMLE_POINT_DISTANCE ), (int)(OTTO_SECOND_LINE_START_Y*SAMLE_POINT_DISTANCE) };
 			else if (count == 1) pos = { (int)(AZAPS_START_X * SAMLE_POINT_DISTANCE), (int)(AZAPS_START_Y * SAMLE_POINT_DISTANCE) };
 			else if (count == 7) pos = { (int)(TARTAR_X * SAMLE_POINT_DISTANCE), (int)(OTTO_SECOND_LINE_START_Y * SAMLE_POINT_DISTANCE) };
 			else if (count == 8) pos = { (int)(TARTAR_X * SAMLE_POINT_DISTANCE), (int)(RESERV_Y * SAMLE_POINT_DISTANCE) };

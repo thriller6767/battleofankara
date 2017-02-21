@@ -25,20 +25,48 @@ int rounds ;
 void run(int);
 void write_mean_to_each_file();
 
+void singleRun();
+
 int main() {
 
 	march_from_constantinople = 0;
 	is_ottoman_offensive = 0;
 	is_water_poisoned = 0;
 	any_betrayal = false;
-	size_increase = 0;
+	size_increase = 5;
 	rounds = 150;
 	
 	
-	write_mean_to_each_file();
+	//write_mean_to_each_file();
 	//run(rounds);
+	singleRun();
 }
 
+void singleRun() {
+
+	battle1.cr.loadAltitude();
+
+	ofstream RESULTFILE("data/results.csv", ios::app);
+	if (RESULTFILE) {
+		RESULTFILE << "Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty,T_Casualty, Trend\n";
+
+		int i = 1000;
+		RESULTFILE << march_from_constantinople << "," << is_ottoman_offensive << " ," << is_water_poisoned << "," << any_betrayal << "," << size_increase << ",";
+
+		battle1.first_time_populate(is_water_poisoned, march_from_constantinople, size_increase, any_betrayal);
+
+		battle1.simple_result_of_one_battle(RESULTFILE, i,
+			is_ottoman_offensive,
+			any_betrayal,
+			march_from_constantinople,
+			is_water_poisoned,
+			size_increase,
+			300);
+
+		///battle1.ivm.remapping(is_water_poisoned, march_from_constantinople, any_betrayal, battle1.cr);
+		battle1.ivm.deleteAllAgent();
+	}
+}
 
 void run(int rounds)
 {
@@ -49,14 +77,14 @@ void run(int rounds)
 	if (RESULTFILE) {
 		RESULTFILE << "Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty,T_Casualty, Trend\n";
 		
-		int i = 0,;
+		int i = 0;
 		for (int k = 0; k <= 1; ++k) {
 			for (is_water_poisoned = 0; is_water_poisoned <= 1; ++is_water_poisoned) {
 				for (march_from_constantinople = 0; march_from_constantinople <= 1; ++march_from_constantinople) {
 					for (is_ottoman_offensive = 0; is_ottoman_offensive <= 2; ++is_ottoman_offensive) {
-						for (size_increase = 0; size_increase <= 6; ++size_increase) {
+						for (size_increase = 0; size_increase <= 5; ++size_increase) {
 
-							for (int x = 0; x < 20; ++x) {
+							for (int x = 0; x < 10; ++x) {
 
 								RESULTFILE << march_from_constantinople << "," << is_ottoman_offensive << " ," << is_water_poisoned << "," << any_betrayal << "," << size_increase << ",";
 
@@ -68,7 +96,7 @@ void run(int rounds)
 									march_from_constantinople,
 									is_water_poisoned,
 									size_increase,
-									250);
+									300);
 
 								///battle1.ivm.remapping(is_water_poisoned, march_from_constantinople, any_betrayal, battle1.cr);
 								battle1.ivm.deleteAllAgent();

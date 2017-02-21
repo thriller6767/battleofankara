@@ -1,2 +1,7 @@
-﻿  Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.exe
+﻿  main.cpp
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\main.cpp(152): warning C4018: '<': signed/unsigned mismatch
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\main.cpp(154): warning C4018: '<': signed/unsigned mismatch
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\main.cpp(160): warning C4018: '<': signed/unsigned mismatch
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\main.cpp(162): warning C4018: '<': signed/unsigned mismatch
+  Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.exe
   Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.pdb (Full PDB)
