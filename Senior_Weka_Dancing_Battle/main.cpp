@@ -1,6 +1,11 @@
 #include <iostream>
+#include <iomanip> 
+#include <fstream>
+#include <sstream>
 #include <vector>
+#include <math.h>
 #include <functional>
+#include <string>
 #include "ConReader.h"
 #include "Agent.h"
 #include "Initial_val_mapper.h"
@@ -18,6 +23,7 @@ bool any_betrayal;
 int size_increase;
 int rounds ;
 void run(int);
+void write_mean_to_each_file();
 
 int main() {
 
@@ -29,9 +35,10 @@ int main() {
 	rounds = 150;
 	
 	
-
-	run(rounds);
+	write_mean_to_each_file();
+	//run(rounds);
 }
+
 
 void run(int rounds)
 {
@@ -40,17 +47,16 @@ void run(int rounds)
 
 	ofstream RESULTFILE("data/results.csv", ios::app);
 	if (RESULTFILE) {
-		RESULTFILE << "Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty,T_Casualty, Trend,\n";
+		RESULTFILE << "Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty,T_Casualty, Trend\n";
 		
-		int i = 0, k = 0;
-		while (k <= 1){
-			while (is_water_poisoned <= 1) {
-				while (march_from_constantinople <= 1) {
-					while (is_ottoman_offensive <= 2){
-						while (size_increase <= 6) {
+		int i = 0,;
+		for (int k = 0; k <= 1; ++k) {
+			for (is_water_poisoned = 0; is_water_poisoned <= 1; ++is_water_poisoned) {
+				for (march_from_constantinople = 0; march_from_constantinople <= 1; ++march_from_constantinople) {
+					for (is_ottoman_offensive = 0; is_ottoman_offensive <= 2; ++is_ottoman_offensive) {
+						for (size_increase = 0; size_increase <= 6; ++size_increase) {
 
-							int x = 0;
-							while (x < 20) {
+							for (int x = 0; x < 20; ++x) {
 
 								RESULTFILE << march_from_constantinople << "," << is_ottoman_offensive << " ," << is_water_poisoned << "," << any_betrayal << "," << size_increase << ",";
 
@@ -67,16 +73,11 @@ void run(int rounds)
 								///battle1.ivm.remapping(is_water_poisoned, march_from_constantinople, any_betrayal, battle1.cr);
 								battle1.ivm.deleteAllAgent();
 
-								x++;
 								i++;
 							}
-							size_increase++;
 						}
-						is_ottoman_offensive++;
 					}
-					march_from_constantinople++;
 				}
-				is_water_poisoned++;
 			}
 			any_betrayal = true;
 		}
@@ -86,4 +87,64 @@ void run(int rounds)
 	}
 
 	battle1.deleteAllAgent();
+}
+
+void write_mean_to_each_file()
+{
+
+	int index = 0, round = 0;
+	
+	vector<double> o, t;
+	ifstream read;
+	read.open(("data/casualty_per_round_" + std::to_string(index) + ".csv").c_str());
+	ofstream write("data/compareRandomness.csv", ios::app);
+
+	write << "File index, O_mean, O_STD, T_mean, T_STD\n";
+
+	while (read && write) {
+
+		printf("now index is %d\n", index);
+		string line;
+		double variance = 0.0, stdev = 0.0, mean = 0.0, sum = 0.0;
+
+		getline(read, line);
+		while (getline(read, line)) {
+			if (line.empty()) continue;
+
+			istringstream iss(line);
+
+			double o_casualty, t_casualty; char ch;
+			if (iss >> ch >> round >> ch >> o_casualty >> ch >> t_casualty >> ch) {
+
+				o.push_back(o_casualty);
+				t.push_back(t_casualty);
+
+			}
+		}
+		for (int i = 0; i < o.size(); ++i) { sum += o[i]; }
+		mean = sum / o.size();
+		for (int i = 0; i < o.size(); ++i) { variance += pow(o[i] - mean, 2); }
+		stdev = sqrt(variance / o.size());
+
+		write << index << "," << mean << "," << stdev;
+
+		variance = 0.0, stdev = 0.0, mean = 0.0, sum = 0.0;
+		for (int i = 0; i < t.size(); ++i) { sum += t[i]; }
+		mean = sum / t.size();
+		for (int i = 0; i < t.size(); ++i) { variance += pow(t[i] - mean, 2); }
+		stdev = sqrt(variance / t.size());
+
+		write << "," << mean << "," << stdev << "\n";
+
+		o.clear(); t.clear();
+
+		++index;
+		read.close();
+		read.open(("data/casualty_per_round_" + std::to_string(index) + ".csv").c_str());
+		if (!read) {
+			printf("cannot open file: %s\n", ("data/casualty_per_round_" + std::to_string(index) + ".csv").c_str());
+		}
+	}
+	read.close();
+	write.close();
 }
