@@ -254,7 +254,7 @@ void Battle::write_statistics(ofstream& RESULTFILE, ofstream& file, int r, int r
 		double Ottoman_left_rate = (double)left / (double)total;
 		file << "\ntotal Ottoman soldiers, killed, in battlefield, left, total kill rate,\n";
 		file << total << "," << total - alive << "," << total - left << "," << left << "," << ottoman_casualty_rate << ",\n";
-		RESULTFILE << ottoman_casualty_rate << "\n" ;
+		RESULTFILE << ottoman_casualty_rate << "," ;
 
 
 		file << "\nTamerlane statistics,\n";
@@ -406,12 +406,16 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray, int
 		//If no enemy in sight range, MOVE if offensive, IDLE if offensive.
 		else if ((*a).getEnemies().empty()) {
 
-			if (idle_or_move(a, offensive) == Battle::Actions::IDLE) {} //no thing to change.
+			if (idle_or_move(a, offensive) == Battle::Actions::IDLE && round <= 30) {} //no thing to change.
 			else {
-				if (round > 15) {
+				if (round > 20) {
 					//move toward the center
+					vector<int> center;
+					if (offensive == 0) center = { 4500, 8500 };
+					else if (offensive == 1) center = { 4500, 10500 };
+					else center = { 4500, 9500 };
 
-					Agent::Direction dir = find_new_dir_after_move((*a).getPos(), { 4500, 8500 });
+					Agent::Direction dir = find_new_dir_after_move((*a).getPos(), center);
 					int distance = rand() % (150 + 1) + 100;
 					(*a).changeDirection(dir);
 					//printf("----move toward center, index %d, (%d, %d) ", (*a).getIndex(), (*a).getPos()[0], (*a).getPos()[1]);
@@ -424,8 +428,10 @@ void Battle::choose_and_Execute_Action(Agent * a, int offensive, int betray, int
 					int random = rand() % 7;
 					if ((*a).getSide() == Bayezid) {
 						if (random <= 2) {} //idle
-						else if (random > 2 && random < 5) { move_to_flank(a); }
-						else { move_straight(a); }
+						else if (random > 2 && random < 5) { move_to_flank(a); (*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
+						}
+						else { move_straight(a); (*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
+						}
 					}
 					else {
 						move_to_built_in_dir(a);
@@ -1213,7 +1219,7 @@ Battle::Actions Battle::idle_or_move(Agent * a, int offensive)
 		}
 		else { return Battle::Actions::MOVE; }
 	}
-	else if (offensive == 2) {
+	else if (offensive == 1) {
 		if ((*a).getSide() == Tamerlane) { return Battle::Actions::IDLE; }
 		else { return Battle::Actions::MOVE; }
 	}

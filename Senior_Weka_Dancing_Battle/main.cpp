@@ -30,10 +30,10 @@ void singleRun();
 int main() {
 
 	march_from_constantinople = 0;
-	is_ottoman_offensive = 0;
+	is_ottoman_offensive = 2;
 	is_water_poisoned = 0;
 	any_betrayal = false;
-	size_increase = 5;
+	size_increase = 0;
 	rounds = 150;
 	
 	
@@ -50,7 +50,7 @@ void singleRun() {
 	if (RESULTFILE) {
 		RESULTFILE << "Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty,T_Casualty, Trend\n";
 
-		int i = 1000;
+		int i = 2000;
 		RESULTFILE << march_from_constantinople << "," << is_ottoman_offensive << " ," << is_water_poisoned << "," << any_betrayal << "," << size_increase << ",";
 
 		battle1.first_time_populate(is_water_poisoned, march_from_constantinople, size_increase, any_betrayal);
