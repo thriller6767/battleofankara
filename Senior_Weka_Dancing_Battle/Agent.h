@@ -52,6 +52,7 @@ public:
 	bool in_battlefield = true;
 	bool is_alive = true;
 	bool is_being_attacked = false;
+	bool betray = false;
 
 	Agent::Name getName();
 	int getSide();
@@ -185,7 +186,7 @@ private:
 	std::vector<Agent *> enemies;
 	std::vector<Agent *> enemies_in_missile;
 	int current_enemy_index_this_agent_is_attacking;
-	bool betray;
+
 
 	std::string printDir();
 	std::string printCate();
@@ -197,7 +198,7 @@ private:
 	Agent(Name n, Category t, Direction d, int sid, int siz, int mor, int fat, 
 		double sr, int ad, int md, double mr, double acc, int armor, int index, 
 		std::vector<int> pos, int fightState, double ratio, double width, 
-		double depth, int currentEnemyIndex, bool betray);
+		double depth, int currentEnemyIndex);
 
 };
 

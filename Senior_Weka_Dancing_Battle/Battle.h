@@ -46,7 +46,7 @@ public:
 
 	int simple_result_of_one_battle(std::ofstream& file, int fileIndex, int offensive, bool betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds);
 
-	void one_battle(std::ofstream& resultFILE, std::ofstream& file, std::ofstream & agentstat, std::ofstream& file3, int offensive, int betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds);
+	void one_battle(std::ofstream& RESULTFILE, std::ofstream& AGENTSTAT, int offensive, bool betray, int marching_from_constantinople, int is_water_poisoned, int increase_amount, int rounds);
 
 	
 	void deleteAllAgent();
@@ -60,11 +60,13 @@ public:
 	void initial_chart_print();
 
 	/*---------just for test-----------*/
-	void choose_and_Execute_Action(Agent * a, int offensive, int betray, int round);
+	void choose_and_Execute_Action(std::ofstream& RESULTFILE, Agent * a, int offensive, bool betray, int round);
 
 private:
 	
 	std::time_t start;
+
+	bool Ottoman_all_agent_retreat = false, Tamerlane_all_agent_retreat = false;
 
 	int Ottoman_size, Tamerlane_size;
 	
@@ -89,6 +91,7 @@ private:
 
 	/*-----------decide which action, and do it------------------*/
 
+	void move_toward_center(int offensive,Agent *a);
 	void move_to_flank(Agent *a);
 	void move_straight(Agent *a);
 	void move_to_chosen_enemy(Agent *a, Agent * chosenEnemy);

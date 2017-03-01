@@ -55,10 +55,10 @@ string Agent::printCate()
 	}
 }
 
-Agent::Agent(Name n, Category t, Direction d, int sid, int siz, int mor, int fat, double sr, int ad, int md, double mr, double acc, int armor, int index, vector<int> p, int f, double ratio, double wi, double de, int currentEnemyIndex, bool b) :
+Agent::Agent(Name n, Category t, Direction d, int sid, int siz, int mor, int fat, double sr, int ad, int md, double mr, double acc, int armor, int index, vector<int> p, int f, double ratio, double wi, double de, int currentEnemyIndex) :
 	name(n), type(t), dir(d), side(sid), size(siz), initial_size(siz), morale(mor), initial_morale(mor), fatigue(fat), sight_range(sr), attack_damage(ad), initial_ad(ad),
 	missile_damage(md), initial_md(md), missile_range(mr), accuracy(acc), armor_defence(armor), initial_armor(armor), agent_Index(index), pos(p), initial_pos(p),agent_state(f), missile_range_ratio(ratio),
-	width(wi), depth(de), current_enemy_index_this_agent_is_attacking(currentEnemyIndex), betray(b){}
+	width(wi), depth(de), current_enemy_index_this_agent_is_attacking(currentEnemyIndex){}
 
 
 
@@ -828,7 +828,7 @@ Agent* Agent::Builder::build()
 {
 	return new Agent(this->name, this->type, this->dir, this->side, this->size, this->morale, this->fatigue, this->sight_range, 
 		this->attack_damage, this->missile_damage, this->missile_range, this->accuracy, this->armor_defence, this->agent_index,
-		this->pos, this->agent_state, this->missile_range_ratio, this->width, this->depth, this->current_enemy_index_this_agent_is_attacking, this->betray);
+		this->pos, this->agent_state, this->missile_range_ratio, this->width, this->depth, this->current_enemy_index_this_agent_is_attacking);
 }
 
 
