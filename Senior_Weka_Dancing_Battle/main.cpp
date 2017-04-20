@@ -47,16 +47,16 @@ void singleRun() {
 	battle1.cr.loadAltitude();
 
 	march_from_constantinople = 0;
-	is_ottoman_offensive = 1;
+	is_ottoman_offensive = 0;
 	is_water_poisoned = 0;
 	any_betrayal = false;
-	size_increase = 3;
+	size_increase = 0;
 
 	ofstream RESULTFILE("data/results.csv", ios::app);
 	if (RESULTFILE) {
 		RESULTFILE << "Constantinople, Offensive, Poisoned, Betrayal, Size Increase, End Rounds, Given Rounds, Result, O_Casualty,T_Casualty, Trend\n";
 
-		int i =4445;
+		int i =4444;
 		RESULTFILE << march_from_constantinople << "," << is_ottoman_offensive << " ," << is_water_poisoned << "," << any_betrayal << "," << size_increase << ",";
 
 		battle1.first_time_populate(is_water_poisoned, march_from_constantinople, size_increase, any_betrayal);
