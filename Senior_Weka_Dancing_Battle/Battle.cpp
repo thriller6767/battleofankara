@@ -417,6 +417,7 @@ void Battle::choose_and_Execute_Action(std::ofstream& agentstat, Agent * a, int 
 
 			if (idle_or_move(a, offensive) == Battle::Actions::IDLE && round <= 30) {} //no thing to change.
 			else {
+				/* There must be a smarter way to do flank automatically*/
 				if (round > (rand() % 20 + 14)) {
 
 					//if any side is retreating, its opponents chase after
@@ -438,7 +439,7 @@ void Battle::choose_and_Execute_Action(std::ofstream& agentstat, Agent * a, int 
 					int random = rand() % 7;
 					if ((*a).getSide() == Bayezid) {
 						if (random <= 2 || (offensive == 0 && (*a).getName() == Agent::Name::RUMELIAN)) {} //idle
-						else if (random == 3 || random == 4) { move_to_flank(a); (*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
+						else if (round <= 30 && (random == 3 || random == 4)) { move_to_flank(a); (*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
 						}
 						else { move_straight(a); (*a).changeFatigue(FATIGUE_INCREASE_IF_MOVE);
 						}

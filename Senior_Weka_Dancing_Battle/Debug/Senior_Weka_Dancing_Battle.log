@@ -3,5 +3,12 @@ d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\main.cpp(158): 
 d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\main.cpp(160): warning C4018: '<': signed/unsigned mismatch
 d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\main.cpp(166): warning C4018: '<': signed/unsigned mismatch
 d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\main.cpp(168): warning C4018: '<': signed/unsigned mismatch
+  Battle.cpp
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(133): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(173): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(1102): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(1196): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+d:\16-fall\senior_weka_dancing_battle\senior_weka_dancing_battle\battle.cpp(1113): warning C4715: 'Battle::distance_between_two_points': not all control paths return a value
   Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.exe
   Senior_Weka_Dancing_Battle.vcxproj -> D:\16-fall\Senior_Weka_Dancing_Battle\Debug\Senior_Weka_Dancing_Battle.pdb (Full PDB)

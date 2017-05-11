@@ -46,10 +46,10 @@ void singleRun() {
 
 	battle1.cr.loadAltitude();
 
-	march_from_constantinople = 0;
+	march_from_constantinople = 1;
 	is_ottoman_offensive = 0;
 	is_water_poisoned = 0;
-	any_betrayal = false;
+	any_betrayal = true;
 	size_increase = 0;
 
 	ofstream RESULTFILE("data/results.csv", ios::app);
