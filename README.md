@@ -1,6 +1,6 @@
 # battleofankara
 
-This is the simulation I wrote for my CS thesis in Union College.
+This is the simulation I wrote for my CS thesis in Union College. It will generate 4312 (changeable) files which contain data for battlegraphic.exe to demonstrate battle procedure under different settings.
 
 Abstract: In 1402, at the north of the city of Ankara, Turkey, a battle between Ottoman Empire and Tamerlane Empire decided the fate of Europe and Asia. Although historians largely agree on the general battle procedure, the details are still open to dispute.
 
